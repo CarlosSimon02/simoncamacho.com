@@ -1,0 +1,14 @@
+---
+import NavLink from "./clickables/NavLink.astro";
+---
+
+<nav class="flex h-full items-end max-md:-mb-[1rem] max-[46.125em]:hidden">
+  <ul
+    class="flex overflow-clip rounded-t-2xl border-x-[0.0625rem] border-t-[0.0625rem] border-secondary-550 bg-clip-border text-secondary-950"
+  >
+    <NavLink label="Home" href="#home" isSelected={true} />
+    <NavLink label="About" href="#about" />
+    <NavLink label="Projects" href="#projects" />
+    <NavLink label="Contact" href="#contact" />
+  </ul>
+</nav>
