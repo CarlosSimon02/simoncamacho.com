@@ -1,0 +1,49 @@
+---
+type Props = {
+  imageDark: string;
+  imageLight: string;
+  title: string;
+  technologies: string[];
+  description: string;
+};
+
+const { imageDark, imageLight, title, technologies, description } = Astro.props;
+---
+
+<div class="max-w-[30rem]">
+  <div class="mb-5 overflow-clip rounded-lg">
+    <a class="group cursor-pointer">
+      <img
+        class="dark transition-transform duration-700 group-hover:scale-105 group-hover:duration-500"
+        src={imageDark}
+      />
+      <img
+        class="light transition-transform duration-700 group-hover:scale-105 group-hover:duration-500"
+        src={imageLight}
+      />
+    </a>
+  </div>
+  <h3 class="mb-3 text-2xl font-semibold text-secondary-950">{title}</h3>
+  <ul class="mb-5 flex flex-wrap gap-2">
+    {
+      technologies.map((technology) => (
+        <li class="rounded-full border-[0.0625rem] px-3 py-1">{technology}</li>
+      ))
+    }
+  </ul>
+  <p class="mb-5">{description}</p>
+  <a
+    class="flex w-fit cursor-pointer items-center justify-start gap-2 text-lg text-accent-500 before:h-[0.0625rem] before:w-12 before:bg-accent-500 before:transition-all before:duration-700 hover:before:w-20 before:hover:duration-150"
+    >Explore</a
+  >
+</div>
+
+<style>
+  :global(.theme-dark) img.light {
+    display: none;
+  }
+
+  :global(html:not(.theme-dark)) img.dark {
+    display: none;
+  }
+</style>
