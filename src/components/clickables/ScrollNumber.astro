@@ -1,0 +1,35 @@
+---
+type Props = {
+  number: string;
+  className?: string;
+};
+
+const { number, className } = Astro.props;
+---
+
+<button
+  class={`scroll-number group grid justify-items-center gap-2 transition-all after:h-0 after:w-[0.0625rem] after:bg-[currentColor] hover:text-secondary-950 last:after:h-20 ${className}`}
+>
+  <span class="transition-transform group-hover:-translate-x-1">{number}</span>
+</button>
+
+<style>
+  .scroll-number::after {
+    transition: all 500ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .scroll-number.selected {
+    color: hsl(var(--accent-500));
+  }
+
+  .scroll-number.selected::after {
+    content: "";
+    height: 5rem;
+    width: 0.0625rem;
+    background-color: currentColor;
+  }
+
+  .scroll-number:last-child.selected::after {
+    height: 10rem;
+  }
+</style>
