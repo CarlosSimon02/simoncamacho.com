@@ -1,0 +1,19 @@
+---
+import Icon from "../Icon.astro";
+import { iconPaths } from "../IconPaths";
+
+type Props = {
+  href: string;
+  icon: keyof typeof iconPaths;
+};
+
+const { href, icon } = Astro.props;
+---
+
+<a href={href} class="group transition-colors hover:text-secondary-950"
+  ><Icon
+    icon={icon}
+    size="1.5rem"
+    className="transition-transform group-hover:translate-x-1"
+  /></a
+>
