@@ -1,0 +1,18 @@
+---
+type Props = {
+  isVisible: boolean;
+};
+
+const { isVisible } = Astro.props;
+---
+
+<div
+  class={`hexagon h-[2.5rem] w-[2.1rem] ${isVisible ? "bg-primary-200" : "pointer-events-none opacity-0"} `}
+>
+</div>
+
+<style>
+  .hexagon {
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  }
+</style>
