@@ -1,0 +1,21 @@
+---
+import Icon from "../Icon.astro";
+import { iconPaths } from "../IconPaths";
+
+type Props = {
+  icon: keyof typeof iconPaths;
+  className?: string;
+};
+
+const { icon, className } = Astro.props;
+---
+
+<button
+  class={`transition-colors text-secondary-950 hover:text-accent-500 group ${className}`}
+>
+  <Icon
+    icon={icon}
+    size="1.5rem"
+    className="transition-transform group-hover:translate-y-1"
+  />
+</button>
