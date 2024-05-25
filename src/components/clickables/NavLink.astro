@@ -1,0 +1,27 @@
+---
+type Props = {
+  label: string;
+  href: string;
+  isSelected?: boolean;
+};
+
+const { label, href, isSelected = false } = Astro.props;
+---
+
+<li
+  role="none"
+  class="border-r-[0.0625rem] border-secondary-550 last:border-none"
+>
+  <a
+    role="menuitem"
+    href={href}
+    class={`lg:py-4 flex items-center px-8 transition-colors hover:bg-secondary-950/[0.02] max-lg:h-[3.29479375rem] ${isSelected && "selected"}`}
+    >{label}</a
+  >
+</li>
+
+<style>
+  .selected {
+    color: hsl(var(--accent-500));
+  }
+</style>
