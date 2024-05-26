@@ -1,0 +1,61 @@
+---
+import ProjectCard from "../ProjectCard.astro";
+import SectionTitle from "../SectionTitle.astro";
+
+const projects = [
+  {
+    imageDark: "./project-images/kanban-project-dark.png",
+    imageLight: "./project-images/kanban-project-light.png",
+    title: "Kanban Web App",
+    technologies: [
+      "MongoDB",
+      "Express.js",
+      "React",
+      "Node.js",
+      "Tailwind",
+      "Zustand",
+    ],
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non lobortis lorem. Ut vitae venenatis velit. Quisque tempus dui eu eros suscipit placerat. Phasellus et lacus mi. Phasellus nec bibendum nulla, at placerat ante. Nulla facilisi.",
+  },
+  {
+    imageDark: "./project-images/audiophile-project-dark.png",
+    imageLight: "./project-images/audiophile-project-light.png",
+    title: "Audiophile",
+    technologies: ["Next.js", "Tailwind", "Zustand"],
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non lobortis lorem. Ut vitae venenatis velit. Quisque tempus dui eu eros suscipit placerat. Phasellus et lacus mi. Phasellus nec bibendum nulla, at placerat ante. Nulla facilisi.",
+  },
+  {
+    imageDark: "./project-images/pomodoro-project-dark.png",
+    imageLight: "./project-images/pomodoro-project-light.png",
+    title: "FEM Pomodoro App",
+    technologies: ["Javascript", "Sass", "HTML"],
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non lobortis lorem. Ut vitae venenatis velit. Quisque tempus dui eu eros suscipit placerat. Phasellus et lacus mi. Phasellus nec bibendum nulla, at placerat ante. Nulla facilisi.",
+  },
+];
+---
+
+<section class="base-container my-14 min-[46.125em]:my-20">
+  <div
+    class="relative flex flex-col gap-12 max-[46.125em]:items-center lg:mx-24"
+  >
+    <SectionTitle title="Projects" />
+    <div
+      class="grid grid-cols-[repeat(auto-fit,minmax(20rem,1fr))] gap-10 sm:gap-12"
+    >
+      {
+        projects.map((project) => (
+          <ProjectCard
+            imageDark={project.imageDark}
+            imageLight={project.imageLight}
+            title={project.title}
+            technologies={project.technologies}
+            description={project.description}
+          />
+        ))
+      }
+    </div>
+  </div>
+</section>
