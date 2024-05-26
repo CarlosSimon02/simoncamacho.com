@@ -15,13 +15,11 @@ const { label, href, isSelected = false } = Astro.props;
   <a
     role="menuitem"
     href={href}
-    class={`lg:py-4 flex items-center px-8 transition-colors hover:bg-secondary-950/[0.02] max-lg:h-[3.29479375rem] ${isSelected && "selected"}`}
-    >{label}</a
+    class:list={[
+      "transition-colors hover:bg-secondary-950/[0.02] max-lg:h-[3.29479375rem]",
+      "px-8 lg:py-4",
+      "flex items-center",
+      isSelected && "text-accent-500",
+    ]}>{label}</a
   >
 </li>
-
-<style>
-  .selected {
-    color: hsl(var(--accent-500));
-  }
-</style>
