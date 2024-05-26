@@ -1,0 +1,42 @@
+---
+import Icon from "../Icon.astro";
+import Navigation from "../Navigation.astro";
+import HeaderButton from "../clickables/HeaderButton.astro";
+import ThemeToggle from "../clickables/ThemeToggle.astro";
+---
+
+<header
+  class="sticky top-0 z-10 w-full border-b-[0.0625rem] border-b-secondary-550 bg-primary-50"
+>
+  <div class="base-container">
+    <div
+      class="flex h-[5.5rem] items-center justify-between border-x-[0.0625rem] border-x-secondary-550 px-8 max-md:hidden"
+    >
+      <div class="flex h-full items-center gap-16">
+        <Icon icon="logo" size="2.5rem" color="hsl(var(--accent-500))" />
+        <Navigation />
+      </div>
+      <div class="flex gap-5">
+        <HeaderButton icon="globe" />
+        <ThemeToggle />
+      </div>
+    </div>
+    <div
+      class="flex items-end justify-between border-x-[0.0625rem] border-x-secondary-550 p-[1rem] md:hidden"
+    >
+      <div class="flex h-full items-center gap-12">
+        <Icon icon="logo" size="2rem" color="hsl(var(--accent-500))" />
+        <Navigation />
+      </div>
+      <button
+        class="-mb-[1rem] -mr-[1rem] overflow-clip rounded-tl-2xl border-l-[0.0625rem] border-t-[0.0625rem] border-secondary-550 p-3 transition-colors hover:bg-secondary-950/[0.02]"
+      >
+        <Icon
+          icon="hamburger"
+          size="1.75rem"
+          color="hsl(var(--secondary-950))"
+        />
+      </button>
+    </div>
+  </div>
+</header>
