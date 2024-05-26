@@ -1,10 +1,19 @@
 ---
 import NavLink from "./clickables/NavLink.astro";
+
+type Props = {
+  class?: string;
+};
+
+const { class: className } = Astro.props;
 ---
 
-<nav class="flex h-full items-end max-md:-mb-[1rem] max-[46.125em]:hidden">
+<nav class:list={["flex items-end", className]}>
   <ul
-    class="flex overflow-clip rounded-t-2xl border-x-[0.0625rem] border-t-[0.0625rem] border-secondary-550 bg-clip-border text-secondary-950"
+    class:list={[
+      "flex overflow-clip text-secondary-950",
+      "rounded-t-2xl border-x-[0.0625rem] border-t-[0.0625rem] border-secondary-550 bg-clip-border",
+    ]}
   >
     <NavLink label="Home" href="#home" isSelected={true} />
     <NavLink label="About" href="#about" />
