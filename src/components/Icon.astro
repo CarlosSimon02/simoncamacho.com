@@ -7,31 +7,31 @@ type Props = {
   color?: string;
   size?: string;
   viewBox?: string;
-  className?: string;
+  class?: string;
 };
 
-const { color = "currentcolor", icon, size, viewBox, className } = Astro.props;
+const {
+  color = "currentcolor",
+  icon,
+  size,
+  viewBox,
+  class: className,
+} = Astro.props;
+
 const iconPath = iconPaths[icon];
 
 const attrs: HTMLAttributes<"svg"> = {};
+
 if (size) attrs.style = { "--size": size };
 ---
 
 <svg
   xmlns="http://www.w3.org/2000/svg"
-  viewBox={viewBox ? viewBox : "0 0 256 256"}
+  viewBox="0 0 256 256"
   aria-hidden="true"
   stroke={color}
   fill={color}
   set:html={iconPath}
-  class={className}
+  class:list={["h-[var(--size,100%)] w-[var(--size,100%)]", className]}
   {...attrs}
 />
-
-<style>
-  svg {
-    vertical-align: middle;
-    width: var(--size, 1em);
-    height: var(--size, 1em);
-  }
-</style>
