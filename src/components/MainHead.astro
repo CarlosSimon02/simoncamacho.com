@@ -1,73 +1,408 @@
 ---
-import "../styles/global.css";
+import type { HeadProps } from "@/types";
 
-type Props = {
-  title?: string | undefined;
-  description?: string | undefined;
-};
+import { type LanguageKeys, allLanguages } from "@/i18n/languages";
+import "@/styles/global.css";
+import { localizedUrl } from "@/utils";
+
+type Props = HeadProps;
 
 const {
-  title = "Jeanine White: Personal Site",
-  description = "The personal site of Jeanine White",
+  description,
+  googleSiteVerification,
+  gtagId,
+  gtmId,
+  image,
+  keywords,
+  structuredDataBreadcrumb,
+  structuredDataOrganization,
+  structuredDataPerson,
+  title,
+  twitterData1,
+  twitterData2,
+  twitterLabel1,
+  twitterLabel2
 } = Astro.props;
+
+const localizedPathname = (locale: string | undefined): string => {
+  return localizedUrl(Astro.url, locale).pathname;
+};
+const { lang } = Astro.params as { lang: LanguageKeys };
+export const siteName = "Simon Camacho";
+const author = siteName;
 ---
 
-<meta charset="UTF-8" />
-<meta name="description" property="og:description" content={description} />
-<meta name="viewport" content="width=device-width" />
-<meta name="generator" content={Astro.generator} />
-<title>{title}</title>
+<head>
+  <!-- Basics -->
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1" name="viewport" />
+  <title>{title}</title>
+  <meta content={description} name="description" />
+  <meta content={image} name="image" />
+  <meta content={keywords.join(", ")} name="keywords" />
+  <meta content={author} name="author" />
+  <meta content="index, follow" name="robots" />
+  <meta content={googleSiteVerification} name="google-site-verification" />
+  <meta content="#0F172A" name="theme-color" />
+  <meta content="#F59E0B" name="msapplication-TileColor" />
+  <meta content={Astro.generator} name="generator" />
+  <meta content="no-referrer-when-downgrade" name="referrer" />
 
-<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link
-  href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap"
-  rel="stylesheet"
-/>
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link
-  href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&family=Oswald:wght@200..700&display=swap"
-  rel="stylesheet"
-/>
-<script is:inline>
-  // This code is inlined in the head to make dark mode instant & blocking.
+  <!-- Canonical and Alternate Links -->
+  <link href={Astro.url.href} rel="canonical" />
+  {
+    Object.keys(allLanguages).map((locale) => (
+      <link
+        href={localizedPathname(locale)}
+        hreflang={locale}
+        rel="alternate"
+      />
+    ))
+  }
+  <link href="/sitemap-index.xml" rel="sitemap" />
 
-  //---------- functions ---------- //
+  <!-- Open Graph / Facebook -->
+  <meta content={allLanguages[lang].og} property="og:locale" />
+  <meta content={siteName} property="og:site_name" />
+  <meta content="website" property="og:type" />
+  <meta content={title} property="og:title" />
+  <meta content={description} property="og:description" />
+  <meta content={Astro.url.href} property="og:url" />
+  <meta content={image} property="og:image" />
+  {
+    Object.values(allLanguages).map((locale) => (
+      <meta content={locale.og} property="og:locale:alternate" />
+    ))
+  }
 
-  const getThemePreference = () => {
-    if (typeof localStorage !== "undefined" && localStorage.getItem("theme")) {
-      return localStorage.getItem("theme");
+  <!-- Twitter -->
+  <meta content={siteName} name="twitter:site_name" />
+  <meta content="summary_large_image" name="twitter:card" />
+  <meta content="@CarlosSimonCam1" name="twitter:site" />
+  <meta content="@CarlosSimonCam1" name="twitter:creator" />
+  <meta content={title} name="twitter:title" />
+  <meta content={description} name="twitter:description" />
+  <meta content={image} name="twitter:image" />
+  {twitterLabel1 && <meta content={twitterLabel1} name="twitter:label1" />}
+  {twitterData1 && <meta content={twitterData1} name="twitter:data1" />}
+  {twitterLabel2 && <meta content={twitterLabel2} name="twitter:label2" />}
+  {twitterData2 && <meta content={twitterData2} name="twitter:data2" />}
+
+  <!-- Icons -->
+  <link
+    color="#f59e0b"
+    href="/favicons/safari-pinned-tab.svg"
+    rel="mask-icon"
+  />
+  <link
+    href="/favicons/apple-touch-icon.png"
+    rel="apple-touch-icon"
+    sizes="180x180"
+  />
+  <link
+    href="/favicons/favicon-32x32.png"
+    rel="icon"
+    sizes="32x32"
+    type="image/png"
+  />
+  <link
+    href="/favicons/favicon-16x16.png"
+    rel="icon"
+    sizes="16x16"
+    type="image/png"
+  />
+  <link
+    href="/favicons/android-chrome-512x512-dark"
+    rel="shortcut icon"
+    type="image/png"
+  />
+  <link href="/favicons/site.webmanifest" rel="manifest" />
+
+  <!-- Web App -->
+  <meta content="yes" name="mobile-web-app-capable" />
+  <meta content={siteName} name="apple-mobile-web-app-title" />
+  <meta content="yes" name="apple-mobile-web-app-capable" />
+  <meta
+    content="black-translucent"
+    name="apple-mobile-web-app-status-bar-style"
+  />
+
+  <!-- Apple Splash Screens -->
+  <link
+    href="/splash-screens/10.5__iPad_Air_landscape.png"
+    media="screen and (device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)"
+    rel="apple-touch-startup-image"
+  />
+  <link
+    href="/splash-screens/10.9__iPad_Air_portrait.png"
+    media="screen and (device-width: 820px) and (device-height: 1180px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)"
+    rel="apple-touch-startup-image"
+  />
+  <link
+    href="/splash-screens/iPhone_15_Pro_Max__iPhone_15_Plus__iPhone_14_Pro_Max_landscape.png"
+    media="screen and (device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)"
+    rel="apple-touch-startup-image"
+  />
+  <link
+    href="/splash-screens/10.5__iPad_Air_portrait.png"
+    media="screen and (device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)"
+    rel="apple-touch-startup-image"
+  />
+  <link
+    href="/splash-screens/iPhone_8__iPhone_7__iPhone_6s__iPhone_6__4.7__iPhone_SE_portrait.png"
+    media="screen and (device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)"
+    rel="apple-touch-startup-image"
+  />
+  <link
+    href="/splash-screens/12.9__iPad_Pro_landscape.png"
+    media="screen and (device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)"
+    rel="apple-touch-startup-image"
+  />
+  <link
+    href="/splash-screens/11__iPad_Pro_M4_portrait.png"
+    media="screen and (device-width: 834px) and (device-height: 1210px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)"
+    rel="apple-touch-startup-image"
+  />
+  <link
+    href="/splash-screens/10.2__iPad_landscape.png"
+    media="screen and (device-width: 810px) and (device-height: 1080px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)"
+    rel="apple-touch-startup-image"
+  />
+  <link
+    href="/splash-screens/8.3__iPad_Mini_portrait.png"
+    media="screen and (device-width: 744px) and (device-height: 1133px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)"
+    rel="apple-touch-startup-image"
+  />
+  <link
+    href="/splash-screens/iPhone_11_Pro_Max__iPhone_XS_Max_portrait.png"
+    media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)"
+    rel="apple-touch-startup-image"
+  />
+  <link
+    href="/splash-screens/iPhone_14__iPhone_13_Pro__iPhone_13__iPhone_12_Pro__iPhone_12_portrait.png"
+    media="screen and (device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)"
+    rel="apple-touch-startup-image"
+  />
+  <link
+    href="/splash-screens/iPhone_11__iPhone_XR_landscape.png"
+    media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)"
+    rel="apple-touch-startup-image"
+  />
+  <link
+    href="/splash-screens/iPhone_8_Plus__iPhone_7_Plus__iPhone_6s_Plus__iPhone_6_Plus_landscape.png"
+    media="screen and (device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)"
+    rel="apple-touch-startup-image"
+  />
+  <link
+    href="/splash-screens/10.9__iPad_Air_landscape.png"
+    media="screen and (device-width: 820px) and (device-height: 1180px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)"
+    rel="apple-touch-startup-image"
+  />
+  <link
+    href="/splash-screens/10.2__iPad_portrait.png"
+    media="screen and (device-width: 810px) and (device-height: 1080px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)"
+    rel="apple-touch-startup-image"
+  />
+  <link
+    href="/splash-screens/11__iPad_Pro__10.5__iPad_Pro_portrait.png"
+    media="screen and (device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)"
+    rel="apple-touch-startup-image"
+  />
+  <link
+    href="/splash-screens/4__iPhone_SE__iPod_touch_5th_generation_and_later_landscape.png"
+    media="screen and (device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)"
+    rel="apple-touch-startup-image"
+  />
+  <link
+    href="/splash-screens/iPhone_15_Pro__iPhone_15__iPhone_14_Pro_landscape.png"
+    media="screen and (device-width: 393px) and (device-height: 852px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)"
+    rel="apple-touch-startup-image"
+  />
+  <link
+    href="/splash-screens/iPhone_11_Pro_Max__iPhone_XS_Max_landscape.png"
+    media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)"
+    rel="apple-touch-startup-image"
+  />
+  <link
+    href="/splash-screens/iPhone_13_mini__iPhone_12_mini__iPhone_11_Pro__iPhone_XS__iPhone_X_portrait.png"
+    media="screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)"
+    rel="apple-touch-startup-image"
+  />
+  <link
+    href="/splash-screens/iPhone_14__iPhone_13_Pro__iPhone_13__iPhone_12_Pro__iPhone_12_landscape.png"
+    media="screen and (device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)"
+    rel="apple-touch-startup-image"
+  />
+  <link
+    href="/splash-screens/iPhone_8__iPhone_7__iPhone_6s__iPhone_6__4.7__iPhone_SE_landscape.png"
+    media="screen and (device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)"
+    rel="apple-touch-startup-image"
+  />
+  <link
+    href="/splash-screens/12.9__iPad_Pro_portrait.png"
+    media="screen and (device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)"
+    rel="apple-touch-startup-image"
+  />
+  <link
+    href="/splash-screens/iPhone_8_Plus__iPhone_7_Plus__iPhone_6s_Plus__iPhone_6_Plus_portrait.png"
+    media="screen and (device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)"
+    rel="apple-touch-startup-image"
+  />
+  <link
+    href="/splash-screens/9.7__iPad_Pro__7.9__iPad_mini__9.7__iPad_Air__9.7__iPad_landscape.png"
+    media="screen and (device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)"
+    rel="apple-touch-startup-image"
+  />
+  <link
+    href="/splash-screens/13__iPad_Pro_M4_landscape.png"
+    media="screen and (device-width: 1032px) and (device-height: 1376px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)"
+    rel="apple-touch-startup-image"
+  />
+  <link
+    href="/splash-screens/iPhone_14_Plus__iPhone_13_Pro_Max__iPhone_12_Pro_Max_landscape.png"
+    media="screen and (device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)"
+    rel="apple-touch-startup-image"
+  />
+  <link
+    href="/splash-screens/iPhone_15_Pro__iPhone_15__iPhone_14_Pro_portrait.png"
+    media="screen and (device-width: 393px) and (device-height: 852px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)"
+    rel="apple-touch-startup-image"
+  />
+  <link
+    href="/splash-screens/iPhone_15_Pro_Max__iPhone_15_Plus__iPhone_14_Pro_Max_portrait.png"
+    media="screen and (device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)"
+    rel="apple-touch-startup-image"
+  />
+  <link
+    href="/splash-screens/13__iPad_Pro_M4_portrait.png"
+    media="screen and (device-width: 1032px) and (device-height: 1376px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)"
+    rel="apple-touch-startup-image"
+  />
+  <link
+    href="/splash-screens/11__iPad_Pro_M4_landscape.png"
+    media="screen and (device-width: 834px) and (device-height: 1210px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)"
+    rel="apple-touch-startup-image"
+  />
+  <link
+    href="/splash-screens/iPhone_13_mini__iPhone_12_mini__iPhone_11_Pro__iPhone_XS__iPhone_X_landscape.png"
+    media="screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)"
+    rel="apple-touch-startup-image"
+  />
+  <link
+    href="/splash-screens/9.7__iPad_Pro__7.9__iPad_mini__9.7__iPad_Air__9.7__iPad_portrait.png"
+    media="screen and (device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)"
+    rel="apple-touch-startup-image"
+  />
+  <link
+    href="/splash-screens/8.3__iPad_Mini_landscape.png"
+    media="screen and (device-width: 744px) and (device-height: 1133px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)"
+    rel="apple-touch-startup-image"
+  />
+  <link
+    href="/splash-screens/iPhone_11__iPhone_XR_portrait.png"
+    media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)"
+    rel="apple-touch-startup-image"
+  />
+  <link
+    href="/splash-screens/4__iPhone_SE__iPod_touch_5th_generation_and_later_portrait.png"
+    media="screen and (device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)"
+    rel="apple-touch-startup-image"
+  />
+  <link
+    href="/splash-screens/iPhone_14_Plus__iPhone_13_Pro_Max__iPhone_12_Pro_Max_portrait.png"
+    media="screen and (device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)"
+    rel="apple-touch-startup-image"
+  />
+  <link
+    href="/splash-screens/11__iPad_Pro__10.5__iPad_Pro_landscape.png"
+    media="screen and (device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)"
+    rel="apple-touch-startup-image"
+  />
+
+  <!-- Security and Performance -->
+  <!-- <meta
+    content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; object-src 'none';"
+    http-equiv="Content-Security-Policy"
+  />
+  <meta content="IE=edge" http-equiv="X-UA-Compatible" />
+  <link href="https://example.com" rel="preconnect" />
+  <link href="//example.com" rel="dns-prefetch" />
+  <link as="script" href="/path/to/important/script.js" rel="preload" />
+  <link as="style" href="/path/to/important/style.css" rel="preload" /> -->
+
+  <!-- Analytics -->
+  <!-- <script
+    is:inline
+    src={`https://www.googletagmanager.com/gtag/js?id=${gtagId}`}></script>
+  <script is:inline>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
     }
-    return window.matchMedia("(prefers-color-scheme: dark)").matches
-      ? "dark"
-      : "light";
-  };
+    gtag("js", new Date());
+    gtag("config", "{gtagId}");
+  </script>
+  <noscript>
+    <iframe
+      height="0"
+      src={`https://www.googletagmanager.com/ns.html?id=${gtmId}`}
+      style="display:none;visibility:hidden"
+      width="0"></iframe>
+  </noscript> -->
 
-  const applyThemePreference = () => {
-    const isDark = getThemePreference() === "dark";
-    document.documentElement.classList[isDark ? "add" : "remove"]("theme-dark");
+  <!-- Structured Data -->
+  <!-- <script
+    is:inline
+    set:html={JSON.stringify(structuredDataPerson)}
+    type="application/ld+json"
+  />
+  <script
+    is:inline
+    set:html={JSON.stringify(structuredDataBreadcrumb)}
+    type="application/ld+json"
+  />
+  <script
+    is:inline
+    set:html={JSON.stringify(structuredDataOrganization)}
+    type="application/ld+json"
+  /> -->
 
-    if (typeof localStorage !== "undefined") {
-      // Watch the document element and persist user preference when it changes.
-      const observer = new MutationObserver(() => {
-        const isDark =
-          document.documentElement.classList.contains("theme-dark");
-        localStorage.setItem("theme", isDark ? "dark" : "light");
-      });
-      observer.observe(document.documentElement, {
-        attributes: true,
-        attributeFilter: ["class"],
-      });
-    }
-  };
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect" />
+  <link crossorigin href="https://fonts.gstatic.com" rel="preconnect" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&family=Oswald:wght@200..700&display=swap"
+    rel="stylesheet"
+  />
 
-  //---------- END: functions ---------- //
-
-  //---------- function calls ---------- //
-
-  applyThemePreference();
-
-  //---------- END: function calls ---------- //
-</script>
+  <!-- Script for initializing theme -->
+  <script is:inline>
+    const rootElement = document.documentElement;
+    const getThemePreference = () => {
+      if (
+        typeof localStorage !== "undefined" &&
+        localStorage.getItem("theme")
+      ) {
+        return localStorage.getItem("theme");
+      }
+      return window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? "dark"
+        : "light";
+    };
+    const applyThemePreference = () => {
+      const isDark = getThemePreference() === "dark";
+      rootElement.classList[isDark ? "add" : "remove"]("theme-dark");
+      if (typeof localStorage !== "undefined") {
+        const observer = new MutationObserver(() => {
+          const isDark = rootElement.classList.contains("theme-dark");
+          localStorage.setItem("theme", isDark ? "dark" : "light");
+        });
+        observer.observe(rootElement, {
+          attributeFilter: ["class"],
+          attributes: true
+        });
+      }
+    };
+    applyThemePreference();
+  </script>
+</head>
