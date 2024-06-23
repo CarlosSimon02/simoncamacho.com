@@ -1,0 +1,28 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+type Props = {
+  label: string;
+  styleType?: "accent" | "primary";
+} & HTMLAttributes<"button">;
+
+const {
+  class: className,
+  label,
+  styleType = "primary",
+  ...props
+} = Astro.props;
+---
+
+<button class:list={["group max-w-[12.5rem] flex-1", className]} {...props}
+  ><div
+    class:list={[
+      "rounded-lg p-4 font-bold transition-transform group-hover:-translate-y-1",
+      styleType === "primary"
+        ? "bg-secondary-950 text-primary-50"
+        : "border-[0.0625rem] border-accent-500 text-accent-500"
+    ]}
+  >
+    {label}
+  </div></button
+>
