@@ -1,0 +1,38 @@
+---
+type Props = {
+  id: string;
+  label: string;
+  placeholder: string;
+  type?: "email" | "text" | "textarea";
+};
+
+const { id, label, placeholder, type = "text" } = Astro.props;
+
+const commonAttributes = {
+  "aria-describedby": `${id}-alert`,
+  autocomplete: "off",
+  "class:list": [
+    "mb-2 min-w-0 rounded-lg border-[0.0625rem] bg-primary-50 px-6 py-4 placeholder:text-secondary-500",
+    "[&.is-invalid]:border-red-500"
+  ],
+  id,
+  name: id,
+  placeholder,
+  required: true
+};
+---
+
+<div>
+  <label class="grid gap-3">
+    <span class="text-secondary-950">{label}</span>
+    {
+      type === "textarea" ? (
+        <textarea {...commonAttributes} cols="30" rows="4" />
+      ) : (
+        <input {...commonAttributes} type={type} />
+      )
+    }
+  </label>
+  <p aria-live="polite" class="alert text-sm text-red-500" id={`${id}-alert`}>
+  </p>
+</div>
