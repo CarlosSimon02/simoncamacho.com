@@ -1,15 +1,4 @@
----
-type Props = {
-  isVisible: boolean;
-};
-
-const { isVisible } = Astro.props;
----
-
-<div
-  class={`hexagon h-[2.5rem] w-[2.1rem] ${isVisible ? "bg-primary-200" : "pointer-events-none opacity-0"} `}
->
-</div>
+<div class="hexagon h-[2.5rem] w-[2.1rem] bg-primary-200"></div>
 
 <style>
   .hexagon {
