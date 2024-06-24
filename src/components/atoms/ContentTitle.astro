@@ -1,0 +1,16 @@
+---
+type Props = {
+  class?: string;
+  title: string;
+};
+
+const { class: className, title } = Astro.props;
+---
+
+<div
+  class:list={[
+    "mb-4 text-xl font-semibold text-secondary-950 sm:text-2xl 2xl:text-3xl",
+    className
+  ]}
+  set:html={title}
+/>
