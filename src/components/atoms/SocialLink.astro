@@ -1,19 +1,33 @@
 ---
-import Icon from "../atoms/Icon.astro";
-import { iconPaths } from "../IconPaths";
+import { iconPaths } from "@/components/IconPaths";
+import Icon from "@/components/atoms/Icon.astro";
 
 type Props = {
+  class?: string;
+  hoverTranslate?: "bottom" | "right";
   href: string;
   icon: keyof typeof iconPaths;
+  label: string;
 };
 
-const { href, icon } = Astro.props;
+const {
+  class: className,
+  hoverTranslate = "bottom",
+  href,
+  icon,
+  label
+} = Astro.props;
 ---
 
-<a href={href} class="group transition-colors hover:text-secondary-950"
-  ><Icon
+<a class:list={[`group transition-colors`, className]} href={href}
+  ><span class="sr-only">{label}</span><Icon
+    class:list={[
+      "transition-transform",
+      hoverTranslate === "bottom"
+        ? "group-hover:translate-y-1"
+        : "group-hover:translate-x-1"
+    ]}
     icon={icon}
     size="1.5rem"
-    class="transition-transform group-hover:translate-x-1"
   /></a
 >
