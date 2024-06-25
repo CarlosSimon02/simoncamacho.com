@@ -1,0 +1,14 @@
+---
+import Icon from "@/components/atoms/Icon.astro";
+
+type Props = {
+  navigateToHomeLabel: string;
+};
+
+const { navigateToHomeLabel } = Astro.props;
+---
+
+<a class="h-8 w-8 cursor-pointer lg:h-10 lg:w-10" href="/">
+  <Icon color="hsl(var(--accent-500))" icon="logo" />
+  <span class="sr-only">{navigateToHomeLabel}</span>
+</a>
