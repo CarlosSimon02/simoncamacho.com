@@ -1,25 +1,40 @@
 ---
 type Props = {
-  label: string;
   href: string;
-  isSelected?: boolean;
+  label: string;
+  media?: "desktop" | "mobile";
 };
 
-const { label, href, isSelected = false } = Astro.props;
+const { href, label, media = "desktop" } = Astro.props;
 ---
 
-<li
-  role="none"
-  class="border-r-[0.0625rem] border-secondary-550 last:border-none"
->
+<li class="group" role="none">
   <a
-    role="menuitem"
+    class:list={media === "desktop"
+      ? [
+          "scroll-spyer text-secondary-950 transition-[color,background-color] hover:bg-secondary-950/[0.02] max-xl:h-[3.29479375rem]",
+          "border-r-[0.0625rem] border-t-[0.0625rem] border-secondary-550 group-first:border-l-[0.0625rem]",
+          "group-first:rounded-tl-2xl group-last:rounded-tr-2xl",
+          "px-6 lg:px-8 lg:py-4",
+          "flex items-center"
+        ]
+      : ["scroll-spyer group transition-colors hover:text-secondary-950"]}
     href={href}
-    class:list={[
-      "transition-colors hover:bg-secondary-950/[0.02] max-lg:h-[3.29479375rem]",
-      "px-8 lg:py-4",
-      "flex items-center",
-      isSelected && "text-accent-500",
-    ]}>{label}</a
+    role="menuitem"
+    ><span
+      class={media === "mobile"
+        ? "block transition-transform group-hover:translate-x-1"
+        : null}>{label}</span
+    ></a
   >
 </li>
+
+<style>
+  .scroll-spyer.selected {
+    color: hsl(var(--accent-500));
+  }
+
+  .scroll-spyer.selected:hover {
+    color: hsl(var(--accent-500));
+  }
+</style>
