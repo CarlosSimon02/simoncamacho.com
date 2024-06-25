@@ -1,0 +1,19 @@
+---
+type Props = {
+  class?: string;
+  html?: string;
+};
+
+const { class: className, html } = Astro.props;
+---
+
+<div
+  class:list={[
+    "grid gap-3",
+    "leading-[1.9]",
+    "[&_a]:cursor-pointer [&_a]:underline [&_a]:transition-colors",
+    "[&_a:hover]:text-secondary-950",
+    className
+  ]}
+  set:html={html}
+/>
