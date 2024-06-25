@@ -1,0 +1,18 @@
+---
+type Props = {
+  class?: string;
+  html?: string;
+};
+
+const { class: className, html } = Astro.props;
+---
+
+<p
+  class:list={[
+    "leading-[1.9]",
+    "[&_a]:cursor-pointer [&_a]:underline [&_a]:transition-colors",
+    "[&_a:hover]:text-secondary-950",
+    className
+  ]}
+  set:html={html ? html : "Text not available"}
+/>
