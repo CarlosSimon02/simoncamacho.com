@@ -1,16 +1,18 @@
 ---
 type Props = {
+  class?: string;
   title: string;
 };
 
-const { title } = Astro.props;
+const { class: className, title } = Astro.props;
 ---
 
 <h2
   class:list={[
-    "flex shrink-0 items-center gap-3 text-nowrap text-2xl font-extrabold text-accent-500 lg:text-3xl",
-    "before:h-[0.0625rem] before:w-8 before:bg-accent-500 sm:before:w-24 min-[46.125em]:before:w-8",
-    "after:h-[0.0625rem] after:w-8 after:bg-accent-500 sm:after:w-24 min-[46.125em]:after:w-96",
+    "flex items-center gap-3 text-center text-2xl font-extrabold text-accent-500 sm:text-3xl lg:text-4xl",
+    "before:h-[0.0625rem] before:w-8 before:bg-accent-500 sm:before:w-24 md:before:hidden",
+    "after:h-[0.0625rem] after:w-8 after:bg-accent-500 sm:after:w-24 md:after:w-[20rem]",
+    className
   ]}
 >
   {title}
