@@ -1,11 +1,22 @@
+---
+type Props = {
+  alt: string;
+  class?: string;
+};
+
+const { alt, class: className } = Astro.props;
+---
+
 <div
   class:list={[
-    "group relative flex aspect-square justify-center rounded-2xl bg-pfp-bg max-[46.125em]:max-w-72 min-[46.125em]:basis-[30%]",
+    "group relative flex aspect-square justify-center rounded-2xl bg-pfp-bg",
     "before:pointer-events-none before:absolute before:-left-3 before:-top-3 before:z-[9] before:h-full before:w-full before:rounded-2xl before:border-[0.1rem] before:border-accent-500 before:transition-all before:duration-700 hover:before:left-0 hover:before:top-0 hover:before:duration-150",
+    className
   ]}
 >
   <img
-    src="./profile.png"
+    alt={alt}
     class="w-[100%] rounded-2xl grayscale filter transition-all duration-700 group-hover:grayscale-0 group-hover:duration-150"
+    src="./profile.png"
   />
 </div>
