@@ -1,0 +1,39 @@
+---
+type Props = {
+  alt: string;
+  class?: string;
+  srcDark: string;
+  srcLight: string;
+};
+
+const { alt, class: className, srcDark, srcLight } = Astro.props;
+---
+
+<Fragment>
+  <img
+    alt={alt}
+    class:list={[
+      "dark transition-transform duration-700 group-hover:scale-105 group-hover:duration-500",
+      className
+    ]}
+    src={srcDark}
+  />
+  <img
+    alt={alt}
+    class:list={[
+      "light transition-transform duration-700 group-hover:scale-105 group-hover:duration-500",
+      className
+    ]}
+    src={srcLight}
+  />
+</Fragment>
+
+<style>
+  :global(.theme-dark) img.light {
+    display: none;
+  }
+
+  :global(html:not(.theme-dark)) img.dark {
+    display: none;
+  }
+</style>
