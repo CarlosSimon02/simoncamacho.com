@@ -1,35 +1,29 @@
 ---
 type Props = {
-  number: string;
   className?: string;
+  href: string;
+  label: string;
+  number: string;
 };
 
-const { number, className } = Astro.props;
+const { className, href, label, number } = Astro.props;
 ---
 
-<button
-  class={`scroll-number group grid justify-items-center gap-2 transition-all after:h-0 after:w-[0.0625rem] after:bg-[currentColor] hover:text-secondary-950 last:after:h-20 ${className}`}
->
-  <span class="transition-transform group-hover:-translate-x-1">{number}</span>
-</button>
-
-<style>
-  .scroll-number::after {
-    transition: all 500ms cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .scroll-number.selected {
-    color: hsl(var(--accent-500));
-  }
-
-  .scroll-number.selected::after {
-    content: "";
-    height: 5rem;
-    width: 0.0625rem;
-    background-color: currentColor;
-  }
-
-  .scroll-number:last-child.selected::after {
-    height: 10rem;
-  }
-</style>
+<li class="group">
+  <a
+    class:list={[
+      "scroll-spyer group grid justify-items-center gap-2 transition-colors duration-500 hover:text-secondary-950 group-last:after:h-20",
+      "after:h-0 after:w-[0.0625rem] after:bg-[currentColor] after:transition-[colors,height] after:duration-500",
+      "[&.scroll-spyer.selected]:text-accent-500",
+      "[&.scroll-spyer.selected::after]:h-[5rem] [&.scroll-spyer.selected::after]:bg-accent-500",
+      "[.group:last-child>&.scroll-spyer.selected::after]:h-[10rem]",
+      className
+    ]}
+    href={href}
+  >
+    <span class="sr-only">{label}</span>
+    <span aria-hidden class="transition-transform group-hover:-translate-x-1"
+      >{number}</span
+    >
+  </a>
+</li>
