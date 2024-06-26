@@ -1,0 +1,28 @@
+---
+type Props = {
+  class?: string;
+};
+
+const { class: className } = Astro.props;
+---
+
+<svg
+  aria-hidden="true"
+  class={className}
+  fill="hsl(var(--accent-500))"
+  focusable="false"
+  stroke="hsl(var(--accent-500))"
+  viewBox="0 0 640 157"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    clip-rule="evenodd"
+    d="M0.8019 112.67L79.1546 132.198L74.918 106.035L81.8461 115.648L93.06 112.951L78.2191 102.25L17.3549 111.211L74.3495 92.9281L84.6843 66.8469L0.8019 112.67Z"
+    fill-rule="evenodd"
+    stroke="none"></path>
+  <path
+    d="M112 100.498C1184 -73.5 226.5 242.498 584.5 1"
+    fill="none"
+    stroke-dasharray="20 20"
+    stroke-width="2"></path>
+</svg>
