@@ -1,5 +1,19 @@
-<div
-  class="mx-auto w-full max-w-[82.75rem] px-[1rem] sm:px-[2rem] md:px-[3rem]"
+---
+type Props = {
+  class?: string;
+  dataLink?: string;
+  element?: "div" | "footer" | "section";
+};
+const { class: className, dataLink, element: Element = "div" } = Astro.props;
+---
+
+<Element
+  class:list={[
+    "mx-auto w-full max-w-[82.75rem] px-[1rem] sm:px-[2rem] lg:px-[3rem]",
+    "focus:!outline-none focus-visible:!outline-none",
+    className
+  ]}
+  data-link={dataLink}
 >
   <slot />
-</div>
+</Element>
