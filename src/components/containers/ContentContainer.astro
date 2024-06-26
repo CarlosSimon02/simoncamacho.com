@@ -1,0 +1,16 @@
+---
+type Props = {
+  class?: string;
+};
+
+const { class: className } = Astro.props;
+---
+
+<div
+  class:list={[
+    "flex w-full flex-col gap-[5rem] max-md:items-center max-md:text-center md:gap-[8rem] xl:px-24",
+    className
+  ]}
+>
+  <slot />
+</div>
