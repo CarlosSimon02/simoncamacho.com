@@ -1,0 +1,207 @@
+---
+import Button from "../atoms/Button.astro";
+import InputTextField from "../atoms/InputTextField.astro";
+
+export type MessgeFormUITranslationsType = {
+  emailLabel: string;
+  messageLabel: string;
+  nameLabel: string;
+  submitLabel: string;
+};
+
+type Props = {
+  class?: string;
+  translations: MessgeFormUITranslationsType;
+};
+
+const { class: className, translations: t } = Astro.props;
+---
+
+<form
+  class:list={["grid gap-5 md:gap-8", className]}
+  data-netlify="true"
+  method="POST"
+  name="message"
+  novalidate
+>
+  <InputTextField
+    id="name"
+    label={t.nameLabel}
+    placeholder="e.g. Juan Dela Cruz"
+  />
+  <InputTextField
+    id="email"
+    label={t.emailLabel}
+    placeholder="e.g. example@gmail.com"
+    type="email"
+  />
+  <InputTextField
+    id="message"
+    label={t.messageLabel}
+    placeholder="e.g. Hello! Let's connect!"
+    type="textarea"
+  />
+  <Button
+    class="max-w-none justify-self-stretch md:max-w-[12.5rem]"
+    label={t.submitLabel}
+    styleType="accent"
+    type="submit"
+  />
+</form>
+
+<script>
+  import * as yup from "yup";
+
+  type FormData = {
+    name: string;
+    // eslint-disable-next-line perfectionist/sort-object-types
+    email: string;
+    message: string;
+  };
+
+  const getCurrentLocale = () => {
+    const pathname = window.location.pathname;
+    const pathSegments = pathname.split("/").filter(Boolean); // Filter out empty segments
+
+    let locale = "";
+
+    if (pathSegments.length > 0) {
+      locale = pathSegments[0];
+      if (locale !== "en" && locale !== "fil") {
+        locale = "unknown";
+      }
+    } else {
+      locale = "unknown";
+    }
+
+    return locale;
+  };
+
+  const currentLocale = getCurrentLocale() as "en" | "fil";
+
+  const errorMessages = {
+    en: {
+      email: {
+        invalid: "Invalid email format",
+        required: "Email is required"
+      },
+      message: {
+        required: "You forgot your message"
+      },
+      name: {
+        required: "Name is required"
+      }
+    },
+    fil: {
+      email: {
+        invalid: "Maling <i>format</i> ng <i>email</i>",
+        required: "Kinakailangan ang <i>email</i>"
+      },
+      message: {
+        required: "Nakalimutan mo ang iyong mensahe"
+      },
+      name: {
+        required: "Kinakailangan ang pangalan"
+      }
+    }
+  };
+
+  const messageFormSchema = yup.object().shape({
+    name: yup.string().required(errorMessages[currentLocale].name.required),
+    // eslint-disable-next-line perfectionist/sort-objects
+    email: yup
+      .string()
+      .email(errorMessages[currentLocale].email.invalid)
+      .required(errorMessages[currentLocale].email.required),
+    message: yup
+      .string()
+      .required(errorMessages[currentLocale].message.required)
+  });
+
+  const form = document.querySelector("form") as HTMLElement;
+  const requiredInputs = document.querySelectorAll(
+    "input[required],textarea[required]"
+  ) as NodeListOf<HTMLInputElement>;
+  const clearAlert = (inputElement: HTMLInputElement) => {
+    const inputId = inputElement.getAttribute("id");
+    const alert = document.querySelector(`#${inputId}-alert`) as HTMLElement;
+
+    inputElement.classList.remove("is-invalid");
+    alert.innerHTML = "";
+  };
+
+  const clearAllAlerts = () => {
+    requiredInputs.forEach((requiredInput) => clearAlert(requiredInput));
+  };
+
+  const displayErrors = (errors: { [key: string]: string }) => {
+    let hasFocus = false;
+
+    Object.keys(errors).forEach((fieldName) => {
+      const alert = document.querySelector(
+        `#${fieldName}-alert`
+      ) as HTMLElement;
+      const inputField = document.querySelector(`#${fieldName}`) as HTMLElement;
+      const error = errors[fieldName];
+
+      alert.innerHTML = error;
+      inputField.classList.add("is-invalid");
+
+      if (!hasFocus) {
+        inputField.focus({ preventScroll: true });
+        inputField.scrollIntoView({
+          behavior: "smooth",
+          block: "center"
+        });
+        hasFocus = true;
+      }
+    });
+  };
+
+  const validateFormData = async (
+    formData: FormData
+  ): Promise<{ [key: string]: string }> => {
+    try {
+      await messageFormSchema.validate(formData, { abortEarly: false });
+
+      return {};
+    } catch (error) {
+      const errors: { [key: string]: string } = {};
+
+      if (error instanceof yup.ValidationError) {
+        error.inner.forEach((err: yup.ValidationError) => {
+          if (err.path && !errors[err.path]) {
+            errors[err.path] = err.message;
+          }
+        });
+      }
+
+      return errors;
+    }
+  };
+
+  const validateForm = async () => {
+    const formData: FormData = {
+      name: (document.querySelector("#name") as HTMLInputElement).value,
+      // eslint-disable-next-line perfectionist/sort-objects
+      email: (document.querySelector("#email") as HTMLInputElement).value,
+      message: (document.querySelector("#message") as HTMLInputElement).value
+    };
+
+    const errors = await validateFormData(formData);
+
+    displayErrors(errors);
+  };
+
+  const handleFormSubmit = (event: Event) => {
+    clearAllAlerts();
+    event.preventDefault();
+    validateForm();
+  };
+
+  requiredInputs.forEach((requiredInput) => {
+    requiredInput.addEventListener("input", () => clearAlert(requiredInput));
+  });
+
+  form?.addEventListener("submit", handleFormSubmit);
+</script>
