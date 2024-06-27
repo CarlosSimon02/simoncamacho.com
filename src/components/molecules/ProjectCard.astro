@@ -1,49 +1,64 @@
 ---
-type Props = {
-  imageDark: string;
-  imageLight: string;
-  title: string;
-  technologies: string[];
-  description: string;
+import type { LanguageKeys } from "@/i18n/languages";
+import type { ProjectType } from "@/i18n/projects";
+
+import P from "@/components/atoms/P.astro";
+
+import ContentTitle from "../atoms/ContentTitle.astro";
+import ThemedImage from "../atoms/ThemedImage.astro";
+
+export type ProjectCardUITranslationsType = {
+  exploreAnchorLabel: string;
+  listOfTechUsedLabel: string;
+  screenshotAlt: string;
 };
 
-const { imageDark, imageLight, title, technologies, description } = Astro.props;
+type Props = {
+  project: ProjectType;
+  translations: ProjectCardUITranslationsType;
+};
+
+const { project, translations: t } = Astro.props;
+const { lang } = Astro.params as { lang: LanguageKeys };
 ---
 
-<div class="max-w-[30rem]">
-  <div class="mb-5 overflow-clip rounded-lg">
-    <a class="group cursor-pointer">
-      <img
-        class="dark transition-transform duration-700 group-hover:scale-105 group-hover:duration-500"
-        src={imageDark}
-      />
-      <img
-        class="light transition-transform duration-700 group-hover:scale-105 group-hover:duration-500"
-        src={imageLight}
+<div class="max-w-[30rem] text-start">
+  <div class="mb-7 overflow-clip rounded-lg">
+    <a
+      aria-hidden="true"
+      class="group cursor-pointer"
+      href={`/${lang}/projects/${project.slug}`}
+      tabindex="-1"
+    >
+      <ThemedImage
+        alt={t.screenshotAlt}
+        srcDark={project.thumbnailDark}
+        srcLight={project.thumbnailLight}
       />
     </a>
   </div>
-  <h3 class="mb-3 text-2xl font-semibold text-secondary-950">{title}</h3>
-  <ul class="mb-5 flex flex-wrap gap-2">
+  <ContentTitle title={project.title} />
+  <span class="sr-only" id={`tech-list-label-of${project.slug}`}
+    >{t.listOfTechUsedLabel}</span
+  >
+  <ul
+    aria-labelledby={`tech-list-label-of-${project.slug}`}
+    class="mb-5 flex flex-wrap gap-2"
+  >
     {
-      technologies.map((technology) => (
-        <li class="rounded-full border-[0.0625rem] px-3 py-1">{technology}</li>
+      project.technologies.map((technology) => (
+        <li class="rounded-full border-[0.0625rem] px-3 py-1">
+          {technology.name}
+        </li>
       ))
     }
   </ul>
-  <p class="mb-5">{description}</p>
+  <P class="mb-5" html={project.translations[lang].description} />
   <a
-    class="flex w-fit cursor-pointer items-center justify-start gap-2 text-lg text-accent-500 before:h-[0.0625rem] before:w-12 before:bg-accent-500 before:transition-all before:duration-700 hover:before:w-20 before:hover:duration-150"
-    >Explore</a
+    class:list={[
+      "flex w-fit cursor-pointer items-center justify-start gap-2 text-lg text-accent-500",
+      "before:h-[0.0625rem] before:w-12 before:bg-accent-500 before:transition-all before:duration-700 hover:before:w-20 before:hover:duration-150"
+    ]}
+    href={`/${lang}/projects/${project.slug}`}>{t.exploreAnchorLabel}</a
   >
 </div>
-
-<style>
-  :global(.theme-dark) img.light {
-    display: none;
-  }
-
-  :global(html:not(.theme-dark)) img.dark {
-    display: none;
-  }
-</style>
