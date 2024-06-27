@@ -1,0 +1,46 @@
+---
+import { type LanguageKeys, allLanguages } from "@/i18n/languages";
+import { localizedUrl } from "@/utils";
+
+import Select from "./Select.astro";
+
+type Props = {
+  label: string;
+};
+
+const { label } = Astro.props;
+const { lang } = Astro.params as { lang: LanguageKeys };
+
+const localizedPathname = (locale: string | undefined): string => {
+  return localizedUrl(Astro.url, locale).pathname;
+};
+---
+
+<lang-select class="h-fit">
+  <Select
+    icon="globe"
+    label={label}
+    options={Object.entries(allLanguages).map(([code, locale]) => ({
+      label: locale.name,
+      selected: code === lang,
+      value: localizedPathname(code)
+    }))}
+  />
+</lang-select>
+
+<script>
+  class LanguageSelect extends HTMLElement {
+    constructor() {
+      super();
+      const select = this.querySelector("[role=combobox]");
+      if (select) {
+        select.addEventListener("change", () => {
+          window.location.pathname = select.getAttribute(
+            "data-value"
+          ) as string;
+        });
+      }
+    }
+  }
+  customElements.define("lang-select", LanguageSelect);
+</script>
