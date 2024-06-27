@@ -1,0 +1,103 @@
+---
+import Hexagon from "@/components/atoms/Hexagon.astro";
+
+type Props = {
+  class?: string;
+  cols: number;
+  id: string;
+  rows: number;
+};
+
+const { class: className, cols, id, rows } = Astro.props;
+---
+
+<div
+  class:list={["absolute -z-50", `honey-comb-${id}`, className]}
+  data-cols={cols}
+  data-rows={rows}
+>
+  {
+    [...new Array(rows)].map(() => (
+      <div class="-mb-[0.45rem] flex gap-1 odd:ml-[1.175rem]">
+        {[...new Array(cols)].map(() => (
+          <Hexagon />
+        ))}
+      </div>
+    ))
+  }
+</div>
+
+<script>
+  //---------- imports ---------- //
+
+  import anime from "animejs/lib/anime.es.js";
+
+  //---------- END: imports ---------- //
+
+  //---------- elements ---------- //
+
+  const hexagons = document.querySelectorAll(".hexagon");
+
+  //---------- END: elements ---------- //
+
+  //---------- functions ---------- //
+
+  const hexagonOnClick = (
+    index: number,
+    honeyCombId: string,
+    cols: number,
+    rows: number
+  ) => {
+    anime({
+      delay: anime.stagger(200, { from: index, grid: [cols, rows] }),
+      scale: [
+        { duration: 500, easing: "easeOutSine", value: 0.1 },
+        { duration: 1200, easing: "easeInOutQuad", value: 1 }
+      ],
+      targets: `.${honeyCombId} .hexagon`
+    });
+  };
+
+  //---------- END: functions ---------- //
+
+  //---------- event listeners ---------- //
+
+  hexagons.forEach((hexagon) => {
+    const honeyCombElement = hexagon.parentElement?.parentElement;
+
+    if (!honeyCombElement) return;
+
+    const honeyCombId = [...honeyCombElement.classList].find((value) =>
+      value.includes("honey-comb")
+    );
+    const rows = honeyCombElement.getAttribute("data-rows");
+    const cols = honeyCombElement.getAttribute("data-cols");
+
+    let index = [
+      ...document.querySelectorAll(`.${honeyCombId} .hexagon`)
+    ].indexOf(hexagon);
+
+    if (honeyCombId && rows && cols) {
+      hexagon.addEventListener("click", () =>
+        hexagonOnClick(index, honeyCombId, parseInt(cols), parseInt(rows))
+      );
+    }
+  });
+
+  document.addEventListener("click", (event) => {
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+
+    const hexagon = document
+      .elementsFromPoint(event.pageX - scrollX, event.pageY - scrollY)
+      .filter((element) => element.classList.contains("hexagon"))[0];
+
+    if (!hexagon) return;
+
+    let clickEvent = new Event("click");
+
+    hexagon.dispatchEvent(clickEvent);
+  });
+
+  //---------- END: event listeners ---------- //
+</script>
