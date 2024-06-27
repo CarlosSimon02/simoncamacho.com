@@ -1,0 +1,84 @@
+---
+import type { LanguageKeys } from "@/i18n/languages";
+
+import NavLink from "@/components/atoms/NavLink.astro";
+import { allLanguages } from "@/i18n/languages";
+
+import ScrollSpy from "../atoms/ScrollSpy.astro";
+
+type NavLabelsType = {
+  about: string;
+  connect: string;
+  intro: string;
+  projects: string;
+};
+
+type NavHashLinksType = NavLabelsType;
+
+type Props = {
+  class?: string;
+  media?: "desktop" | "mobile";
+  navLabels: NavLabelsType;
+};
+
+const { class: className, media = "desktop", navLabels } = Astro.props;
+const { lang } = Astro.params as { lang: LanguageKeys };
+
+export const navHashLinks = {
+  about: "#about",
+  connect: "#connect",
+  intro: "#intro",
+  projects: "#projects"
+};
+
+const isInHomePage = () => {
+  const allLanguageKeys = Object.keys(allLanguages);
+
+  for (let i = 0; i < allLanguageKeys.length; i++) {
+    if (`/${allLanguageKeys[i]}` === Astro.url.pathname) {
+      return true;
+    }
+  }
+
+  return false;
+};
+
+export const getNavs = (labels: NavLabelsType, hashLinks: NavHashLinksType) => {
+  return [
+    { label: labels.intro, link: hashLinks.intro },
+    { label: labels.about, link: hashLinks.about },
+    { label: labels.projects, link: hashLinks.projects },
+    { label: labels.connect, link: hashLinks.connect }
+  ];
+};
+
+const navs = getNavs(
+  navLabels,
+  isInHomePage()
+    ? navHashLinks
+    : {
+        about: `/${lang}${navHashLinks.about}`,
+        connect: `/${lang}${navHashLinks.connect}`,
+        intro: `/${lang}${navHashLinks.intro}`,
+        projects: `/${lang}${navHashLinks.projects}`
+      }
+);
+---
+
+<ScrollSpy>
+  <nav
+    class:list={media === "desktop"
+      ? ["flex items-end", className]
+      : [className]}
+  >
+    <ul
+      class={media === "desktop" ? "flex" : "flex flex-col items-start gap-7"}
+    >
+      {
+        navs.map((navLink) => (
+          <NavLink href={navLink.link} label={navLink.label} media={media} />
+        ))
+      }
+    </ul>
+  </nav>
+</ScrollSpy>
