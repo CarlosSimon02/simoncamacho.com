@@ -1,71 +1,83 @@
 ---
-import Icon from "../atoms/Icon.astro";
+import Icon from "@/components/atoms/Icon.astro";
+
 import type { iconPaths } from "../IconPaths";
+
+type Props = {
+  class?: string;
+};
+
+const { class: className } = Astro.props;
 
 const skills = [
   {
     logo: "javascript",
-    name: "Javascript",
+    name: "Javascript"
   },
   {
     logo: "typescript",
-    name: "Typescript",
+    name: "Typescript"
   },
   {
     logo: "css",
-    name: "CSS",
+    name: "CSS"
   },
   {
     logo: "html",
-    name: "HTML",
+    name: "HTML"
   },
   {
     logo: "react",
-    name: "React",
+    name: "React"
   },
   {
     logo: "nextjs",
-    name: "Next.js",
+    name: "Next.js"
   },
   {
     logo: "tailwind",
-    name: "Tailwind CSS",
+    name: "Tailwind CSS"
   },
   {
     logo: "styled-components",
-    name: "Styled Components",
+    name: "Styled Components"
   },
   {
     logo: "mongodb",
-    name: "MongoDB",
+    name: "MongoDB"
   },
   {
     logo: "expressjs",
-    name: "Express.js",
+    name: "Express.js"
   },
   {
     logo: "sass",
-    name: "Sass",
+    name: "Sass"
   },
   {
     logo: "astrojs",
-    name: "Astro.js",
+    name: "Astro.js"
   },
   {
     logo: "nodejs",
-    name: "Node.js",
+    name: "Node.js"
   },
   {
     logo: "zustand",
-    name: "Zustand",
-  },
+    name: "Zustand"
+  }
 ];
 ---
 
-<ul class="grid w-full grid-cols-[repeat(auto-fit,minmax(13rem,1fr))] gap-8">
+<ul
+  class:list={[
+    "grid grid-cols-[repeat(auto-fit,minmax(13rem,1fr))] gap-8",
+    className
+  ]}
+>
   {
     skills.map((skill) => (
-      <li class="flex items-start gap-4 max-[46.125em]:justify-self-center">
+      <li class="flex items-center gap-4 max-md:justify-self-center">
         <Icon icon={skill.logo as keyof typeof iconPaths} size="2rem" />
         <span>{skill.name}</span>
       </li>
