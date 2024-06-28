@@ -1,24 +1,32 @@
 ---
-import Icon from "../atoms/Icon.astro";
+import Icon from "@/components/atoms/Icon.astro";
+
+type Props = {
+  toggleDarkModeLabel: string;
+  toggleLightModeLabel: string;
+};
+
+const { toggleDarkModeLabel, toggleLightModeLabel } = Astro.props;
 ---
 
 <theme-toggle class="h-6 w-6">
   <button
-    class="group h-full w-full text-secondary-950 transition-all hover:text-accent-500"
+    class="group h-full w-full text-secondary-950 transition-colors hover:text-accent-500"
   >
-    <span class="sr-only">Dark theme</span>
     <span class="icon light">
+      <span class="sr-only">{toggleDarkModeLabel}</span>
       <Icon
+        class="transition-transform group-hover:translate-y-1"
         icon="moon"
         size="1.5rem"
-        class="transition-transform group-hover:translate-y-1"
       />
     </span>
     <span class="icon dark">
+      <span class="sr-only">{toggleLightModeLabel}</span>
       <Icon
+        class="transition-transform group-hover:translate-y-1"
         icon="sun"
         size="1.5rem"
-        class="transition-transform group-hover:translate-y-1"
       />
     </span>
   </button>
@@ -44,7 +52,7 @@ import Icon from "../atoms/Icon.astro";
       /** Set the theme to dark/light mode. */
       const setTheme = (dark: boolean) => {
         document.documentElement.classList[dark ? "add" : "remove"](
-          "theme-dark",
+          "theme-dark"
         );
         button.setAttribute("aria-pressed", String(dark));
       };
