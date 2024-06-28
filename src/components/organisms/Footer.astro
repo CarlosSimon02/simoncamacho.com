@@ -1,0 +1,141 @@
+---
+import Icon from "@/components/atoms/Icon.astro";
+import SocialLink from "@/components/atoms/SocialLink.astro";
+import BaseContainer from "@/components/containers/BaseContainer.astro";
+import ContentContainer from "@/components/containers/ContentContainer.astro";
+
+export type FooterUITranslationsType = {
+  attribution: string;
+  socialsLabel: string;
+};
+
+type Props = {
+  class?: string;
+  translations: FooterUITranslationsType;
+};
+
+const { class: className, translations: t } = Astro.props;
+---
+
+<BaseContainer class={className} element="footer">
+  <ContentContainer class="grid justify-center gap-8 text-center">
+    <div class="grid gap-7">
+      <div class="lg:hidden">
+        <span class="sr-only" id="social-media-accounts-2"
+          >{t.socialsLabel}</span
+        >
+        <ul
+          aria-labelledby="social-media-accounts-2"
+          class="flex flex-wrap justify-center gap-5"
+        >
+          <li>
+            <SocialLink
+              class="text-secondary-500 hover:text-secondary-950"
+              href="https://www.frontendmentor.io/profile/CarlosSimon02"
+              icon="frontendmentor"
+              label="Frontend Mentor"
+            />
+          </li>
+          <li>
+            <SocialLink
+              class="text-secondary-500 hover:text-secondary-950"
+              href="https://github.com/CarlosSimon02"
+              icon="github"
+              label="Github"
+            />
+          </li>
+          <li>
+            <SocialLink
+              class="text-secondary-500 hover:text-secondary-950"
+              href="https://www.facebook.com/CarlosSimon02/"
+              icon="facebook"
+              label="Facebook"
+            />
+          </li>
+          <li>
+            <SocialLink
+              class="text-secondary-500 hover:text-secondary-950"
+              href="https://www.linkedin.com/in/carlossimon02/"
+              icon="linkedin"
+              label="Linkedin"
+            />
+          </li>
+          <li>
+            <SocialLink
+              class="text-secondary-500 hover:text-secondary-950"
+              href="https://www.instagram.com/caloycowmoochi/"
+              icon="instagram"
+              label="Instagram"
+            />
+          </li>
+        </ul>
+      </div>
+      <a
+        class="group font-semibold text-secondary-500 transition-colors hover:text-secondary-950 md:text-lg"
+        href="https://github.com/CarlosSimon02/my-dev-portfolio-website"
+      >
+        <div
+          class="gap grid gap-3 transition-transform group-hover:translate-y-1"
+        >
+          <div>{t.attribution}</div>
+          <div class="flex justify-center gap-8">
+            <div class="flex items-center gap-2">
+              <Icon icon="star" size="1.5rem" />
+              <span class="stars-count"></span>
+            </div>
+            <div class="flex items-center gap-2">
+              <Icon icon="fork" size="1.5rem" />
+              <span class="forks-count"></span>
+            </div>
+          </div>
+        </div>
+      </a>
+    </div>
+  </ContentContainer>
+</BaseContainer>
+
+<script>
+  type Repository = {
+    forks_count: number;
+    stargazers_count: number;
+  };
+
+  const starsCount = document.querySelector(".stars-count") as HTMLElement;
+  const forksCount = document.querySelector(".forks-count") as HTMLElement;
+
+  const getRepositoryInfo = async (
+    owner: string,
+    repo: string
+  ): Promise<Repository> => {
+    const url = `https://api.github.com/repos/${owner}/${repo}`;
+
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error(
+          `Error fetching repository info: ${response.statusText}`
+        );
+      }
+      const data = await response.json();
+
+      const repositoryInfo: Repository = {
+        forks_count: data.forks_count,
+        stargazers_count: data.stargazers_count
+      };
+
+      return repositoryInfo;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  };
+
+  getRepositoryInfo("CarlosSimon02", "my-dev-portfolio-website")
+    .then((info) => {
+      starsCount.innerHTML = info.stargazers_count.toLocaleString();
+      forksCount.innerHTML = info.forks_count.toLocaleString();
+    })
+    .catch((error) => {
+      console.error("Failed to fetch repository info", error);
+    });
+</script>
