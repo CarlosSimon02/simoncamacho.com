@@ -1,51 +1,55 @@
 ---
-import HeaderButton from "../atoms/HeaderButton.astro";
-import Icon from "../atoms/Icon.astro";
-import BaseContainer from "../containers/BaseContainer.astro";
-import Navigation from "../molecules/Navigation.astro";
-import ThemeToggle from "../molecules/ThemeToggle.astro";
+import type { MobileMenuUITranslationsType } from "@/components/organisms/MobileMenu.astro";
+
+import LogoLink from "@/components/atoms/LogoLink.astro";
+import BaseContainer from "@/components/containers/BaseContainer.astro";
+import Hamburger from "@/components/molecules/Hamburger.astro";
+import LanguageSwitcher from "@/components/molecules/LanguageSelect.astro";
+import Nav from "@/components/molecules/Nav.astro";
+import ThemeToggle from "@/components/molecules/ThemeToggle.astro";
+
+// eslint-disable-next-line perfectionist/sort-intersection-types
+export type HeaderUITranslationsType = MobileMenuUITranslationsType & {
+  navigateToHomeLabel: string;
+};
 
 type Props = {
   class?: string;
+  translations: HeaderUITranslationsType;
 };
 
-const { class: className } = Astro.props;
+const { class: className, translations: t } = Astro.props;
 ---
 
 <header
   class:list={[
-    "border-b-[0.0625rem] border-b-secondary-550 bg-primary-50",
-    className,
+    "h-fit border-b-[0.0625rem] border-b-secondary-550 bg-primary-50",
+    className
   ]}
 >
   <BaseContainer>
     <div
       class:list={[
-        "h-[4.3rem] md:h-[5.5rem]",
+        "h-[4.3rem] lg:h-[5.5rem]",
         "flex justify-between",
-        "border-x-[0.0625rem] border-x-secondary-550",
+        "border-x-[0.0625rem] border-x-secondary-550"
       ]}
     >
-      <div class="flex h-full items-center gap-12 px-4 md:gap-16 md:px-8">
-        <a class="h-8 w-8 cursor-pointer md:h-10 md:w-10" href="/">
-          <Icon icon="logo" color="hsl(var(--accent-500))" />
-        </a>
-        <Navigation class="h-full max-[46.125em]:hidden" />
+      <div class="flex h-full items-center px-4 lg:px-8">
+        <LogoLink navigateToHomeLabel={t.navigateToHomeLabel} />
       </div>
-      <div class="flex h-full items-center gap-5 px-4 max-md:hidden md:px-8">
-        <HeaderButton icon="globe" />
-        <ThemeToggle />
+      <Nav class="h-full max-md:hidden" navLabels={t.navLabels} />
+      <div
+        class="flex h-full w-fit items-center gap-4 px-4 max-md:hidden lg:px-8"
+      >
+        <ThemeToggle
+          toggleDarkModeLabel={t.themeToggleLabels.dark}
+          toggleLightModeLabel={t.themeToggleLabels.light}
+        />
+        <LanguageSwitcher label={t.langSelectLabel} />
       </div>
       <div class="flex h-full items-end md:hidden">
-        <button
-          class="overflow-clip rounded-tl-2xl border-l-[0.0625rem] border-t-[0.0625rem] border-secondary-550 p-3 transition-colors hover:bg-secondary-950/[0.02]"
-        >
-          <Icon
-            icon="hamburger"
-            size="1.75rem"
-            color="hsl(var(--secondary-950))"
-          />
-        </button>
+        <Hamburger />
       </div>
     </div>
   </BaseContainer>
