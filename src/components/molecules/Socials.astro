@@ -1,22 +1,69 @@
 ---
-import SocialLink from "../atoms/SocialLink.astro";
+import SocialLink from "@/components/atoms/SocialLink.astro";
+
+export type SocialsUITranslationsType = {
+  socialsLabel: string;
+};
+
+type Props = {
+  translations: SocialsUITranslationsType;
+};
+
+const { translations: t } = Astro.props;
 ---
 
 <div
-  class="fixed bottom-0 left-[3rem] grid justify-items-center gap-5 text-secondary-500 after:h-20 after:w-[0.0625rem] after:bg-[currentColor] max-lg:hidden"
+  class="fixed bottom-0 left-[3rem] grid justify-items-center gap-5 text-secondary-500 after:h-20 after:w-[0.0625rem] after:bg-[currentColor] max-xl:hidden"
 >
-  <SocialLink href="https://github.com/CarlosSimon02" icon="github" />
-  <SocialLink href="https://www.facebook.com/CarlosSimon02/" icon="facebook" />
-  <SocialLink
-    href="https://www.reddit.com/user/carlos_simon_02/"
-    icon="reddit"
-  />
-  <SocialLink
-    href="https://www.linkedin.com/in/carlossimon02/"
-    icon="linkedin"
-  />
-  <SocialLink
-    href="https://www.instagram.com/caloycowmoochi/"
-    icon="instagram"
-  />
+  <span class="sr-only" id="social-media-accounts-1">{t.socialsLabel}</span>
+  <ul
+    aria-labelledby="social-media-accounts-1"
+    class="grid justify-items-center gap-5"
+  >
+    <li>
+      <SocialLink
+        class="hover:text-secondary-950"
+        hoverTranslate="right"
+        href="https://www.frontendmentor.io/profile/CarlosSimon02"
+        icon="frontendmentor"
+        label="Frontend Mentor"
+      />
+    </li>
+    <li>
+      <SocialLink
+        class="hover:text-secondary-950"
+        hoverTranslate="right"
+        href="https://github.com/CarlosSimon02"
+        icon="github"
+        label="Github"
+      />
+    </li>
+    <li>
+      <SocialLink
+        class="hover:text-secondary-950"
+        hoverTranslate="right"
+        href="https://www.facebook.com/CarlosSimon02/"
+        icon="facebook"
+        label="Facebook"
+      />
+    </li>
+    <li>
+      <SocialLink
+        class="hover:text-secondary-950"
+        hoverTranslate="right"
+        href="https://www.linkedin.com/in/carlossimon02/"
+        icon="linkedin"
+        label="Linkedin"
+      />
+    </li>
+    <li>
+      <SocialLink
+        class="hover:text-secondary-950"
+        hoverTranslate="right"
+        href="https://www.instagram.com/caloycowmoochi/"
+        icon="instagram"
+        label="Instagram"
+      />
+    </li>
+  </ul>
 </div>
