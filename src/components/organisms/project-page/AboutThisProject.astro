@@ -1,0 +1,116 @@
+---
+import type { LanguageKeys } from "@/i18n/languages";
+import type { ProjectType } from "@/i18n/projects";
+import type { SectionType } from "@/types";
+
+import ContentTitle from "@/components/atoms/ContentTitle.astro";
+import Icon from "@/components/atoms/Icon.astro";
+import P from "@/components/atoms/P.astro";
+import ThemedImage from "@/components/atoms/ThemedImage.astro";
+import BaseContainer from "@/components/containers/BaseContainer.astro";
+import ContentContainer from "@/components/containers/ContentContainer.astro";
+
+export type AboutThisProjectSectionUITranslationsType = {
+  descriptionLabel: string;
+  listOfTechUsedLabel: string;
+  previewProjectLabel: string;
+  thumbnailAlt: string;
+  title: string;
+  viewCodeLabel: string;
+  webStackAndExplanationLabel: string;
+};
+
+type Props = {
+  project: ProjectType;
+  translations: AboutThisProjectSectionUITranslationsType;
+} & SectionType;
+
+const {
+  class: className,
+  dataLink,
+  project: proj,
+  translations: t
+} = Astro.props;
+const { lang } = Astro.params as { lang: LanguageKeys };
+---
+
+<BaseContainer class={className} dataLink={dataLink} element="section">
+  <ContentContainer>
+    <h1 class="text-3xl font-bold text-accent-500 sm:text-4xl lg:text-5xl">
+      {proj.title}
+    </h1>
+    <div class="flex flex-col items-center gap-12 md:flex-row-reverse">
+      <div class="max-md:basis-1/2">
+        <ThemedImage
+          alt={t.thumbnailAlt}
+          class="w-full max-w-[30rem] rounded-lg"
+          srcDark={proj.thumbnailDark}
+          srcLight={proj.thumbnailLight}
+        />
+      </div>
+      <div class="basis-1/2">
+        <ContentTitle title={t.descriptionLabel} />
+        <div class="mb-4 flex gap-6 max-md:justify-center">
+          <a class="group cursor-pointer" href={proj.viewCodeUrl}
+            ><span
+              class="block text-accent-500 transition-[text-decoration-color,transform] group-hover:translate-y-1 group-hover:decoration-accent-500"
+              set:html={t.viewCodeLabel}
+            /></a
+          >
+          <a class="group cursor-pointer" href={proj.previewProjectUrl}
+            ><span
+              class="block text-accent-500 transition-[text-decoration-color,transform] group-hover:translate-y-1 group-hover:decoration-accent-500"
+              set:html={t.previewProjectLabel}
+            /></a
+          >
+        </div>
+        <P html={proj.translations[lang].description} />
+      </div>
+    </div>
+    <div class="flex items-center gap-12">
+      <div class="basis-[30%] max-md:hidden">
+        <span class="sr-only" id={`tech-list-label-1`}
+          >{t.listOfTechUsedLabel}</span
+        >
+        <ul
+          aria-labelledby={`tech-list-label-1`}
+          class="flex h-full w-full items-center justify-center gap-x-12 gap-y-8 text-accent-500 max-md:flex-wrap md:flex-col"
+        >
+          {
+            proj.technologies.map((technology) => (
+              <li class="flex items-center justify-center gap-4 max-md:justify-self-center">
+                <Icon icon={technology.logo} size="2rem" />
+                <span>{technology.name}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+      <div class="grid max-md:gap-4 md:basis-[70%]">
+        <ContentTitle title={t.webStackAndExplanationLabel} />
+        <div class="md:col-start-1 md:row-span-2 md:row-start-1 md:hidden">
+          <span class="sr-only" id={`tech-list-label-2`}
+            >{t.listOfTechUsedLabel}</span
+          >
+          <ul
+            aria-labelledby={`tech-list-label-2`}
+            class="flex h-full w-full items-center justify-center gap-x-12 gap-y-8 text-accent-500 max-md:flex-wrap md:flex-col"
+          >
+            {
+              proj.technologies.map((technology) => (
+                <li class="flex items-center justify-center gap-4 max-md:justify-self-center">
+                  <Icon icon={technology.logo} size="2rem" />
+                  <span>{technology.name}</span>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+        <P
+          class="max-w-[80ch]"
+          html={proj.translations[lang].webStackAndExplanation}
+        />
+      </div>
+    </div>
+  </ContentContainer>
+</BaseContainer>
