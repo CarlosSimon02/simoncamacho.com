@@ -1,0 +1,40 @@
+---
+import type { SectionType } from "@/types";
+
+import SectionTitle from "@/components/atoms/SectionTitle.astro";
+import BaseContainer from "@/components/containers/BaseContainer.astro";
+import ContentContainer from "@/components/containers/ContentContainer.astro";
+import ProjectCard, {
+  type ProjectCardUITranslationsType
+} from "@/components/molecules/ProjectCard.astro";
+import { projects } from "@/i18n/projects";
+
+export type ProjectsSectionUITranslationsType = {
+  projectCardUI: ProjectCardUITranslationsType;
+  title: string;
+};
+
+type Props = {
+  translations: ProjectsSectionUITranslationsType;
+} & SectionType;
+
+const { class: className, dataLink, translations: t } = Astro.props;
+---
+
+<BaseContainer class={className} dataLink={dataLink} element="section">
+  <ContentContainer>
+    <SectionTitle title={t.title} />
+    <div
+      class:list={[
+        "grid gap-x-10 gap-y-14 sm:gap-x-12 sm:gap-y-20",
+        "md:grid-cols-[repeat(auto-fit,minmax(16rem,1fr))] lg:grid-cols-[repeat(auto-fit,minmax(20rem,1fr))]"
+      ]}
+    >
+      {
+        projects.map((project) => (
+          <ProjectCard project={project} translations={t.projectCardUI} />
+        ))
+      }
+    </div>
+  </ContentContainer>
+</BaseContainer>
