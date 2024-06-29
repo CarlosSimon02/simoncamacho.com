@@ -1,0 +1,54 @@
+---
+import type { LanguageKeys } from "@/i18n/languages";
+import type { ProjectType } from "@/i18n/projects";
+import type { SectionType } from "@/types";
+
+import ContentTitle from "@/components/atoms/ContentTitle.astro";
+import P from "@/components/atoms/P.astro";
+import SectionTitle from "@/components/atoms/SectionTitle.astro";
+import BaseContainer from "@/components/containers/BaseContainer.astro";
+import ContentContainer from "@/components/containers/ContentContainer.astro";
+
+export type ProjectInsightsSectionUITranslationsType = {
+  lessonsLearnedLabel: string;
+  problemsAndThoughtProcessLabel: string;
+  purposeAndGoalLabel: string;
+  title: string;
+};
+
+type Props = {
+  project: ProjectType;
+  translations: ProjectInsightsSectionUITranslationsType;
+} & SectionType;
+
+const {
+  class: className,
+  dataLink,
+  project: proj,
+  translations: t
+} = Astro.props;
+const { lang } = Astro.params as { lang: LanguageKeys };
+---
+
+<BaseContainer class={className} dataLink={dataLink} element="section">
+  <ContentContainer>
+    <SectionTitle title={t.title} />
+    <div>
+      <ContentTitle title={t.purposeAndGoalLabel} />
+      <P class="max-w-[60ch]" html={proj.translations[lang].purposeAndGoal} />
+    </div>
+    <div class="grid justify-center text-center">
+      <ContentTitle title={t.problemsAndThoughtProcessLabel} />
+      <P
+        class="max-w-[60ch]"
+        html={proj.translations[lang].problemsAndThoughtProcess}
+      />
+    </div>
+    <div class="flex justify-end">
+      <div>
+        <ContentTitle title={t.lessonsLearnedLabel} />
+        <P class="max-w-[60ch]" html={proj.translations[lang].lessonsLearned} />
+      </div>
+    </div>
+  </ContentContainer>
+</BaseContainer>
