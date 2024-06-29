@@ -1,0 +1,66 @@
+---
+import type { SectionType } from "@/types";
+
+import ContentTitle from "@/components/atoms/ContentTitle.astro";
+import PGroup from "@/components/atoms/PGroup.astro";
+import ProfileImage from "@/components/atoms/ProfileImage.astro";
+import SectionTitle from "@/components/atoms/SectionTitle.astro";
+import BaseContainer from "@/components/containers/BaseContainer.astro";
+import ContentContainer from "@/components/containers/ContentContainer.astro";
+import Honeycomb from "@/components/molecules/Honeycomb.astro";
+import Skills from "@/components/molecules/Skills.astro";
+
+export type AboutSectionUITranslationsType = {
+  "myJourney.content": string;
+  "myJourney.title": string;
+  "mySkills.title": string;
+  profileImgAlt: string;
+  title: string;
+};
+
+type Props = { translations: AboutSectionUITranslationsType } & SectionType;
+
+const { class: className, dataLink, translations: t } = Astro.props;
+---
+
+<BaseContainer
+  class:list={["overflow-hidden", className]}
+  dataLink={dataLink}
+  element="section"
+>
+  <ContentContainer>
+    <SectionTitle title={t.title} />
+    <div
+      class="relative flex flex-col items-center gap-12 md:flex-row-reverse md:items-start"
+    >
+      <Honeycomb
+        class="-right-10 top-1/2 -translate-y-1/2 max-md:hidden"
+        cols={7}
+        id="3"
+        rows={10}
+      />
+      <Honeycomb
+        class="left-1/2 top-48 -translate-x-1/2 md:hidden"
+        cols={15}
+        id="4"
+        rows={4}
+      />
+      <div
+        class="flex flex-col items-center justify-center gap-10 md:basis-[30%]"
+      >
+        <ProfileImage
+          alt={t.profileImgAlt}
+          class="max-md:max-w-72 md:basis-[30%]"
+        />
+      </div>
+      <div class="flex-1 basis-[40%]">
+        <ContentTitle title={t["myJourney.title"]} />
+        <PGroup class="max-w-[60ch]" html={t["myJourney.content"]} />
+      </div>
+    </div>
+    <div>
+      <ContentTitle class="mb-8" title={t["mySkills.title"]} />
+      <Skills />
+    </div>
+  </ContentContainer>
+</BaseContainer>
