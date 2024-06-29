@@ -1,0 +1,71 @@
+---
+import type { SectionType } from "@/types";
+
+import Button from "@/components/atoms/Button.astro";
+import P from "@/components/atoms/P.astro";
+import HeroSVG from "@/components/atoms/svgs/HeroSVG.astro";
+import BaseContainer from "@/components/containers/BaseContainer.astro";
+import ContentContainer from "@/components/containers/ContentContainer.astro";
+import Honeycomb from "@/components/molecules/Honeycomb.astro";
+
+export type IntroSectionUITranslationsType = {
+  contactButtonLabel: string;
+  description: string;
+  developerName: string;
+  greetings: string;
+  position: string;
+  resumeButtonLabel: string;
+};
+
+type Props = { translations: IntroSectionUITranslationsType } & SectionType;
+
+const { class: className, dataLink, translations: t } = Astro.props;
+---
+
+<BaseContainer
+  class:list={["flex items-center overflow-hidden", className]}
+  dataLink={dataLink}
+  element="section"
+>
+  <ContentContainer>
+    <div
+      class="relative flex items-center justify-between gap-[2.5rem] max-md:flex-col-reverse"
+    >
+      <Honeycomb
+        class="right-10 top-1/2 -translate-y-1/2 max-md:hidden"
+        cols={7}
+        id="1"
+        rows={15}
+      />
+      <Honeycomb
+        class="left-1/2 top-36 -translate-x-1/2 md:hidden"
+        cols={15}
+        id="2"
+        rows={4}
+      />
+      <div
+        class="flex shrink basis-[55%] flex-col max-md:items-stretch max-md:text-center"
+      >
+        <h1 class="mb-3 text-accent-500">{t.greetings}</h1>
+        <h2
+          class="mb-3 text-3xl font-extrabold text-accent-500 sm:text-4xl 2xl:text-5xl"
+        >
+          {t.developerName}.
+        </h2>
+        <h3
+          class="mb-7 text-xl font-bold text-secondary-950 sm:text-2xl 2xl:text-3xl"
+        >
+          {t.position}
+        </h3>
+        <P class="mb-9 max-w-[60ch]" html={t.description} />
+        <div class="flex justify-center gap-6 md:justify-start">
+          <Button label={t.contactButtonLabel} />
+          <Button label={t.resumeButtonLabel} styleType="accent" />
+        </div>
+      </div>
+      <div class="flex basis-[45%] justify-center">
+        <HeroSVG class="w-full max-w-[16rem] md:max-w-[28rem]" />
+      </div>
+    </div>
+  </ContentContainer>
+</BaseContainer>
