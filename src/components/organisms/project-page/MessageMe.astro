@@ -1,0 +1,40 @@
+---
+import type { SectionType } from "@/types";
+
+import ContentTitle from "@/components/atoms/ContentTitle.astro";
+import P from "@/components/atoms/P.astro";
+import SectionTitle from "@/components/atoms/SectionTitle.astro";
+import BaseContainer from "@/components/containers/BaseContainer.astro";
+import ContentContainer from "@/components/containers/ContentContainer.astro";
+import MessageForm, {
+  type MessgeFormUITranslationsType
+} from "@/components/molecules/MessageForm.astro";
+
+export type MessageMeSectionUITranslationsType = {
+  letsBuildTogetherContent: string;
+  letsBuildTogetherLabel: string;
+  messageForm: MessgeFormUITranslationsType;
+  title: string;
+};
+
+type Props = {
+  translations: MessageMeSectionUITranslationsType;
+} & SectionType;
+
+const { class: className, dataLink, translations: t } = Astro.props;
+---
+
+<BaseContainer class={className} dataLink={dataLink} element="section">
+  <ContentContainer>
+    <SectionTitle title={t.title} />
+    <div
+      class="flex flex-col items-center gap-12 md:flex-row-reverse md:gap-16"
+    >
+      <div class="basis-1/2">
+        <ContentTitle title={t.letsBuildTogetherLabel} />
+        <P class="max-w-[80ch]" html={t.letsBuildTogetherContent} />
+      </div>
+      <MessageForm class="basis-1/2 text-start" translations={t.messageForm} />
+    </div>
+  </ContentContainer>
+</BaseContainer>
