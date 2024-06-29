@@ -1,0 +1,96 @@
+---
+import type { SectionType } from "@/types";
+
+import ContentTitle from "@/components/atoms/ContentTitle.astro";
+import P from "@/components/atoms/P.astro";
+import SectionTitle from "@/components/atoms/SectionTitle.astro";
+import BishopSVG from "@/components/atoms/svgs/BishopSVG.astro";
+import ChessSVG from "@/components/atoms/svgs/ChessSVG.astro";
+import EnvelopeSVG from "@/components/atoms/svgs/EnvelopeSVG.astro";
+import FlagSVG from "@/components/atoms/svgs/FlagSVG.astro";
+import KnightSVG from "@/components/atoms/svgs/KnightSVG.astro";
+import PaperPlaneSVG from "@/components/atoms/svgs/PaperPlaneSVG.astro";
+import PuzzleSVG from "@/components/atoms/svgs/PuzzleSVG.astro";
+import BaseContainer from "@/components/containers/BaseContainer.astro";
+import ContentContainer from "@/components/containers/ContentContainer.astro";
+import MessageForm, {
+  type MessgeFormUITranslationsType
+} from "@/components/molecules/MessageForm.astro";
+
+export type ConnectSectionUITranslationsType = {
+  "getInTouch.description": string;
+  "getInTouch.messageForm": MessgeFormUITranslationsType;
+  "getInTouch.title": string;
+  "onFrontendMentor.description": string;
+  "onFrontendMentor.screenshotsAlt": string;
+  "onFrontendMentor.title": string;
+  "playChess.description": string;
+  "playChess.title": string;
+  title: string;
+};
+
+type Props = {
+  translations: ConnectSectionUITranslationsType;
+} & SectionType;
+
+const { class: className, dataLink, translations: t } = Astro.props;
+---
+
+<BaseContainer class={className} dataLink={dataLink} element="section">
+  <ContentContainer>
+    <SectionTitle title={t.title} />
+    <div
+      class="flex flex-col items-center justify-stretch gap-[2rem] md:flex-row md:gap-16"
+    >
+      <div class="grid basis-1/2 gap-6">
+        <EnvelopeSVG class="w-40 justify-self-center md:w-60" />
+        <div>
+          <ContentTitle title={t["getInTouch.title"]} />
+          <P html={t["getInTouch.description"]} />
+        </div>
+        <PaperPlaneSVG class="w-44 justify-self-center md:w-72" />
+      </div>
+      <MessageForm
+        class="basis-1/2 text-start"
+        translations={t["getInTouch.messageForm"]}
+      />
+    </div>
+    <div
+      class="flex flex-col items-center gap-[2rem] md:flex-row-reverse md:gap-12"
+    >
+      <div class="relative grid basis-[40%] gap-3 md:gap-8">
+        <PuzzleSVG class="w-[9rem] justify-self-end md:w-[14rem]" />
+        <div>
+          <ContentTitle title={t["onFrontendMentor.title"]} />
+          <P html={t["onFrontendMentor.description"]} />
+        </div>
+        <FlagSVG class="mt-3 w-[9rem] md:w-[14rem]" />
+      </div>
+      <div class="basis-[60%]">
+        <img
+          alt={t["onFrontendMentor.screenshotsAlt"]}
+          class="w-full max-[25em]:hidden"
+          src="./fem-screenshots/fem-screenshots.png"
+        />
+        <img
+          alt={t["onFrontendMentor.screenshotsAlt"]}
+          class="w-full min-[25em]:hidden"
+          src="./fem-screenshots/fem-screenshots-mobile.png"
+        />
+      </div>
+    </div>
+    <div class="flex flex-col items-center gap-[2rem] md:flex-row md:gap-12">
+      <div class="grid basis-[60%] gap-3 md:gap-8">
+        <KnightSVG class="mb-3 w-[9rem] md:w-[14rem]" />
+        <div>
+          <ContentTitle title={t["playChess.title"]} />
+          <P html={t["playChess.description"]} />
+        </div>
+        <BishopSVG class="w-[9rem] justify-self-end md:w-[14rem]" />
+      </div>
+      <div class="basis-[40%]">
+        <ChessSVG class="w-full" />
+      </div>
+    </div>
+  </ContentContainer>
+</BaseContainer>
