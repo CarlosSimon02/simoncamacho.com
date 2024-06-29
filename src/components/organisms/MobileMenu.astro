@@ -1,0 +1,574 @@
+---
+import Icon from "@/components/atoms/Icon.astro";
+import LanguageSelect from "@/components/molecules/LanguageSelect.astro";
+import Nav from "@/components/molecules/Nav.astro";
+import ThemeToggle from "@/components/molecules/ThemeToggle.astro";
+
+export type MobileMenuUITranslationsType = {
+  langSelectLabel: string;
+  navLabels: {
+    about: string;
+    connect: string;
+    intro: string;
+    projects: string;
+  };
+  themeToggleLabels: {
+    dark: string;
+    light: string;
+  };
+};
+
+type Props = {
+  translations: MobileMenuUITranslationsType;
+};
+
+const { translations: t } = Astro.props;
+---
+
+<div
+  aria-modal="true"
+  class="mobile-menu fixed right-0 z-50 h-full w-60 overflow-y-scroll border-l-[0.0625rem] border-l-secondary-550 bg-primary-50"
+  id="mobile-menu"
+  role="navigation"
+>
+  <div
+    class="sticky top-0 z-10 flex justify-between border-b-[0.0625rem] border-b-secondary-550 bg-primary-50 px-5 py-3"
+  >
+    <button
+      class="group text-secondary-950 transition-colors hover:text-accent-500"
+      id="mobile-menu-close-btn"
+    >
+      <Icon
+        class="pointer-events-none transition-transform group-hover:translate-y-1"
+        icon="cross"
+        size="1.2rem"
+      />
+    </button>
+    <div class="flex items-center gap-4">
+      <ThemeToggle
+        toggleDarkModeLabel={t.themeToggleLabels.dark}
+        toggleLightModeLabel={t.themeToggleLabels.light}
+      />
+      <LanguageSelect label={t.langSelectLabel} />
+    </div>
+  </div>
+  <Nav class="px-5 py-8" media="mobile" navLabels={t.navLabels} />
+</div>
+
+<style>
+  @keyframes slide-in {
+    from {
+      visibility: hidden;
+      margin-right: -15.2rem;
+    }
+    1% {
+      visibility: visible;
+      margin-right: -15.2rem;
+    }
+    to {
+      visibility: visible;
+      margin-right: 0;
+    }
+  }
+
+  @keyframes slide-out {
+    from {
+      visibility: visible;
+      margin-right: 0;
+    }
+    99% {
+      visibility: visible;
+      margin-right: -15.2rem;
+    }
+    to {
+      visibility: hidden;
+      margin-right: -15.2rem;
+    }
+  }
+
+  .mobile-menu {
+    visibility: hidden;
+  }
+
+  .mobile-menu.close {
+    animation: slide-out 400ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+
+  .mobile-menu.open {
+    animation: slide-in 400ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+</style>
+
+<script>
+  "use strict";
+
+  /**
+   * @description Key code constants
+   */
+  const KeyCode = {
+    BACKSPACE: 8,
+    DELETE: 46,
+    DOWN: 40,
+    END: 35,
+    ESC: 27,
+    HOME: 36,
+    LEFT: 37,
+    PAGE_DOWN: 34,
+    PAGE_UP: 33,
+    RETURN: 13,
+    RIGHT: 39,
+    SHIFT: 16,
+    SPACE: 32,
+    TAB: 9,
+    UP: 38
+  } as const;
+
+  const Utils = {
+    IgnoreUtilFocusChanges: false,
+
+    addClass: (element: Element, className: string): void => {
+      if (!Utils.hasClass(element, className)) {
+        element.className += ` ${className}`;
+      }
+    },
+
+    attemptFocus: (element: Element): boolean => {
+      if (!Utils.isFocusable(element)) {
+        return false;
+      }
+
+      Utils.IgnoreUtilFocusChanges = true;
+      try {
+        (element as HTMLElement).focus();
+      } catch (e) {
+        // continue regardless of error
+      }
+      Utils.IgnoreUtilFocusChanges = false;
+      return document.activeElement === element;
+    },
+
+    bindMethods: <T,>(object: T, ...methodNames: (keyof T)[]): void => {
+      methodNames.forEach((method) => {
+        if (typeof object[method] === "function") {
+          object[method] = (object[method] as Function).bind(object);
+        }
+      });
+    },
+
+    dialogOpenClass: "has-dialog",
+
+    focusFirstDescendant: (element: Element): boolean => {
+      for (const child of Array.from(element.childNodes)) {
+        if (child instanceof Element) {
+          if (Utils.attemptFocus(child) || Utils.focusFirstDescendant(child)) {
+            return true;
+          }
+        }
+      }
+      return false;
+    },
+
+    focusLastDescendant: (element: Element): boolean => {
+      for (let i = element.childNodes.length - 1; i >= 0; i--) {
+        const child = element.childNodes[i];
+        if (child instanceof Element) {
+          if (Utils.attemptFocus(child) || Utils.focusLastDescendant(child)) {
+            return true;
+          }
+        }
+      }
+      return false;
+    },
+
+    getAncestorBySelector: (
+      element: Element,
+      selector: string
+    ): Element | null => {
+      if (!Utils.matches(element, `${selector} ${element.tagName}`)) {
+        return null;
+      }
+
+      let currentNode: Element | null = element;
+      let ancestor: Element | null = null;
+      while (ancestor === null && currentNode) {
+        if (
+          currentNode.parentNode &&
+          Utils.matches(currentNode.parentNode as Element, selector)
+        ) {
+          ancestor = currentNode.parentNode as Element;
+        } else {
+          currentNode = currentNode.parentNode as Element;
+        }
+      }
+      return ancestor;
+    },
+
+    hasClass: (element: Element, className: string): boolean => {
+      return new RegExp(`(\\s|^)${className}(\\s|$)`).test(element.className);
+    },
+    isFocusable: (element: Element): boolean => {
+      if (element instanceof HTMLElement && element.tabIndex < 0) {
+        return false;
+      }
+
+      if (element instanceof HTMLInputElement && element.disabled) {
+        return false;
+      }
+
+      switch (element.nodeName) {
+        case "A":
+          return (
+            !!(element as HTMLAnchorElement).href &&
+            (element as HTMLAnchorElement).rel !== "ignore"
+          );
+        case "INPUT":
+          return (element as HTMLInputElement).type !== "hidden";
+        case "BUTTON":
+        case "SELECT":
+        case "TEXTAREA":
+          return true;
+        default:
+          return false;
+      }
+    },
+
+    // Polyfill src https://developer.mozilla.org/en-US/docs/Web/API/Element/matches
+    matches: (element: Element, selector: string): boolean => {
+      if (!Element.prototype.matches) {
+        Element.prototype.matches =
+          (Element.prototype as any).msMatchesSelector ||
+          Element.prototype.webkitMatchesSelector ||
+          function (s: string) {
+            const matches = (element.parentNode?.querySelectorAll(s) ||
+              []) as NodeListOf<Element>;
+            let i = matches.length;
+            while (--i >= 0 && matches.item(i) !== element) {
+              // empty
+            }
+            return i > -1;
+          };
+      }
+      return element.matches(selector);
+    },
+
+    remove: (item: Element): boolean => {
+      if (item.remove && typeof item.remove === "function") {
+        item.remove();
+        return true;
+      }
+      if (
+        item.parentNode &&
+        item.parentNode.removeChild &&
+        typeof item.parentNode.removeChild === "function"
+      ) {
+        item.parentNode.removeChild(item);
+        return true;
+      }
+      return false;
+    },
+
+    removeClass: (element: Element, className: string): void => {
+      const classRegex = new RegExp(`(\\s|^)${className}(\\s|$)`);
+      element.className = element.className.replace(classRegex, " ").trim();
+    }
+  };
+
+  let OpenDialogList: Dialog[] = [];
+
+  const getCurrentDialog = (): Dialog | undefined => {
+    if (OpenDialogList.length) {
+      return OpenDialogList[OpenDialogList.length - 1];
+    }
+    return undefined;
+  };
+
+  const closeCurrentDialog = (): boolean => {
+    const currentDialog = getCurrentDialog();
+    if (currentDialog) {
+      currentDialog.close();
+      return true;
+    }
+    return false;
+  };
+
+  const handleEscape = (event: KeyboardEvent): void => {
+    const key = event.which || event.keyCode;
+
+    if (key === KeyCode.ESC && closeCurrentDialog()) {
+      event.stopPropagation();
+    }
+  };
+
+  document.addEventListener("keyup", handleEscape);
+
+  /**
+   * @class
+   * @description Dialog object providing modal focus management.
+   *
+   * Assumptions: The element serving as the dialog container is present in the
+   * DOM and hidden. The dialog container has role='dialog'.
+   */
+  class Dialog {
+    addListeners = (): void => {
+      document.addEventListener("focus", this.trapFocus, true);
+      this.links.forEach((link) => {
+        link.addEventListener("click", this.close);
+      });
+    };
+    backdropNode: HTMLElement;
+    clearDialog = (): void => {
+      Array.from(this.dialogNode.querySelectorAll("input")).forEach((input) => {
+        (input as HTMLInputElement).value = "";
+      });
+    };
+    close = (): void => {
+      this.dialogNode.classList.remove("open");
+      this.dialogNode.classList.add("close");
+      this.backdropNode.classList.remove("active");
+      this.backdropNode.classList.add("inactive");
+
+      setTimeout(() => {
+        OpenDialogList.pop();
+        this.removeListeners();
+        Utils.remove(this.preNode);
+        Utils.remove(this.postNode);
+
+        this.focusAfterClosed.focus();
+
+        if (this.elWithAriaExpanded) {
+          this.elWithAriaExpanded.setAttribute("aria-expanded", "false");
+        }
+
+        if (OpenDialogList.length > 0) {
+          getCurrentDialog()?.addListeners();
+        } else {
+          document.body.classList.remove(Utils.dialogOpenClass);
+        }
+      }, 400);
+    };
+    dialogNode: HTMLElement;
+    elWithAriaExpanded: HTMLElement | null;
+    focusAfterClosed: HTMLElement;
+    focusFirst: HTMLElement | null;
+    lastFocus: Element | null;
+
+    links: NodeListOf<HTMLAnchorElement>;
+
+    postNode: HTMLElement;
+
+    preNode: HTMLElement;
+
+    removeListeners = (): void => {
+      document.removeEventListener("focus", this.trapFocus, true);
+      this.links.forEach((link) => {
+        link.removeEventListener("click", this.close);
+      });
+    };
+
+    replace = (
+      newDialogId: string,
+      newFocusAfterClosed?: HTMLElement | string,
+      newFocusFirst?: HTMLElement | string
+    ): void => {
+      this.dialogNode.classList.add("close");
+      this.dialogNode.classList.remove("open");
+      this.backdropNode.classList.remove("active");
+      this.backdropNode.classList.add("inactive");
+
+      setTimeout(() => {
+        OpenDialogList.pop();
+        this.removeListeners();
+        Utils.remove(this.preNode);
+        Utils.remove(this.postNode);
+        const focusAfterClosed = newFocusAfterClosed || this.focusAfterClosed;
+
+        if (this.elWithAriaExpanded) {
+          this.elWithAriaExpanded.setAttribute("aria-expanded", "false");
+        }
+
+        new Dialog(newDialogId, focusAfterClosed, newFocusFirst);
+      }, 400);
+    };
+
+    trapFocus = function (event: FocusEvent): void {
+      if (Utils.IgnoreUtilFocusChanges) {
+        return;
+      }
+      const currentDialog = getCurrentDialog();
+      if (currentDialog) {
+        if (currentDialog.dialogNode.contains(event.target as Node)) {
+          currentDialog.lastFocus = event.target as Element;
+        } else {
+          Utils.focusFirstDescendant(currentDialog.dialogNode);
+          if (currentDialog.lastFocus === document.activeElement) {
+            Utils.focusLastDescendant(currentDialog.dialogNode);
+          }
+          currentDialog.lastFocus = document.activeElement;
+        }
+      }
+    };
+
+    constructor(
+      dialogId: string,
+      focusAfterClosed: HTMLElement | string,
+      focusFirst?: HTMLElement | string,
+      elWithAriaExpanded?: HTMLElement | string
+    ) {
+      //check if dialogNode exists
+      this.dialogNode = document.getElementById(dialogId) as HTMLElement;
+      this.links = this.dialogNode.querySelectorAll("a");
+      if (!this.dialogNode) {
+        throw new Error(`No element found with id="${dialogId}".`);
+      }
+
+      //check roles if valid
+      const validRoles = ["dialog", "alertdialog", "navigation"];
+      const isDialog = (this.dialogNode.getAttribute("role") || "")
+        .trim()
+        .split(/\s+/g)
+        .some((token) => validRoles.includes(token));
+      if (!isDialog) {
+        throw new Error(
+          "Dialog() requires a DOM element with ARIA role of dialog or alertdialog."
+        );
+      }
+
+      //handle element with aria-expanded
+      if (typeof elWithAriaExpanded === "string") {
+        this.elWithAriaExpanded = document.getElementById(
+          elWithAriaExpanded
+        ) as HTMLElement;
+      } else if (elWithAriaExpanded instanceof HTMLElement) {
+        this.elWithAriaExpanded = elWithAriaExpanded;
+      } else {
+        this.elWithAriaExpanded = null;
+      }
+
+      //handle the backdrop
+      const backdropClass = "dialog-backdrop";
+      if (
+        (this.dialogNode.parentNode as HTMLElement).classList.contains(
+          backdropClass
+        )
+      ) {
+        this.backdropNode = this.dialogNode.parentNode as HTMLElement;
+      } else {
+        this.backdropNode = document.createElement("div");
+        this.backdropNode.classList.add(backdropClass);
+        this.dialogNode.parentNode?.insertBefore(
+          this.backdropNode,
+          this.dialogNode
+        );
+        this.backdropNode.addEventListener("click", (event) => {
+          if (!this.dialogNode.contains(event.target as Node)) this.close();
+        });
+        this.backdropNode.appendChild(this.dialogNode);
+      }
+      this.backdropNode.classList.add("active");
+      this.backdropNode.classList.remove("inactive");
+
+      document.body.classList.add(Utils.dialogOpenClass);
+
+      if (typeof focusAfterClosed === "string") {
+        this.focusAfterClosed = document.getElementById(
+          focusAfterClosed
+        ) as HTMLElement;
+      } else if (focusAfterClosed instanceof HTMLElement) {
+        this.focusAfterClosed = focusAfterClosed;
+      } else {
+        throw new Error(
+          "The focusAfterClosed parameter is required for the Dialog constructor."
+        );
+      }
+
+      if (typeof focusFirst === "string") {
+        this.focusFirst = document.getElementById(focusFirst) as HTMLElement;
+      } else if (focusFirst instanceof HTMLElement) {
+        this.focusFirst = focusFirst;
+      } else {
+        this.focusFirst = null;
+      }
+
+      const preDiv = document.createElement("div");
+      this.preNode = this.dialogNode.parentNode?.insertBefore(
+        preDiv,
+        this.dialogNode
+      ) as HTMLElement;
+      this.preNode.tabIndex = 0;
+
+      const postDiv = document.createElement("div");
+      this.postNode = this.dialogNode.parentNode?.insertBefore(
+        postDiv,
+        this.dialogNode.nextSibling
+      ) as HTMLElement;
+      this.postNode.tabIndex = 0;
+
+      if (OpenDialogList.length > 0) {
+        getCurrentDialog()?.removeListeners();
+      }
+
+      this.addListeners();
+      OpenDialogList.push(this);
+      this.clearDialog();
+      this.dialogNode.classList.add("open");
+      this.dialogNode.classList.remove("close");
+
+      this.lastFocus = null;
+
+      window.setTimeout(() => {
+        if (this.focusFirst) {
+          this.focusFirst.focus();
+        } else {
+          Utils.focusFirstDescendant(this.dialogNode);
+        }
+
+        if (this.elWithAriaExpanded) {
+          this.elWithAriaExpanded.setAttribute("aria-expanded", "true");
+        }
+
+        this.lastFocus = document.activeElement;
+      }, 400);
+    }
+  }
+
+  const openDialog = (
+    dialogId: string,
+    focusAfterClosed: HTMLElement | string,
+    focusFirst?: HTMLElement | string,
+    elWithAriaExpanded?: HTMLElement | string
+  ): void => {
+    new Dialog(dialogId, focusAfterClosed, focusFirst, elWithAriaExpanded);
+  };
+
+  const closeDialog = (closeButton: HTMLElement): void => {
+    const topDialog = getCurrentDialog();
+    if (topDialog && topDialog.dialogNode.contains(closeButton)) {
+      topDialog.close();
+    }
+  };
+
+  const replaceDialog = (
+    newDialogId: string,
+    newFocusAfterClosed?: HTMLElement | string,
+    newFocusFirst?: HTMLElement | string
+  ): void => {
+    const topDialog = getCurrentDialog();
+    if (topDialog && topDialog.dialogNode.contains(document.activeElement)) {
+      topDialog.replace(newDialogId, newFocusAfterClosed, newFocusFirst);
+    }
+  };
+
+  const hamburger = document.getElementById("hamburger");
+  const mobileMenuCloseBtn = document.getElementById("mobile-menu-close-btn");
+  hamburger?.addEventListener("click", () => {
+    openDialog("mobile-menu", hamburger, "mobile-menu-close-btn", hamburger);
+  });
+  mobileMenuCloseBtn?.addEventListener("click", () => {
+    closeDialog(mobileMenuCloseBtn);
+  });
+  window.addEventListener("resize", () => {
+    const width = window.innerWidth;
+
+    if (width >= 738 && mobileMenuCloseBtn) closeDialog(mobileMenuCloseBtn);
+  });
+</script>
