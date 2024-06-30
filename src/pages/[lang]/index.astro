@@ -1,0 +1,90 @@
+---
+import type { LanguageKeys } from "@/i18n/languages";
+import type { HeadProps } from "@/types";
+
+import { siteName } from "@/components/MainHead.astro";
+import { getNavs, navHashLinks } from "@/components/molecules/Nav.astro";
+import About from "@/components/organisms/home-page/About.astro";
+import Connect from "@/components/organisms/home-page/Connect.astro";
+import Intro from "@/components/organisms/home-page/Intro.astro";
+import Projects from "@/components/organisms/home-page/Projects.astro";
+import { homePageTranslations } from "@/i18n/homePageTranslations";
+import { allLanguages } from "@/i18n/languages";
+import { uiLayoutTranslations } from "@/i18n/uiLayoutTranslations";
+import UILayout from "@/layouts/UILayout.astro";
+
+export const getStaticPaths = () => {
+  return Object.keys(allLanguages).map((lang) => {
+    return { params: { lang } };
+  });
+};
+
+const { lang } = Astro.params as { lang: LanguageKeys };
+const navs = getNavs(uiLayoutTranslations[lang].header.navLabels, navHashLinks);
+
+const metadata: HeadProps = {
+  description: homePageTranslations[lang].intro.description,
+  googleSiteVerification: "",
+  gtagId: "",
+  gtmId: "",
+  image: "/ogs/og.png",
+  keywords: [
+    "Simon Camacho",
+    "web developer portfolio",
+    "aspiring web developer",
+    "front-end development",
+    "back-end development",
+    "full-stack development",
+    "HTML",
+    "CSS",
+    "JavaScript",
+    "React",
+    "Node.js",
+    "web design",
+    "responsive design",
+    "UX/UI",
+    "web projects",
+    "programming",
+    "coding",
+    "software development",
+    "JavaScript frameworks",
+    "portfolio projects",
+    "web applications",
+    "web development skills",
+    "coding portfolio",
+    "developer portfolio",
+    "junior web developer",
+    "web developer Simon Camacho",
+    "Simon Camacho projects",
+    "Simon Camacho web developer",
+    "Simon Camacho portfolio"
+  ],
+  structuredDataBreadcrumb: {},
+  structuredDataOrganization: {},
+  structuredDataPerson: {},
+  title: siteName
+};
+---
+
+<UILayout metadata={metadata} sections={navs}>
+  <Intro
+    class="h-auto min-h-[calc(100vh-4.3rem)] py-14 md:py-20 lg:min-h-[calc(100vh-5.5rem)]"
+    dataLink="#intro"
+    translations={homePageTranslations[lang].intro}
+  />
+  <About
+    class="py-20 md:py-28"
+    dataLink="#about"
+    translations={homePageTranslations[lang].about}
+  />
+  <Projects
+    class="py-20 md:py-28"
+    dataLink="#projects"
+    translations={homePageTranslations[lang].projects}
+  />
+  <Connect
+    class="py-20 md:py-28"
+    dataLink="#connect"
+    translations={homePageTranslations[lang].connect}
+  />
+</UILayout>
