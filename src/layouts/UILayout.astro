@@ -1,0 +1,140 @@
+---
+import type { LanguageKeys } from "@/i18n/languages";
+import type { HeadProps } from "@/types";
+
+import MainHead from "@/components/MainHead.astro";
+import ScrollNumbers, {
+  type SectionsType
+} from "@/components/molecules/ScrollNumbers.astro";
+import Socials from "@/components/molecules/Socials.astro";
+import Footer from "@/components/organisms/Footer.astro";
+import Header from "@/components/organisms/Header.astro";
+import MobileMenu from "@/components/organisms/MobileMenu.astro";
+import {
+  type UILayoutTranslationsType,
+  uiLayoutTranslations
+} from "@/i18n/uiLayoutTranslations";
+
+type Props = {
+  metadata: HeadProps;
+  sections: SectionsType;
+};
+
+const { metadata, sections } = Astro.props;
+const { lang } = Astro.params as { lang: LanguageKeys };
+const t = uiLayoutTranslations[lang];
+---
+
+<html lang={lang}>
+  <MainHead {...metadata} />
+  <body
+    class:list={[
+      "grid min-h-screen bg-primary-50 font-lexend text-secondary-700",
+      "[&_*:focus-visible]:outline-dashed [&_*:focus-visible]:outline-accent-500"
+    ]}
+  >
+    <Header class="sticky top-0 z-10 w-full" translations={t.header} />
+    <main>
+      <slot />
+    </main>
+    <Footer class="mb-8 mt-32 md:mb-14 md:mt-44" translations={t.footer} />
+    <Socials translations={t.socials} />
+    <ScrollNumbers sections={sections} translations={t.scrollNumbers} />
+    <MobileMenu translations={t.mobileMenu} />
+    <script>
+      const sections = document.querySelectorAll(
+        "section"
+      ) as NodeListOf<HTMLElement>;
+
+      const isInView = (element: HTMLElement) => {
+        const header = document.querySelector("header") as HTMLElement;
+        const headerHeight = header.offsetHeight;
+
+        const scrollTop =
+          document.documentElement.scrollTop || document.body.scrollTop;
+        const elementTop = element.offsetTop;
+        const elementBottom = elementTop + element.offsetHeight;
+
+        return (
+          elementTop - scrollTop - headerHeight <= 0 &&
+          elementBottom - scrollTop - headerHeight > 1
+        );
+      };
+
+      const getElementOffsetTop = (element: HTMLElement) => {
+        const header = document.querySelector("header") as HTMLElement;
+        const headerHeight = header.offsetHeight;
+
+        return element.offsetTop - headerHeight + 1;
+      };
+
+      const getSectionOfHash = (hash: string) => {
+        return Array.from(sections).find(
+          (section) => section.getAttribute("data-link") === hash
+        );
+      };
+
+      const scrollToFocus = (element: HTMLElement) => {
+        if (!isInView(element)) {
+          const focusOnSection = () => {
+            element.setAttribute("tabindex", "-1");
+            element.focus({ preventScroll: true });
+            element.removeAttribute("tabindex");
+
+            window.removeEventListener("scrollend", focusOnSection);
+          };
+
+          window.addEventListener("scrollend", focusOnSection);
+
+          window.scrollTo({
+            behavior: "smooth",
+            top: getElementOffsetTop(element)
+          });
+        }
+      };
+
+      const updateHashOnSectionInView = () => {
+        for (let i = 0; i < sections.length; i++) {
+          const hashOfSection = sections[i].getAttribute("data-link") || "";
+
+          if (isInView(sections[i]) && hashOfSection !== window.location.hash) {
+            window.location.hash = hashOfSection;
+            break;
+          }
+        }
+      };
+
+      const handleScrollEnd = () => {
+        updateHashOnSectionInView();
+      };
+
+      const handleResize = () => {
+        updateHashOnSectionInView();
+      };
+
+      const handleHashChange = () => {
+        const currentHash = window.location.hash;
+        const targetSection = getSectionOfHash(currentHash) as HTMLElement;
+        scrollToFocus(targetSection);
+      };
+
+      const handlePageLoad = () => {
+        const currentHash = window.location.hash;
+
+        if (currentHash) {
+          const targetSection = getSectionOfHash(currentHash) as HTMLElement;
+          scrollToFocus(targetSection);
+        } else {
+          const hashOfFirstSection =
+            sections[0].getAttribute("data-link") || "";
+          window.location.hash = hashOfFirstSection;
+        }
+      };
+
+      window.addEventListener("scrollend", handleScrollEnd);
+      window.addEventListener("resize", handleResize);
+      window.addEventListener("hashchange", handleHashChange);
+      window.addEventListener("DOMContentLoaded", handlePageLoad);
+    </script>
+  </body>
+</html>
