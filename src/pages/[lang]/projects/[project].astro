@@ -1,0 +1,98 @@
+---
+import type { LanguageKeys } from "@/i18n/languages";
+import type { ProjectType } from "@/i18n/projects";
+import type { HeadProps } from "@/types";
+
+import { siteName } from "@/components/MainHead.astro";
+import AboutThisProject from "@/components/organisms/project-page/AboutThisProject.astro";
+import MessageMe from "@/components/organisms/project-page/MessageMe.astro";
+import OtherProjects from "@/components/organisms/project-page/OtherProjects.astro";
+import ProjectInsights from "@/components/organisms/project-page/ProjectInsights.astro";
+import { allLanguages } from "@/i18n/languages";
+import { projectPageTranslationsType } from "@/i18n/projectPageTranslations";
+import { projects } from "@/i18n/projects";
+import UILayout from "@/layouts/UILayout.astro";
+
+export const getStaticPaths = () => {
+  const paths: {
+    params: { lang: string; project: string };
+  }[] = [];
+
+  Object.keys(allLanguages).forEach((lang) => {
+    projects.forEach((project) => {
+      paths.push({ params: { lang, project: project.slug } });
+    });
+  });
+
+  return paths;
+};
+
+const { lang, project: projectSlug } = Astro.params as {
+  lang: LanguageKeys;
+  project: ProjectType["slug"];
+};
+
+const project = projects.find(
+  (project) => projectSlug === project.slug
+) as ProjectType;
+
+const t = projectPageTranslationsType[lang];
+
+const sections = [
+  {
+    label: t.aboutThisProject.title,
+    link: "#about-this-project"
+  },
+  {
+    label: t.projectInsights.title,
+    link: "#project-insights"
+  },
+  {
+    label: t.otherProjects.title,
+    link: "#other-projects"
+  },
+  {
+    label: t.messageMe.title,
+    link: "#message-me"
+  }
+];
+
+const metadata: HeadProps = {
+  description: project.translations[lang].description,
+  googleSiteVerification: "",
+  gtagId: "",
+  gtmId: "",
+  image: project.ogImage,
+  keywords: project.keywords as unknown as string[],
+  structuredDataBreadcrumb: {},
+  structuredDataOrganization: {},
+  structuredDataPerson: {},
+  title: `${siteName} | ${project.title}`
+};
+---
+
+<UILayout metadata={metadata} sections={sections}>
+  <AboutThisProject
+    class="py-20 md:py-28"
+    dataLink="#about-this-project"
+    project={project}
+    translations={t.aboutThisProject}
+  />
+  <ProjectInsights
+    class="py-20 md:py-28"
+    dataLink="#project-insights"
+    project={project}
+    translations={t.projectInsights}
+  />
+  <OtherProjects
+    class="py-20 md:py-28"
+    dataLink="#other-projects"
+    otherProjectSlugs={project.otherProjectSlugs}
+    translations={t.otherProjects}
+  />
+  <MessageMe
+    class="py-20 md:py-28"
+    dataLink="#message-me"
+    translations={t.messageMe}
+  />
+</UILayout>
