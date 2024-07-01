@@ -59,7 +59,7 @@ const { class: className, dataLink, translations: t } = Astro.props;
         </h3>
         <P class="mb-9 max-w-[60ch]" html={t.description} />
         <div class="flex justify-center gap-6 md:justify-start">
-          <Button label={t.contactButtonLabel} />
+          <Button class="contact-button" label={t.contactButtonLabel} />
           <Button label={t.resumeButtonLabel} styleType="accent" />
         </div>
       </div>
@@ -69,3 +69,16 @@ const { class: className, dataLink, translations: t } = Astro.props;
     </div>
   </ContentContainer>
 </BaseContainer>
+
+<script>
+  const contactButton = document.querySelector(
+    ".contact-button"
+  ) as HTMLElement;
+
+  const focusOnNameInput = () => {
+    const nameInput = document.querySelector("#name") as HTMLElement;
+    nameInput.focus();
+  };
+
+  contactButton.addEventListener("click", focusOnNameInput);
+</script>

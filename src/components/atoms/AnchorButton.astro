@@ -6,10 +6,15 @@ type Props = {
   styleType?: "accent" | "primary";
 } & HTMLAttributes<"a">;
 
-const { label, styleType = "primary", ...props } = Astro.props;
+const {
+  class: className,
+  label,
+  styleType = "primary",
+  ...props
+} = Astro.props;
 ---
 
-<a class="group max-w-[12.5rem] flex-1" {...props}
+<a class:list={["group max-w-[12.5rem] flex-1", className]} {...props}
   ><div
     class:list={[
       "rounded-lg p-4 font-bold transition-transform group-hover:-translate-y-1",
