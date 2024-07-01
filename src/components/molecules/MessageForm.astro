@@ -22,7 +22,6 @@ const { class: className, translations: t } = Astro.props;
   data-netlify="true"
   method="POST"
   name="message"
-  novalidate
 >
   <InputTextField
     id="name"
@@ -199,9 +198,14 @@ const { class: className, translations: t } = Astro.props;
     validateForm();
   };
 
+  const useCustomFormValidation = () => {
+    form?.setAttribute("novalidate", "");
+  };
+
   requiredInputs.forEach((requiredInput) => {
     requiredInput.addEventListener("input", () => clearAlert(requiredInput));
   });
 
   form?.addEventListener("submit", handleFormSubmit);
+  document.addEventListener("DOMContentLoaded", useCustomFormValidation);
 </script>
