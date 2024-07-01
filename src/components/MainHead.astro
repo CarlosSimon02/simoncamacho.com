@@ -57,11 +57,11 @@ const author = siteName;
   <meta content="no-referrer-when-downgrade" name="referrer" />
 
   <!-- Canonical and Alternate Links -->
-  <link href={Astro.url.href} rel="canonical" />
+  <link href={`${siteUrl}${Astro.url.pathname}`} rel="canonical" />
   {
     Object.keys(allLanguages).map((locale) => (
       <link
-        href={localizedPathname(locale)}
+        href={`${siteUrl}${localizedPathname(locale)}`}
         hreflang={locale}
         rel="alternate"
       />
@@ -75,7 +75,7 @@ const author = siteName;
   <meta content="website" property="og:type" />
   <meta content={title} property="og:title" />
   <meta content={description} property="og:description" />
-  <meta content={Astro.url.href} property="og:url" />
+  <meta content={`${siteUrl}${Astro.url}`} property="og:url" />
   <meta content={`${siteUrl}${image}`} property="og:image" />
   {
     Object.values(allLanguages).map((locale) => (
