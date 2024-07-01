@@ -54,7 +54,12 @@ export const getNavs = (labels: NavLabelsType, hashLinks: NavHashLinksType) => {
 const navs = getNavs(
   navLabels,
   isInHomePage()
-    ? navHashLinks
+    ? {
+        about: `${Astro.url.href}${navHashLinks.about}`,
+        connect: `${Astro.url.href}${navHashLinks.connect}`,
+        intro: `${Astro.url.href}${navHashLinks.intro}`,
+        projects: `${Astro.url.href}${navHashLinks.projects}`
+      }
     : {
         about: `/${lang}${navHashLinks.about}`,
         connect: `/${lang}${navHashLinks.connect}`,
