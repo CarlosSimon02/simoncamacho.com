@@ -38,3 +38,11 @@ export const localizedUrl = (url: URL, locale: string | undefined): URL => {
   if (hasBase) url.pathname = base + url.pathname;
   return url;
 };
+
+export const removeItalicTags = (input: string) => {
+  // Regular expression to match <i> and </i> tags
+  const regex = /<\/?i>/g;
+
+  // Replace the matched tags with an empty string
+  return input.replace(regex, "");
+};

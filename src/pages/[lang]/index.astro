@@ -11,6 +11,7 @@ import { homePageTranslations } from "@/i18n/homePageTranslations";
 import { DEFAULT_LANG, allLanguages } from "@/i18n/languages";
 import { uiLayoutTranslations } from "@/i18n/uiLayoutTranslations";
 import UILayout from "@/layouts/UILayout.astro";
+import { removeItalicTags } from "@/utils";
 
 export const getStaticPaths = () => {
   return Object.keys(allLanguages).map((lang) => {
@@ -23,7 +24,7 @@ const lang = langParams ? langParams : DEFAULT_LANG;
 const navs = getNavs(uiLayoutTranslations[lang].header.navLabels, navHashLinks);
 
 export const getHomeMetaData = (lang: LanguageKeys) => ({
-  description: homePageTranslations[lang].intro.description,
+  description: removeItalicTags(homePageTranslations[lang].intro.description),
   googleSiteVerification: "",
   gtagId: "",
   gtmId: "",
@@ -62,7 +63,7 @@ export const getHomeMetaData = (lang: LanguageKeys) => ({
   structuredDataBreadcrumb: {},
   structuredDataOrganization: {},
   structuredDataPerson: {},
-  title: siteName
+  title: removeItalicTags(siteName)
 });
 ---
 
