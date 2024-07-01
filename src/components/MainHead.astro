@@ -74,7 +74,7 @@ const author = siteName;
   <meta content={title} property="og:title" />
   <meta content={description} property="og:description" />
   <meta content={Astro.url.href} property="og:url" />
-  <meta content={image} property="og:image" />
+  <meta content={`${Astro.url.origin}${image}`} property="og:image" />
   {
     Object.values(allLanguages).map((locale) => (
       <meta content={locale.og} property="og:locale:alternate" />
@@ -88,7 +88,7 @@ const author = siteName;
   <meta content="@CarlosSimonCam1" property="twitter:creator" />
   <meta content={title} property="twitter:title" />
   <meta content={description} property="twitter:description" />
-  <meta content={image} property="twitter:image" />
+  <meta content={`${Astro.url.origin}${image}`} property="twitter:image" />
   {twitterLabel1 && <meta content={twitterLabel1} property="twitter:label1" />}
   {twitterData1 && <meta content={twitterData1} property="twitter:data1" />}
   {twitterLabel2 && <meta content={twitterLabel2} property="twitter:label2" />}
