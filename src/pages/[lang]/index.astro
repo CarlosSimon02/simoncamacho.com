@@ -22,7 +22,7 @@ export const getStaticPaths = () => {
 const { lang } = Astro.params as { lang: LanguageKeys };
 const navs = getNavs(uiLayoutTranslations[lang].header.navLabels, navHashLinks);
 
-const metadata: HeadProps = {
+export const homeMetadata: HeadProps = {
   description: homePageTranslations[lang].intro.description,
   googleSiteVerification: "",
   gtagId: "",
@@ -66,7 +66,7 @@ const metadata: HeadProps = {
 };
 ---
 
-<UILayout metadata={metadata} sections={navs}>
+<UILayout metadata={homeMetadata} sections={navs}>
   <Intro
     class="h-auto min-h-[calc(100vh-4.3rem)] py-14 md:py-20 lg:min-h-[calc(100vh-5.5rem)]"
     dataLink={navHashLinks.intro}

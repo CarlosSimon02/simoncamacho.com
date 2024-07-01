@@ -14,6 +14,7 @@ const {
   gtmId,
   image,
   keywords,
+  redirectTo,
   structuredDataBreadcrumb,
   structuredDataOrganization,
   structuredDataPerson,
@@ -374,6 +375,9 @@ const author = siteName;
     href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&family=Oswald:wght@200..700&display=swap"
     rel="stylesheet"
   />
+
+  <!-- Redirect Option -->
+  {redirectTo && <meta content={`0;url=${redirectTo}`} http-equiv="refresh" />}
 
   <!-- Script for initializing theme -->
   <script is:inline>

@@ -14,6 +14,7 @@ export type HeadProps = {
   gtmId: string;
   image: string;
   keywords: string[];
+  redirectTo?: string;
   structuredDataBreadcrumb: StructuredData;
   structuredDataOrganization: StructuredData;
   structuredDataPerson: StructuredData;

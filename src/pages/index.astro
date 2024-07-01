@@ -1,1 +1,7 @@
-<meta content="0;url=/en" http-equiv="refresh" />
+---
+import MainHead from "@/components/MainHead.astro";
+
+import { homeMetadata } from "./[lang]/index.astro";
+---
+
+<MainHead redirectTo="/en" {...homeMetadata} />
