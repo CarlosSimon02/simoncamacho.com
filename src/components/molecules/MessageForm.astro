@@ -22,6 +22,7 @@ const { class: className, translations: t } = Astro.props;
   data-netlify="true"
   method="POST"
   name="message"
+  novalidate
 >
   <InputTextField
     id="name"
@@ -179,7 +180,7 @@ const { class: className, translations: t } = Astro.props;
     }
   };
 
-  const validateForm = async () => {
+  const isFormValid = async () => {
     const formData: FormData = {
       name: (document.querySelector("#name") as HTMLInputElement).value,
       // eslint-disable-next-line perfectionist/sort-objects
@@ -189,17 +190,37 @@ const { class: className, translations: t } = Astro.props;
 
     const errors = await validateFormData(formData);
 
-    displayErrors(errors);
+    if (Object.keys(errors).length === 0) {
+      return true;
+    } else {
+      displayErrors(errors);
+      return false;
+    }
   };
 
-  const handleFormSubmit = (event: Event) => {
-    clearAllAlerts();
+  const handleFormSubmit = async (event: Event) => {
     event.preventDefault();
-    validateForm();
-  };
+    clearAllAlerts();
+    const isValid = await isFormValid();
 
-  const useCustomFormValidation = () => {
-    form?.setAttribute("novalidate", "");
+    if (isValid) {
+      const form = document.querySelector("form") as HTMLFormElement;
+      const formData = new FormData(form);
+
+      const urlParams = new URLSearchParams();
+
+      formData.forEach((value, key) => {
+        urlParams.append(key, value as string);
+      });
+
+      fetch("/", {
+        body: urlParams.toString(),
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        method: "POST"
+      })
+        .then(() => console.log("Form successfully submitted"))
+        .catch((error) => alert(error));
+    }
   };
 
   requiredInputs.forEach((requiredInput) => {
@@ -207,5 +228,4 @@ const { class: className, translations: t } = Astro.props;
   });
 
   form?.addEventListener("submit", handleFormSubmit);
-  document.addEventListener("DOMContentLoaded", useCustomFormValidation);
 </script>
