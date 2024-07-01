@@ -75,7 +75,7 @@ const author = siteName;
   <meta content="website" property="og:type" />
   <meta content={title} property="og:title" />
   <meta content={description} property="og:description" />
-  <meta content={`${siteUrl}${Astro.url}`} property="og:url" />
+  <meta content={`${siteUrl}${Astro.url.pathname}`} property="og:url" />
   <meta content={`${siteUrl}${image}`} property="og:image" />
   {
     Object.values(allLanguages).map((locale) => (
