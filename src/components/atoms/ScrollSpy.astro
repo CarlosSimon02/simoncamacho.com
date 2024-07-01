@@ -14,12 +14,12 @@ const { ...props } = Astro.props;
   const scrollSpyers = document.querySelectorAll(".scroll-spyer");
 
   const onHashChange = () => {
-    const newHref = window.location.href;
+    const newHash = window.location.hash;
 
     scrollSpyers.forEach((scrollSpyer) => {
       scrollSpyer.classList.remove("selected");
 
-      if (scrollSpyer.getAttribute("href") === newHref)
+      if (scrollSpyer.getAttribute("href") === newHash)
         scrollSpyer.classList.add("selected");
     });
   };
