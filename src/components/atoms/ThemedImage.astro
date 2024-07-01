@@ -1,16 +1,18 @@
 ---
+import { Image } from "astro:assets";
+
 type Props = {
   alt: string;
   class?: string;
-  srcDark: string;
-  srcLight: string;
+  srcDark: ImageMetadata;
+  srcLight: ImageMetadata;
 };
 
 const { alt, class: className, srcDark, srcLight } = Astro.props;
 ---
 
 <Fragment>
-  <img
+  <Image
     alt={alt}
     class:list={[
       "dark transition-transform duration-700 group-hover:scale-105 group-hover:duration-500",
@@ -18,7 +20,7 @@ const { alt, class: className, srcDark, srcLight } = Astro.props;
     ]}
     src={srcDark}
   />
-  <img
+  <Image
     alt={alt}
     class:list={[
       "light transition-transform duration-700 group-hover:scale-105 group-hover:duration-500",

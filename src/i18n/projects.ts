@@ -1,3 +1,10 @@
+import audiophileDark from "@/assets/project-images/audiophile-project-dark.png";
+import audiophileLight from "@/assets/project-images/audiophile-project-light.png";
+import kanbanDark from "@/assets/project-images/kanban-project-dark.png";
+import kanbanLight from "@/assets/project-images/kanban-project-light.png";
+import pomodoroDark from "@/assets/project-images/pomodoro-project-dark.png";
+import pomodoroLight from "@/assets/project-images/pomodoro-project-light.png";
+
 export type ProjectType = (typeof projects)[number];
 
 export const projects = [
@@ -41,8 +48,8 @@ export const projects = [
       { logo: "tailwind", name: "Tailwind" },
       { logo: "zustand", name: "Zustand" }
     ],
-    thumbnailDark: "/project-images/kanban-project-dark.png",
-    thumbnailLight: "/project-images/kanban-project-light.png",
+    thumbnailDark: kanbanDark,
+    thumbnailLight: kanbanLight,
     title: "Kanban Web App",
     translations: {
       en: {
@@ -107,8 +114,8 @@ export const projects = [
       { logo: "tailwind", name: "Tailwind" },
       { logo: "zustand", name: "Zustand" }
     ],
-    thumbnailDark: "/project-images/audiophile-project-dark.png",
-    thumbnailLight: "/project-images/audiophile-project-light.png",
+    thumbnailDark: audiophileDark,
+    thumbnailLight: audiophileLight,
     title: "Audiophile E-commerce Website",
     translations: {
       en: {
@@ -171,8 +178,8 @@ export const projects = [
       { logo: "sass", name: "Sass" },
       { logo: "html", name: "HTML" }
     ],
-    thumbnailDark: "/project-images/pomodoro-project-dark.png",
-    thumbnailLight: "/project-images/pomodoro-project-light.png",
+    thumbnailDark: pomodoroDark,
+    thumbnailLight: pomodoroLight,
     title: "FEM Pomodoro App",
     translations: {
       en: {

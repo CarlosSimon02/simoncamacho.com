@@ -1,6 +1,8 @@
 ---
 import type { SectionType } from "@/types";
 
+import femScreenshotsMobile from "@/assets/fem-screenshots/fem-screenshots-mobile.png";
+import femScreenshots from "@/assets/fem-screenshots/fem-screenshots.png";
 import ContentTitle from "@/components/atoms/ContentTitle.astro";
 import P from "@/components/atoms/P.astro";
 import SectionTitle from "@/components/atoms/SectionTitle.astro";
@@ -16,6 +18,7 @@ import ContentContainer from "@/components/containers/ContentContainer.astro";
 import MessageForm, {
   type MessgeFormUITranslationsType
 } from "@/components/molecules/MessageForm.astro";
+import { Image } from "astro:assets";
 
 export type ConnectSectionUITranslationsType = {
   "getInTouch.description": string;
@@ -67,15 +70,15 @@ const { class: className, dataLink, translations: t } = Astro.props;
         <FlagSVG class="mt-3 w-[9rem] md:w-[14rem]" />
       </div>
       <div class="basis-[60%]">
-        <img
+        <Image
           alt={t["onFrontendMentor.screenshotsAlt"]}
           class="w-full max-[25em]:hidden"
-          src="/fem-screenshots/fem-screenshots.png"
+          src={femScreenshots}
         />
-        <img
+        <Image
           alt={t["onFrontendMentor.screenshotsAlt"]}
           class="w-full min-[25em]:hidden"
-          src="/fem-screenshots/fem-screenshots-mobile.png"
+          src={femScreenshotsMobile}
         />
       </div>
     </div>

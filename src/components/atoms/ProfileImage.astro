@@ -1,4 +1,7 @@
 ---
+import profileImg from "@/assets/profile.png";
+import { Image } from "astro:assets";
+
 type Props = {
   alt: string;
   class?: string;
@@ -14,9 +17,9 @@ const { alt, class: className } = Astro.props;
     className
   ]}
 >
-  <img
+  <Image
     alt={alt}
     class="w-[100%] rounded-2xl grayscale filter transition-all duration-700 group-hover:grayscale-0 group-hover:duration-150"
-    src="/profile.png"
+    src={profileImg}
   />
 </div>
