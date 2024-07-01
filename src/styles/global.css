@@ -38,6 +38,126 @@
   color-scheme: dark;
 }
 
+@font-face {
+  font-family: "Lexend";
+  src: url("/fonts/Lexend/Lexend-Bold.ttf") format("truetype");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Lexend";
+  src: url("/fonts/Lexend/Lexend-ExtraBold.ttf") format("truetype");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Lexend";
+  src: url("/fonts/Lexend/Lexend-Black.ttf") format("truetype");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Lexend";
+  src: url("/fonts/Lexend/Lexend-ExtraLight.ttf") format("truetype");
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Lexend";
+  src: url("/fonts/Lexend/Lexend-SemiBold.ttf") format("truetype");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Lexend";
+  src: url("/fonts/Lexend/Lexend-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Lexend";
+  src: url("/fonts/Lexend/Lexend-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Lexend";
+  src: url("/fonts/Lexend/Lexend-Light.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Lexend";
+  src: url("/fonts/Lexend/Lexend-Thin.ttf") format("truetype");
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Oswald";
+  src: url("/fonts/Oswald/Oswald-Bold.ttf") format("truetype");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Oswald";
+  src: url("/fonts/Oswald/Oswald-ExtraLight.ttf") format("truetype");
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Oswald";
+  src: url("/fonts/Oswald/Oswald-Light.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Oswald";
+  src: url("/fonts/Oswald/Oswald-SemiBold.ttf") format("truetype");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Oswald";
+  src: url("/fonts/Oswald/Oswald-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Oswald";
+  src: url("/fonts/Oswald/Oswald-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
 @keyframes fade-in {
   from {
     visibility: hidden;
