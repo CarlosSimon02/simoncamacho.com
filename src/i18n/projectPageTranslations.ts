@@ -7,7 +7,7 @@ import type { LanguageKeys } from "@/i18n/languages";
 import {
   messageFormUITranslations,
   projectCardUITranslations
-} from "./commonPageTranslations";
+} from "@/i18n/commonPageTranslations";
 
 type ProjectPageTranslationsType = {
   aboutThisProject: AboutThisProjectSectionUITranslationsType;
