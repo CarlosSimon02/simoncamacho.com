@@ -38,46 +38,6 @@
   color-scheme: dark;
 }
 
-@font-face {
-  font-family: "Lexend";
-  src: url("/fonts/Lexend/Lexend-Bold.ttf") format("truetype");
-  font-weight: bold;
-  font-style: normal;
-  font-display: block;
-}
-
-@font-face {
-  font-family: "Lexend";
-  src: url("/fonts/Lexend/Lexend-ExtraBold.ttf") format("truetype");
-  font-weight: bold;
-  font-style: normal;
-  font-display: block;
-}
-
-@font-face {
-  font-family: "Lexend";
-  src: url("/fonts/Lexend/Lexend-SemiBold.ttf") format("truetype");
-  font-weight: 600;
-  font-style: normal;
-  font-display: block;
-}
-
-@font-face {
-  font-family: "Lexend";
-  src: url("/fonts/Lexend/Lexend-Regular.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal;
-  font-display: block;
-}
-
-@font-face {
-  font-family: "Oswald";
-  src: url("/fonts/Oswald/Oswald-Bold.ttf") format("truetype");
-  font-weight: bold;
-  font-style: normal;
-  font-display: block;
-}
-
 @keyframes fade-in {
   from {
     visibility: hidden;

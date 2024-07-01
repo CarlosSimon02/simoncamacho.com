@@ -327,45 +327,6 @@ const author = siteName;
     rel="apple-touch-startup-image"
   />
 
-  <!-- Preload Lexend Fonts -->
-  <link
-    as="font"
-    crossorigin="anonymous"
-    href="/fonts/Lexend/Lexend-Bold.ttf"
-    rel="preload"
-    type="font/ttf"
-  />
-  <link
-    as="font"
-    crossorigin="anonymous"
-    href="/fonts/Lexend/Lexend-ExtraBold.ttf"
-    rel="preload"
-    type="font/ttf"
-  />
-  <link
-    as="font"
-    crossorigin="anonymous"
-    href="/fonts/Lexend/Lexend-SemiBold.ttf"
-    rel="preload"
-    type="font/ttf"
-  />
-  <link
-    as="font"
-    crossorigin="anonymous"
-    href="/fonts/Lexend/Lexend-Regular.ttf"
-    rel="preload"
-    type="font/ttf"
-  />
-
-  <!-- Preload Oswald Fonts -->
-  <link
-    as="font"
-    crossorigin="anonymous"
-    href="/fonts/Oswald/Oswald-Bold.ttf"
-    rel="preload"
-    type="font/ttf"
-  />
-
   <!-- Security and Performance -->
   <!-- <meta
     content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; object-src 'none';"
@@ -413,6 +374,14 @@ const author = siteName;
     set:html={JSON.stringify(structuredDataOrganization)}
     type="application/ld+json"
   /> -->
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect" />
+  <link crossorigin href="https://fonts.gstatic.com" rel="preconnect" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&family=Oswald:wght@200..700&display=swap"
+    rel="stylesheet"
+  />
 
   <!-- Redirect Option -->
   {redirectTo && <meta content={`0;url=${redirectTo}`} http-equiv="refresh" />}
