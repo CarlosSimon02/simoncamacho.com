@@ -1,6 +1,5 @@
 ---
 import type { LanguageKeys } from "@/i18n/languages";
-import type { HeadProps } from "@/types";
 
 import { siteName } from "@/components/MainHead.astro";
 import { getNavs, navHashLinks } from "@/components/molecules/Nav.astro";
@@ -9,7 +8,7 @@ import Connect from "@/components/organisms/home-page/Connect.astro";
 import Intro from "@/components/organisms/home-page/Intro.astro";
 import Projects from "@/components/organisms/home-page/Projects.astro";
 import { homePageTranslations } from "@/i18n/homePageTranslations";
-import { allLanguages } from "@/i18n/languages";
+import { DEFAULT_LANG, allLanguages } from "@/i18n/languages";
 import { uiLayoutTranslations } from "@/i18n/uiLayoutTranslations";
 import UILayout from "@/layouts/UILayout.astro";
 
@@ -19,10 +18,11 @@ export const getStaticPaths = () => {
   });
 };
 
-const { lang } = Astro.params as { lang: LanguageKeys };
+const { lang: langParams } = Astro.params as { lang: LanguageKeys };
+const lang = langParams ? langParams : DEFAULT_LANG;
 const navs = getNavs(uiLayoutTranslations[lang].header.navLabels, navHashLinks);
 
-export const homeMetadata: HeadProps = {
+export const getHomeMetaData = (lang: LanguageKeys) => ({
   description: homePageTranslations[lang].intro.description,
   googleSiteVerification: "",
   gtagId: "",
@@ -63,10 +63,10 @@ export const homeMetadata: HeadProps = {
   structuredDataOrganization: {},
   structuredDataPerson: {},
   title: siteName
-};
+});
 ---
 
-<UILayout metadata={homeMetadata} sections={navs}>
+<UILayout metadata={getHomeMetaData(lang)} sections={navs}>
   <Intro
     class="h-auto min-h-[calc(100vh-4.3rem)] py-14 md:py-20 lg:min-h-[calc(100vh-5.5rem)]"
     dataLink={navHashLinks.intro}

@@ -1,7 +1,7 @@
 ---
 import MainHead from "@/components/MainHead.astro";
 
-import { homeMetadata } from "./[lang]/index.astro";
+import { getHomeMetaData } from "./[lang]/index.astro";
 ---
 
-<MainHead redirectTo="/en" {...homeMetadata} />
+<MainHead redirectTo="/en" {...getHomeMetaData("en")} />

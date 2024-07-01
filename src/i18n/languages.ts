@@ -5,4 +5,4 @@ export const allLanguages = {
 
 export type LanguageKeys = keyof typeof allLanguages;
 
-export const DEFAULT_LANG = "en" as LanguageKeys;
+export const DEFAULT_LANG = "en";

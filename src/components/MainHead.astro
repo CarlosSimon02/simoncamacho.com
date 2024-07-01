@@ -1,7 +1,11 @@
 ---
 import type { HeadProps } from "@/types";
 
-import { type LanguageKeys, allLanguages } from "@/i18n/languages";
+import {
+  DEFAULT_LANG,
+  type LanguageKeys,
+  allLanguages
+} from "@/i18n/languages";
 import "@/styles/global.css";
 import { localizedUrl } from "@/utils";
 
@@ -28,7 +32,8 @@ const {
 const localizedPathname = (locale: string | undefined): string => {
   return localizedUrl(Astro.url, locale).pathname;
 };
-const { lang } = Astro.params as { lang: LanguageKeys };
+const { lang: langParams } = Astro.params as { lang: LanguageKeys };
+const lang = langParams ? langParams : DEFAULT_LANG;
 export const siteName = "Simon Camacho";
 const author = siteName;
 ---
