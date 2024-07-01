@@ -69,22 +69,22 @@ const metadata: HeadProps = {
 <UILayout metadata={metadata} sections={navs}>
   <Intro
     class="h-auto min-h-[calc(100vh-4.3rem)] py-14 md:py-20 lg:min-h-[calc(100vh-5.5rem)]"
-    dataLink="#intro"
+    dataLink={navHashLinks.intro}
     translations={homePageTranslations[lang].intro}
   />
   <About
     class="py-20 md:py-28"
-    dataLink="#about"
+    dataLink={navHashLinks.about}
     translations={homePageTranslations[lang].about}
   />
   <Projects
     class="py-20 md:py-28"
-    dataLink="#projects"
+    dataLink={navHashLinks.projects}
     translations={homePageTranslations[lang].projects}
   />
   <Connect
     class="py-20 md:py-28"
-    dataLink="#connect"
+    dataLink={navHashLinks.connect}
     translations={homePageTranslations[lang].connect}
   />
 </UILayout>
