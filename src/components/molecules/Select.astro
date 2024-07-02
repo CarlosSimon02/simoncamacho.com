@@ -282,7 +282,43 @@ const getCurrentOption = () => options.findLast(({ selected }) => selected);
     comboEl: HTMLElement;
     comboElLabel: HTMLElement;
     el: HTMLElement;
-    getSearchString = (char: string): string => {
+    idBase: string;
+    ignoreBlur: boolean;
+    labelEl: HTMLElement | null;
+    listboxEl: HTMLElement;
+    open: boolean;
+    options: NodeListOf<Element>;
+    searchString: string;
+    searchTimeout: number | undefined;
+
+    constructor(el: HTMLElement, options: string[] = []) {
+      // element refs
+      this.el = el;
+      this.labelEl = el.querySelector(".js-combo-label");
+      this.comboEl = el.querySelector("[role=combobox]") as HTMLElement;
+      this.comboElLabel = el.querySelector(
+        "[role=combobox] span"
+      ) as HTMLElement;
+      this.listboxEl = el.querySelector("[role=listbox]") as HTMLElement;
+      this.options = el.querySelectorAll("[role=option]");
+
+      // data
+      this.idBase = this.comboEl.id || "combo";
+
+      // state
+      this.activeIndex = 0;
+      this.open = false;
+      this.searchString = "";
+      this.searchTimeout = undefined;
+      this.ignoreBlur = false;
+
+      // init
+      if (el && this.comboEl && this.listboxEl) {
+        this.init();
+      }
+    }
+
+    getSearchString(char: string): string {
       // reset typing timeout and start new timeout
       // this allows us to make multiple-letter matches, like a native select
       if (typeof this.searchTimeout === "number") {
@@ -296,10 +332,9 @@ const getCurrentOption = () => options.findLast(({ selected }) => selected);
       // add most recent letter to saved search string
       this.searchString += char;
       return this.searchString;
-    };
-    idBase: string;
-    ignoreBlur: boolean;
-    init = () => {
+    }
+
+    init() {
       // add event listeners
       this.labelEl?.addEventListener("click", this.onLabelClick);
       this.comboEl.addEventListener("blur", this.onComboBlur);
@@ -313,10 +348,9 @@ const getCurrentOption = () => options.findLast(({ selected }) => selected);
         });
         option.addEventListener("mousedown", this.onOptionMouseDown);
       });
-    };
-    labelEl: HTMLElement | null;
-    listboxEl: HTMLElement;
-    onComboBlur = (event: FocusEvent) => {
+    }
+
+    onComboBlur(event: FocusEvent) {
       // do nothing if relatedTarget is contained within listboxEl
       if (this.listboxEl.contains(event.relatedTarget as Node)) {
         return;
@@ -326,12 +360,13 @@ const getCurrentOption = () => options.findLast(({ selected }) => selected);
       if (this.open) {
         this.updateMenuState(false, false);
       }
-    };
-    onComboClick = () => {
-      this.updateMenuState(!this.open);
-    };
+    }
 
-    onComboKeyDown = (event: KeyboardEvent) => {
+    onComboClick() {
+      this.updateMenuState(!this.open);
+    }
+
+    onComboKeyDown(event: KeyboardEvent) {
       const { key } = event;
       const max = this.options.length - 1;
 
@@ -363,9 +398,9 @@ const getCurrentOption = () => options.findLast(({ selected }) => selected);
           event.preventDefault();
           return this.updateMenuState(true);
       }
-    };
+    }
 
-    onComboType = (letter: string) => {
+    onComboType(letter: string) {
       // open the listbox if it is closed
       this.updateMenuState(true);
 
@@ -390,13 +425,13 @@ const getCurrentOption = () => options.findLast(({ selected }) => selected);
         window.clearTimeout(this.searchTimeout);
         this.searchString = "";
       }
-    };
+    }
 
-    onLabelClick = () => {
+    onLabelClick() {
       this.comboEl.focus();
-    };
+    }
 
-    onOptionChange = (index: number) => {
+    onOptionChange(index: number) {
       // update state
       this.activeIndex = index;
 
@@ -422,29 +457,21 @@ const getCurrentOption = () => options.findLast(({ selected }) => selected);
       if (!isElementInView(options[index] as HTMLElement)) {
         options[index].scrollIntoView({ behavior: "smooth", block: "nearest" });
       }
-    };
+    }
 
-    onOptionClick = (index: number) => {
+    onOptionClick(index: number) {
       this.onOptionChange(index);
       this.selectOption(index);
       this.updateMenuState(false);
-    };
+    }
 
-    onOptionMouseDown = () => {
+    onOptionMouseDown() {
       // Clicking an option will cause a blur event,
       // but we don't want to perform the default keyboard blur action
       this.ignoreBlur = true;
-    };
+    }
 
-    open: boolean;
-
-    options: NodeListOf<Element>;
-
-    searchString: string;
-
-    searchTimeout: number | undefined;
-
-    selectOption = (index: number) => {
+    selectOption(index: number) {
       // update state
       this.activeIndex = index;
 
@@ -465,9 +492,9 @@ const getCurrentOption = () => options.findLast(({ selected }) => selected);
         optionEl.setAttribute("aria-selected", "false");
       });
       options[index].setAttribute("aria-selected", "true");
-    };
+    }
 
-    updateMenuState = (open: boolean, callFocus = true) => {
+    updateMenuState(open: boolean, callFocus = true) {
       if (this.open === open) {
         return;
       }
@@ -489,33 +516,6 @@ const getCurrentOption = () => options.findLast(({ selected }) => selected);
 
       // move focus back to the combobox, if needed
       callFocus && this.comboEl.focus();
-    };
-
-    constructor(el: HTMLElement, options: string[] = []) {
-      // element refs
-      this.el = el;
-      this.labelEl = el.querySelector(".js-combo-label");
-      this.comboEl = el.querySelector("[role=combobox]") as HTMLElement;
-      this.comboElLabel = el.querySelector(
-        "[role=combobox] span"
-      ) as HTMLElement;
-      this.listboxEl = el.querySelector("[role=listbox]") as HTMLElement;
-      this.options = el.querySelectorAll("[role=option]");
-
-      // data
-      this.idBase = this.comboEl.id || "combo";
-
-      // state
-      this.activeIndex = 0;
-      this.open = false;
-      this.searchString = "";
-      this.searchTimeout = undefined;
-      this.ignoreBlur = false;
-
-      // init
-      if (el && this.comboEl && this.listboxEl) {
-        this.init();
-      }
     }
   }
 
