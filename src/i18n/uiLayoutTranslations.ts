@@ -10,6 +10,7 @@ export type UILayoutTranslationsType = {
   header: HeaderUITranslationsType;
   mobileMenu: MobileMenuUITranslationsType;
   scrollNumbers: ScrollNumbersUITranslationsType;
+  skipToMainContent: string;
   socials: SocialsUITranslationsType;
 };
 
@@ -71,6 +72,7 @@ export const uiLayoutTranslations: {
     scrollNumbers: {
       sectionsLabel: "List of sections to navigate"
     },
+    skipToMainContent: "Skip to main content",
     socials: socialsTranslations.en
   },
   fil: {
@@ -86,6 +88,7 @@ export const uiLayoutTranslations: {
     scrollNumbers: {
       sectionsLabel: "Listahan ng mga seksyon na pwedeng puntahan"
     },
+    skipToMainContent: "Pumunta sa nilalaman",
     socials: socialsTranslations.fil
   }
 };
