@@ -33,11 +33,11 @@ const { toggleDarkModeLabel, toggleLightModeLabel } = Astro.props;
 </theme-toggle>
 
 <style>
-  :global(.theme-dark) .icon.light {
+  :global([data-ui-mode="dark"]) .icon.light {
     display: none;
   }
 
-  :global(html:not(.theme-dark)) .icon.dark {
+  :global(html:not([data-ui-mode="dark"])) .icon.dark {
     display: none;
   }
 </style>
@@ -51,9 +51,11 @@ const { toggleDarkModeLabel, toggleLightModeLabel } = Astro.props;
 
       /** Set the theme to dark/light mode. */
       const setTheme = (dark: boolean) => {
-        document.documentElement.classList[dark ? "add" : "remove"](
-          "theme-dark"
-        );
+        if (dark) {
+          document.documentElement.setAttribute("data-ui-mode", "dark");
+        } else {
+          document.documentElement.removeAttribute("data-ui-mode");
+        }
         button.setAttribute("aria-pressed", String(dark));
       };
 
@@ -65,7 +67,7 @@ const { toggleDarkModeLabel, toggleLightModeLabel } = Astro.props;
     }
 
     isDark() {
-      return document.documentElement.classList.contains("theme-dark");
+      return document.documentElement.getAttribute("data-ui-mode") === "dark";
     }
   }
 
