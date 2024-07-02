@@ -59,8 +59,8 @@ const { class: className, dataLink, translations: t } = Astro.props;
         </h3>
         <P class="mb-9 max-w-[60ch]" html={t.description} />
         <div class="flex justify-center gap-6 md:justify-start">
-          <Button class="contact-button" label={t.contactButtonLabel} />
-          <Button label={t.resumeButtonLabel} styleType="accent" />
+          <Button class="contact-button">{t.contactButtonLabel}</Button>
+          <Button styleType="accent">{t.resumeButtonLabel}</Button>
         </div>
       </div>
       <div class="flex basis-[45%] justify-center">
