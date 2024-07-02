@@ -2,16 +2,10 @@
 import type { HTMLAttributes } from "astro/types";
 
 type Props = {
-  label: string;
   styleType?: "accent" | "primary";
 } & HTMLAttributes<"a">;
 
-const {
-  class: className,
-  label,
-  styleType = "primary",
-  ...props
-} = Astro.props;
+const { class: className, styleType = "primary", ...props } = Astro.props;
 ---
 
 <a class:list={["group max-w-[12.5rem] flex-1", className]} {...props}
@@ -23,6 +17,6 @@ const {
         : "border-[0.0625rem] border-accent-500 text-accent-500"
     ]}
   >
-    {label}
+    <slot />
   </div></a
 >
