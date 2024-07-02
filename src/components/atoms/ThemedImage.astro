@@ -31,11 +31,11 @@ const { alt, class: className, srcDark, srcLight } = Astro.props;
 </Fragment>
 
 <style>
-  :global(.theme-dark) img.light {
+  :global([data-ui-mode="dark"]) img.light {
     display: none;
   }
 
-  :global(html:not(.theme-dark)) img.dark {
+  :global(html:not([data-ui-mode="dark"])) img.dark {
     display: none;
   }
 </style>
