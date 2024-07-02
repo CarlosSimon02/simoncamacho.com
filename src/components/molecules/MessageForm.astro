@@ -1,5 +1,6 @@
 ---
 import Button from "@/components/atoms/Button.astro";
+import Icon from "@/components/atoms/Icon.astro";
 import InputTextField from "@/components/atoms/InputTextField.astro";
 
 export type MessgeFormUITranslationsType = {
@@ -42,14 +43,21 @@ const { class: className, translations: t } = Astro.props;
     type="textarea"
   />
   <Button
-    class="max-w-none justify-self-stretch md:max-w-[12.5rem]"
-    label={t.submitLabel}
+    class="submit max-w-none justify-self-stretch md:max-w-[12.5rem]"
     styleType="accent"
     type="submit"
-  />
+  >
+    <span class="loading hidden">
+      <Icon class="animate-spin" icon="loading" size="1rem" />
+    </span>
+    <span class="default">
+      {t.submitLabel}
+    </span>
+  </Button>
 </form>
 
 <script>
+  import { Toast } from "jolty";
   import * as yup from "yup";
 
   type FormData = {
@@ -57,6 +65,24 @@ const { class: className, translations: t } = Astro.props;
     // eslint-disable-next-line perfectionist/sort-object-types
     email: string;
     message: string;
+  };
+
+  Toast.template(({ autohide, content, dismiss, type }) => {
+    const className = `ui-toast ${type ? "ui-toast--" + type : ""}`;
+    const closeBtn = dismiss
+      ? `<button class="ui-btn-close ui-btn-close--no-bg" aria-label="Close"></button>`
+      : "";
+    const progress = autohide
+      ? '<div class="ui-toast-progress" data-ui-autohide-progress></div>'
+      : "";
+    return `<div class="${className}" data-ui-dismiss><div class="ui-toast-icon"></div><div class="ui-toast-content">${content}</div>${closeBtn}${progress}</div>`;
+  });
+
+  const toast = {
+    error: (content: string) =>
+      new Toast({ content, position: "bottom-start", type: "danger" }),
+    success: (content: string) =>
+      new Toast({ content, position: "bottom-start", type: "success" })
   };
 
   const getCurrentLocale = () => {
@@ -76,9 +102,7 @@ const { class: className, translations: t } = Astro.props;
 
     return locale;
   };
-
   const currentLocale = getCurrentLocale() as "en" | "fil";
-
   const errorMessages = {
     en: {
       email: {
@@ -105,7 +129,6 @@ const { class: className, translations: t } = Astro.props;
       }
     }
   };
-
   const messageFormSchema = yup.object().shape({
     name: yup.string().required(errorMessages[currentLocale].name.required),
     // eslint-disable-next-line perfectionist/sort-objects
@@ -117,8 +140,8 @@ const { class: className, translations: t } = Astro.props;
       .string()
       .required(errorMessages[currentLocale].message.required)
   });
-
   const form = document.querySelector("form") as HTMLElement;
+  const submitButton = document.querySelector(".submit") as HTMLElement;
   const requiredInputs = document.querySelectorAll(
     "input[required],textarea[required]"
   ) as NodeListOf<HTMLInputElement>;
@@ -198,6 +221,21 @@ const { class: className, translations: t } = Astro.props;
     }
   };
 
+  const changeSubmitButtonState = (state: "default" | "loading") => {
+    const loadingElem = document.querySelector(".loading") as HTMLElement;
+    const defaultElem = document.querySelector(".default") as HTMLElement;
+
+    if (state === "loading") {
+      submitButton.setAttribute("disabled", "true");
+      loadingElem.classList.remove("hidden");
+      defaultElem.classList.add("hidden");
+    } else {
+      submitButton.removeAttribute("disabled");
+      loadingElem.classList.add("hidden");
+      defaultElem.classList.remove("hidden");
+    }
+  };
+
   const handleFormSubmit = async (event: Event) => {
     event.preventDefault();
     clearAllAlerts();
@@ -206,20 +244,32 @@ const { class: className, translations: t } = Astro.props;
     if (isValid) {
       const form = document.querySelector("form") as HTMLFormElement;
       const formData = new FormData(form);
-
       const urlParams = new URLSearchParams();
 
       formData.forEach((value, key) => {
         urlParams.append(key, value as string);
       });
 
+      changeSubmitButtonState("loading");
+
       fetch("/", {
         body: urlParams.toString(),
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         method: "POST"
       })
-        .then(() => console.log("Form successfully submitted"))
-        .catch((error) => alert(error));
+        .then(() => {
+          changeSubmitButtonState("default");
+          toast.success("Message sent successfully");
+          let audio = new Audio("/audios/success.mp3");
+          audio.play();
+        })
+        .catch((error) => {
+          changeSubmitButtonState("default");
+          toast.error("Message couldn't be sent");
+          let audio = new Audio("/audios/error.mp3");
+          audio.play();
+          console.error(error);
+        });
     }
   };
 
