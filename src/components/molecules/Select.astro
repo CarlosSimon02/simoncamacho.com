@@ -336,17 +336,17 @@ const getCurrentOption = () => options.findLast(({ selected }) => selected);
 
     init() {
       // add event listeners
-      this.labelEl?.addEventListener("click", this.onLabelClick);
-      this.comboEl.addEventListener("blur", this.onComboBlur);
-      this.listboxEl.addEventListener("focusout", this.onComboBlur);
-      this.comboEl.addEventListener("click", this.onComboClick);
-      this.comboEl.addEventListener("keydown", this.onComboKeyDown);
+      this.labelEl?.addEventListener("click", this.onLabelClick.bind(this));
+      this.comboEl.addEventListener("blur", this.onComboBlur.bind(this));
+      this.listboxEl.addEventListener("focusout", this.onComboBlur.bind(this));
+      this.comboEl.addEventListener("click", this.onComboClick.bind(this));
+      this.comboEl.addEventListener("keydown", this.onComboKeyDown.bind(this));
       this.options.forEach((option, index) => {
         option.addEventListener("click", (event) => {
           event.stopPropagation();
           this.onOptionClick(index);
         });
-        option.addEventListener("mousedown", this.onOptionMouseDown);
+        option.addEventListener("mousedown", this.onOptionMouseDown.bind(this));
       });
     }
 
