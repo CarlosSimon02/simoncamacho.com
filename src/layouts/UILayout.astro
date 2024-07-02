@@ -25,7 +25,7 @@ const { lang } = Astro.params as { lang: LanguageKeys };
 const t = uiLayoutTranslations[lang];
 ---
 
-<html lang={lang}>
+<html data-ui-mode="dark" lang={lang}>
   <MainHead {...metadata} />
   <body
     class:list={[
