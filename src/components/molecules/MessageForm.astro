@@ -23,8 +23,14 @@ const { class: className, translations: t } = Astro.props;
   data-netlify="true"
   method="POST"
   name="message"
+  netlify-honeypot="bot-field"
   novalidate
 >
+  <p aria-hidden="true" class="sr-only">
+    <label>
+      Don’t fill this out if you’re human: <input name="bot-field" />
+    </label>
+  </p>
   <InputTextField
     id="name"
     label={t.nameLabel}
