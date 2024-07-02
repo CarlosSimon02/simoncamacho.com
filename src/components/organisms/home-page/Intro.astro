@@ -27,22 +27,22 @@ const { class: className, dataLink, translations: t } = Astro.props;
   dataLink={dataLink}
   element="section"
 >
-  <ContentContainer>
+  <ContentContainer class="relative">
+    <Honeycomb
+      class="right-10 top-1/2 -translate-y-1/2 max-md:hidden"
+      cols={7}
+      id="1"
+      rows={15}
+    />
+    <Honeycomb
+      class="left-1/2 top-36 -translate-x-1/2 md:hidden"
+      cols={15}
+      id="2"
+      rows={4}
+    />
     <div
-      class="relative flex items-center justify-between gap-[2.5rem] max-md:flex-col-reverse"
+      class="z-[7] flex items-center justify-between gap-[2.5rem] max-md:flex-col-reverse"
     >
-      <Honeycomb
-        class="right-10 top-1/2 -translate-y-1/2 max-md:hidden"
-        cols={7}
-        id="1"
-        rows={15}
-      />
-      <Honeycomb
-        class="left-1/2 top-36 -translate-x-1/2 md:hidden"
-        cols={15}
-        id="2"
-        rows={4}
-      />
       <div
         class="flex shrink basis-[55%] flex-col max-md:items-stretch max-md:text-center"
       >
