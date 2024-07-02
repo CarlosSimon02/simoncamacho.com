@@ -28,7 +28,10 @@ const { class: className, translations: t } = Astro.props;
 >
   <p aria-hidden="true" class="sr-only">
     <label>
-      Don’t fill this out if you’re human: <input name="bot-field" />
+      Don’t fill this out if you’re human: <input
+        name="bot-field"
+        tabindex="-1"
+      />
     </label>
   </p>
   <InputTextField
