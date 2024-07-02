@@ -236,6 +236,10 @@ const { class: className, translations: t } = Astro.props;
     }
   };
 
+  const clearInputFields = () => {
+    requiredInputs.forEach((input) => (input.value = ""));
+  };
+
   const handleFormSubmit = async (event: Event) => {
     event.preventDefault();
     clearAllAlerts();
@@ -262,6 +266,7 @@ const { class: className, translations: t } = Astro.props;
           toast.success("Message sent successfully");
           let audio = new Audio("/audios/success.mp3");
           audio.play();
+          clearInputFields();
         })
         .catch((error) => {
           changeSubmitButtonState("default");
