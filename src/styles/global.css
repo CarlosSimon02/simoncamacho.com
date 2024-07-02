@@ -1,3 +1,5 @@
+@import "jolty-ui";
+
 :root {
   --primary-50: 0 0% 100%;
   --primary-200: 210 40% 97.08%;
@@ -18,7 +20,7 @@
   color-scheme: light;
 }
 
-:root.theme-dark {
+:root[data-ui-mode="dark"] {
   --primary-50: 222.22 47.37% 11.18%;
   --primary-200: 220.71 42.42% 13.24%;
   --primary-201: 217.24 32.58% 17.45%;
