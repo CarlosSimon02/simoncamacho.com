@@ -402,14 +402,18 @@ const author = siteName;
     };
     const applyThemePreference = () => {
       const isDark = getThemePreference() === "dark";
-      rootElement.classList[isDark ? "add" : "remove"]("theme-dark");
+      if (isDark) {
+        rootElement.setAttribute("data-ui-mode", "dark");
+      } else {
+        rootElement.removeAttribute("data-ui-mode");
+      }
       if (typeof localStorage !== "undefined") {
         const observer = new MutationObserver(() => {
-          const isDark = rootElement.classList.contains("theme-dark");
+          const isDark = rootElement.getAttribute("data-ui-mode") === "dark";
           localStorage.setItem("theme", isDark ? "dark" : "light");
         });
         observer.observe(rootElement, {
-          attributeFilter: ["class"],
+          attributeFilter: ["data-ui-mode"],
           attributes: true
         });
       }
