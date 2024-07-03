@@ -41,8 +41,8 @@
 }
 
 body {
-  visibility: visible;
-  opacity: 1;
+  visibility: visible !important;
+  opacity: 1 !important;
 }
 
 @keyframes fade-in {
