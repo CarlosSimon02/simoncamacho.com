@@ -40,11 +40,6 @@
   color-scheme: dark;
 }
 
-body {
-  visibility: visible !important;
-  opacity: 1 !important;
-}
-
 @keyframes fade-in {
   from {
     visibility: hidden;
