@@ -1,7 +1,8 @@
-import { DEFAULT_LANG, allLanguages } from "@/i18n/languages";
 import sitemap from "@astrojs/sitemap";
 import tailwind from "@astrojs/tailwind";
 import { defineConfig } from "astro/config";
+
+import { DEFAULT_LANG, allLanguages } from "./src/i18n/languages";
 
 const createSitemapLocales = () => {
   let sitemapLocales = {};
