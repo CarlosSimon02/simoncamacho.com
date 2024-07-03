@@ -1,3 +1,4 @@
+import sitemap from "@astrojs/sitemap";
 import tailwind from "@astrojs/tailwind";
 import { defineConfig } from "astro/config";
 
@@ -7,6 +8,7 @@ export default defineConfig({
     defaultLocale: "en",
     locales: ["en", "fil"]
   },
-  integrations: [tailwind()],
+  integrations: [tailwind(), sitemap()],
+  site: "https://simoncamacho.com",
   trailingSlash: "never"
 });
