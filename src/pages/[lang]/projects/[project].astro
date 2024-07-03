@@ -61,9 +61,7 @@ const metadata: HeadProps = {
   description: project.translations[lang].description,
   image: project.ogImage,
   keywords: project.keywords as unknown as string[],
-  structuredDataBreadcrumb: {},
-  structuredDataOrganization: {},
-  structuredDataPerson: {},
+  structuredData: project.structuredData,
   title: `${siteName} | ${project.title}`
 };
 ---

@@ -57,9 +57,23 @@ export const getHomeMetaData = (lang: LanguageKeys) => ({
     "Simon Camacho web developer",
     "Simon Camacho portfolio"
   ],
-  structuredDataBreadcrumb: {},
-  structuredDataOrganization: {},
-  structuredDataPerson: {},
+  structuredData: {
+    "@context": "https://schema.org/",
+    "@type": "Person",
+    image:
+      "https://media.licdn.com/dms/image/D5603AQFpXIQze8tWQg/profile-displayphoto-shrink_800_800/0/1697413118407?e=1725494400&v=beta&t=BzsyQbz4nNkymIjPGVWR5RsG5QpCyejnrmQYV0DJic8",
+    jobTitle: "Web Developer",
+    name: "Carlos Simon Camacho",
+    sameAs: [
+      "https://www.facebook.com/CarlosSimon02/",
+      "https://x.com/CarlosSimonCam1",
+      "https://www.instagram.com/caloycowmoochi/",
+      "https://www.linkedin.com/in/carlossimon02/",
+      "https://github.com/CarlosSimon02",
+      "https://simoncamacho.com"
+    ],
+    url: "https://simoncamacho.com"
+  },
   title: removeItalicTags(siteName)
 });
 ---

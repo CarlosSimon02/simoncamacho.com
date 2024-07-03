@@ -12,9 +12,7 @@ export type HeadProps = {
   image: string;
   keywords: string[];
   redirectTo?: string;
-  structuredDataBreadcrumb: StructuredData;
-  structuredDataOrganization: StructuredData;
-  structuredDataPerson: StructuredData;
+  structuredData: StructuredData;
   title: string;
   twitterData1?: string;
   twitterData2?: string;

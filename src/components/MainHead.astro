@@ -19,9 +19,7 @@ const {
   image,
   keywords,
   redirectTo,
-  structuredDataBreadcrumb,
-  structuredDataOrganization,
-  structuredDataPerson,
+  structuredData,
   title,
   twitterData1,
   twitterData2,
@@ -355,32 +353,18 @@ const author = siteName;
   />
 
   <!-- Security and Performance -->
-  <!-- <meta
+  <meta
     content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; object-src 'none';"
     http-equiv="Content-Security-Policy"
   />
   <meta content="IE=edge" http-equiv="X-UA-Compatible" />
-  <link href="https://example.com" rel="preconnect" />
-  <link href="//example.com" rel="dns-prefetch" />
-  <link as="script" href="/path/to/important/script.js" rel="preload" />
-  <link as="style" href="/path/to/important/style.css" rel="preload" /> -->
 
   <!-- Structured Data -->
-  <!-- <script
-    is:inline
-    set:html={JSON.stringify(structuredDataPerson)}
-    type="application/ld+json"
-  />
   <script
     is:inline
-    set:html={JSON.stringify(structuredDataBreadcrumb)}
+    set:html={JSON.stringify(structuredData)}
     type="application/ld+json"
   />
-  <script
-    is:inline
-    set:html={JSON.stringify(structuredDataOrganization)}
-    type="application/ld+json"
-  /> -->
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect" />

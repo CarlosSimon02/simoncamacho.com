@@ -40,6 +40,33 @@ export const projects = [
     otherProjectSlugs: ["fem-pomodoro-app", "audiophile"],
     previewProjectUrl: "https://fem-kanban.onrender.com/",
     slug: "kanban-web-app",
+    structuredData: {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      author: {
+        "@type": "Person",
+        name: "Simon Camacho",
+        url: "https://simoncamacho.com"
+      },
+      dateModified: "2024-07-03",
+      datePublished: "2024-07-03",
+      description:
+        "Manage and track your tasks with my full-stack MERN web app. Switch between dark and light modes to suit your style. You can sign up to save your data or use it without an account, thanks to local storage. Enjoy intuitive drag-and-drop task management.",
+      headline: "Kanban Web App",
+      image: "https://simoncamacho.com/ogs/kanban-og.png",
+      mainEntityOfPage: {
+        "@id": "https://simoncamacho.com/en/projects/kanban-web-app",
+        "@type": "WebPage"
+      },
+      publisher: {
+        "@type": "Organization",
+        logo: {
+          "@type": "ImageObject",
+          url: "https://simoncamacho.com/favicons/android-chrome-512x512.png"
+        },
+        name: "Simon Camacho"
+      }
+    },
     technologies: [
       { logo: "mongodb", name: "MongoDB" },
       { logo: "expressjs", name: "Express.js" },
@@ -109,6 +136,33 @@ export const projects = [
     otherProjectSlugs: ["kanban-web-app", "fem-pomodoro-app"],
     previewProjectUrl: "https://officialaudiophile.vercel.app/",
     slug: "audiophile",
+    structuredData: {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      author: {
+        "@type": "Person",
+        name: "Simon Camacho",
+        url: "https://simoncamacho.com"
+      },
+      dateModified: "2024-07-03",
+      datePublished: "2024-07-03",
+      description:
+        "This multi-page e-commerce website, built with Next.js, is fully responsive and uses local storage to retain cart items. It features a modern design and intuitive navigation for an enhanced shopping experience.",
+      headline: "Audiophile E-commerce Website",
+      image: "https://simoncamacho.com/ogs/audiophile-og.png",
+      mainEntityOfPage: {
+        "@id": "https://simoncamacho.com/en/projects/audiophile",
+        "@type": "WebPage"
+      },
+      publisher: {
+        "@type": "Organization",
+        logo: {
+          "@type": "ImageObject",
+          url: "https://simoncamacho.com/favicons/android-chrome-512x512.png"
+        },
+        name: "Simon Camacho"
+      }
+    },
     technologies: [
       { logo: "nextjs", name: "Next.js" },
       { logo: "tailwind", name: "Tailwind" },
@@ -173,6 +227,33 @@ export const projects = [
     otherProjectSlugs: ["kanban-web-app", "audiophile"],
     previewProjectUrl: "https://fempomodoro.netlify.app/",
     slug: "fem-pomodoro-app",
+    structuredData: {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      author: {
+        "@type": "Person",
+        name: "Simon Camacho",
+        url: "https://simoncamacho.com"
+      },
+      dateModified: "2024-07-03",
+      datePublished: "2024-07-03",
+      description:
+        "A Pomodoro-inspired timer that is a progressive web app, allowing offline use. It features customizable appearance options and provides notification alerts.",
+      headline: "FEM Pomodoro App",
+      image: "https://simoncamacho.com/ogs/pomodoro-og.png",
+      mainEntityOfPage: {
+        "@id": "https://simoncamacho.com/en/projects/fem-pomodoro-app",
+        "@type": "WebPage"
+      },
+      publisher: {
+        "@type": "Organization",
+        logo: {
+          "@type": "ImageObject",
+          url: "https://simoncamacho.com/favicons/android-chrome-512x512.png"
+        },
+        name: "Simon Camacho"
+      }
+    },
     technologies: [
       { logo: "javascript", name: "Javascript" },
       { logo: "sass", name: "Sass" },
