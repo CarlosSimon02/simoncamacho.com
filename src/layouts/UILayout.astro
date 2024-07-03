@@ -3,7 +3,6 @@ import type { LanguageKeys } from "@/i18n/languages";
 import type { HeadProps } from "@/types";
 
 import MainHead from "@/components/MainHead.astro";
-import AnchorButton from "@/components/atoms/AnchorButton.astro";
 import Button from "@/components/atoms/Button.astro";
 import ScrollNumbers, {
   type SectionsType
@@ -16,6 +15,7 @@ import {
   type UILayoutTranslationsType,
   uiLayoutTranslations
 } from "@/i18n/uiLayoutTranslations";
+import "@/styles/global.css";
 
 type Props = {
   metadata: HeadProps;
