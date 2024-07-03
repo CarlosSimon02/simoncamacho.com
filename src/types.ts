@@ -10,8 +10,6 @@ export type StructuredData = {
 export type HeadProps = {
   description: string;
   googleSiteVerification: string;
-  gtagId: string;
-  gtmId: string;
   image: string;
   keywords: string[];
   redirectTo?: string;
