@@ -39,6 +39,21 @@ const author = siteName;
 ---
 
 <head>
+  <!-- Google tag (gtag.js) -->
+  <script
+    is:inline
+    src="https://www.googletagmanager.com/gtag/js?id=G-2CJXJSCJE4"></script>
+  <script is:inline>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+
+    gtag("config", "G-2CJXJSCJE4");
+  </script>
+  <!-- End Google tag (gtag.js) -->
+
   <meta charset="utf-8" />
   <meta content="width=device-width, initial-scale=1" name="viewport" />
   <title>{title}</title>
