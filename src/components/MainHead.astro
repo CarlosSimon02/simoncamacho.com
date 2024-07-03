@@ -35,41 +35,10 @@ const author = siteName;
 ---
 
 <head>
-  <!-- Google tag (gtag.js) -->
-  <script
-    is:inline
-    src="https://www.googletagmanager.com/gtag/js?id=G-2CJXJSCJE4"></script>
-  <script async is:inline>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() {
-      dataLayer.push(arguments);
-    }
-    gtag("js", new Date());
-
-    gtag("config", "G-2CJXJSCJE4");
-  </script>
-  <!-- End Google tag (gtag.js) -->
-
+  <!-- Basics -->
   <meta charset="utf-8" />
   <meta content="width=device-width, initial-scale=1" name="viewport" />
   <title>{title}</title>
-
-  <!-- Google Tag Manager -->
-  <script is:inline>
-    (function (w, d, s, l, i) {
-      w[l] = w[l] || [];
-      w[l].push({ event: "gtm.js", "gtm.start": new Date().getTime() });
-      var f = d.getElementsByTagName(s)[0],
-        j = d.createElement(s),
-        dl = l != "dataLayer" ? "&l=" + l : "";
-      j.async = true;
-      j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
-      f.parentNode.insertBefore(j, f);
-    })(window, document, "script", "dataLayer", "GTM-PQVR64CL");
-  </script>
-  <!-- End Google Tag Manager -->
-
-  <!-- Basics -->
   <meta content={description} name="description" />
   <meta content={image} name="image" />
   <meta content={keywords.join(", ")} name="keywords" />
