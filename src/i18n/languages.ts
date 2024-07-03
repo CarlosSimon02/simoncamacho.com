@@ -1,6 +1,6 @@
 export const allLanguages = {
-  en: { name: "English", og: "en_US" },
-  fil: { name: "Filipino", og: "fil_PH" }
+  en: { name: "English", og: "en_US", sitemap: "en-US" },
+  fil: { name: "Filipino", og: "fil_PH", sitemap: "fil-PH" }
 } as const;
 
 export type LanguageKeys = keyof typeof allLanguages;
