@@ -29,7 +29,7 @@ const getCurrentOption = () => options.findLast(({ selected }) => selected);
     aria-labelledby={labelID}
     class="cursor-pointer"
     data-value={getCurrentOption()?.value}
-    id="combo1"
+    id={`combo-${labelID}`}
     role="combobox"
     tabindex="0"
   >
@@ -43,7 +43,7 @@ const getCurrentOption = () => options.findLast(({ selected }) => selected);
   <div
     aria-labelledby={labelID}
     class="combo-menu absolute right-0 top-[2rem] z-50 hidden max-h-80 w-fit overflow-y-scroll rounded-md border-[0.0625rem] border-secondary-550 bg-primary-50 p-1 text-secondary-950"
-    id="listbox1"
+    id={`listbox-${labelID}`}
     role="listbox"
     tabindex="-1"
   >
