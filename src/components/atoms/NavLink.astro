@@ -8,7 +8,7 @@ type Props = {
 const { href, label, media = "desktop" } = Astro.props;
 ---
 
-<li class="group" role="none">
+<li class="group">
   <a
     class:list={media === "desktop"
       ? [
