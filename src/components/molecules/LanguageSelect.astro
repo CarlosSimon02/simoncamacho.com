@@ -5,9 +5,10 @@ import { localizedUrl } from "@/utils";
 
 type Props = {
   label: string;
+  labelID: string;
 };
 
-const { label } = Astro.props;
+const { label, labelID } = Astro.props;
 const { lang } = Astro.params as { lang: LanguageKeys };
 
 const localizedPathname = (locale: string | undefined): string => {
@@ -19,6 +20,7 @@ const localizedPathname = (locale: string | undefined): string => {
   <Select
     icon="globe"
     label={label}
+    labelID={labelID}
     options={Object.entries(allLanguages).map(([code, locale]) => ({
       label: locale.name,
       selected: code === lang,

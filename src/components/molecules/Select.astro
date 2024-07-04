@@ -5,6 +5,7 @@ import Icon from "@/components/atoms/Icon.astro";
 type Props = {
   icon: keyof typeof iconPaths;
   label: string;
+  labelID: string;
   options: {
     label: string;
     selected: boolean;
@@ -12,7 +13,7 @@ type Props = {
   }[];
 };
 
-const { icon, label, options } = Astro.props;
+const { icon, label, labelID, options } = Astro.props;
 
 const getCurrentOption = () => options.findLast(({ selected }) => selected);
 ---
@@ -20,12 +21,12 @@ const getCurrentOption = () => options.findLast(({ selected }) => selected);
 <div
   class="js-select group relative text-secondary-950 transition-colors hover:text-accent-500"
 >
-  <div class="js-combo-label sr-only" id="combo1-label">{label}</div>
+  <div class="js-combo-label sr-only" id={labelID}>{label}</div>
   <div
     aria-controls="listbox1"
     aria-expanded="false"
     aria-haspopup="listbox"
-    aria-labelledby="combo1-label"
+    aria-labelledby={labelID}
     class="cursor-pointer"
     data-value={getCurrentOption()?.value}
     id="combo1"
@@ -40,7 +41,7 @@ const getCurrentOption = () => options.findLast(({ selected }) => selected);
     <span class="sr-only">{getCurrentOption()?.label}</span>
   </div>
   <div
-    aria-labelledby="combo1-label"
+    aria-labelledby={labelID}
     class="combo-menu absolute right-0 top-[2rem] z-50 hidden max-h-80 w-fit overflow-y-scroll rounded-md border-[0.0625rem] border-secondary-550 bg-primary-50 p-1 text-secondary-950"
     id="listbox1"
     role="listbox"
