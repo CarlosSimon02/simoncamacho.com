@@ -31,7 +31,7 @@ export const projectPageTranslationsType: {
     },
     messageMe: {
       letsBuildTogetherContent:
-        "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Obcaecati nemo libero cumque sint, facere fuga, voluptatum velit quae debitis sequi modi voluptate unde vero harum rem quis molestiae repellendus tempora!Lorem ipsum dolor sit, amet consectetur adipisicing elit. Obcaecati nemo libero cumque sint, facere fuga, voluptatum velit quae debitis sequi modi voluptate unde vero harum rem quis molestiae repellendus tempora!",
+        "Got an idea you want to bring to life? Let's team up and make something amazing. Whether it's a web app, an online store, or a personal portfolio, I have the experience and passion to help you make it happen.",
       letsBuildTogetherLabel: "Let's Build Something Together",
       messageForm: messageFormUITranslations.en,
       title: "Message Me"
@@ -60,7 +60,7 @@ export const projectPageTranslationsType: {
     },
     messageMe: {
       letsBuildTogetherContent:
-        "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Obcaecati nemo libero cumque sint, facere fuga, voluptatum velit quae debitis sequi modi voluptate unde vero harum rem quis molestiae repellendus tempora!Lorem ipsum dolor sit, amet consectetur adipisicing elit. Obcaecati nemo libero cumque sint, facere fuga, voluptatum velit quae debitis sequi modi voluptate unde vero harum rem quis molestiae repellendus tempora!",
+        "May ideya ka ba na gusto mong maisakatuparan? Magtulungan tayo at gumawa ng kahanga-hangang proyekto. Kung ito man ay isang <i>web app</i>, <i>online store</i>, o personal na <i>portfolio</i>, mayroon akong karanasan at dedikasyon upang matulungan kang mangyari ito.",
       letsBuildTogetherLabel: "Bumuo Tayo ng Proyekto",
       messageForm: messageFormUITranslations.fil,
       title: "Magmensahe"
