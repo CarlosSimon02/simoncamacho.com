@@ -84,14 +84,24 @@ const { class: className, translations: t } = Astro.props;
     const progress = autohide
       ? '<div class="ui-toast-progress" data-ui-autohide-progress></div>'
       : "";
-    return `<div class="${className}" data-ui-dismiss data-ui-transition-enabled="false"><div class="ui-toast-icon"></div><div class="ui-toast-content">${content}</div>${closeBtn}${progress}</div>`;
+    return `<div class="${className}" data-ui-dismiss><div class="ui-toast-icon"></div><div class="ui-toast-content">${content}</div>${closeBtn}${progress}</div>`;
   });
 
   const toast = {
     error: (content: string) =>
-      new Toast({ content, position: "bottom-start", type: "danger" }),
+      new Toast({
+        content,
+        position: "bottom-start",
+        transition: false,
+        type: "danger"
+      }),
     success: (content: string) =>
-      new Toast({ content, position: "bottom-start", type: "success" })
+      new Toast({
+        content,
+        position: "bottom-start",
+        transition: false,
+        type: "success"
+      })
   };
 
   const getCurrentLocale = () => {
