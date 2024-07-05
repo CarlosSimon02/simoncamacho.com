@@ -5,6 +5,7 @@ import type { SectionType } from "@/types";
 
 import ContentTitle from "@/components/atoms/ContentTitle.astro";
 import Icon from "@/components/atoms/Icon.astro";
+import P from "@/components/atoms/P.astro";
 import PGroup from "@/components/atoms/PGroup.astro";
 import ThemedImage from "@/components/atoms/ThemedImage.astro";
 import BaseContainer from "@/components/containers/BaseContainer.astro";
@@ -64,7 +65,7 @@ const { lang } = Astro.params as { lang: LanguageKeys };
             /></a
           >
         </div>
-        <PGroup html={proj.translations[lang].description} />
+        <P html={proj.translations[lang].description} />
       </div>
     </div>
     <div class="flex items-center gap-12">
