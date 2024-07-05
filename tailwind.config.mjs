@@ -12,7 +12,6 @@ export default {
         "pfp-bg": "hsl(var(--pfp-bg))",
         "primary-50": "hsl(var(--primary-50))",
         "primary-200": "hsl(var(--primary-200))",
-        "primary-201": "hsl(var(--primary-201))",
         "red-500": "hsl(var(--red-500))",
         "secondary-400": "hsl(var(--secondary-400))",
         "secondary-500": "hsl(var(--secondary-500))",
