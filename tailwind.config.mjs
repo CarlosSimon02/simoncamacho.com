@@ -6,13 +6,16 @@ export default {
     extend: {
       colors: {
         "accent-500": "hsl(var(--accent-500))",
+        "hero-300": "hsl(var(--hero-300))",
+        "hero-400": "hsl(var(--hero-400))",
+        "hero-500": "hsl(var(--hero-500))",
         "pfp-bg": "hsl(var(--pfp-bg))",
         "primary-50": "hsl(var(--primary-50))",
         "primary-200": "hsl(var(--primary-200))",
         "primary-201": "hsl(var(--primary-201))",
         "red-500": "hsl(var(--red-500))",
+        "secondary-400": "hsl(var(--secondary-400))",
         "secondary-500": "hsl(var(--secondary-500))",
-        "secondary-501": "hsl(var(--secondary-501))",
         "secondary-550": "hsl(var(--secondary-550))",
         "secondary-700": "hsl(var(--secondary-700))",
         "secondary-950": "hsl(var(--secondary-950))"
