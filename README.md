@@ -4,6 +4,8 @@ A minimal website that is built with [Astro.js](https://astro.build/).
 
 ![portfolio](/screenshots/screenshot-intro-section.png)
 
+## 🧞 Setup
+
 ## 🧞 Commands
 
 All commands are run from the root of the project, from a terminal:
