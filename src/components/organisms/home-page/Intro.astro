@@ -1,6 +1,7 @@
 ---
 import type { SectionType } from "@/types";
 
+import AnchorButton from "@/components/atoms/AnchorButton.astro";
 import Button from "@/components/atoms/Button.astro";
 import P from "@/components/atoms/P.astro";
 import HeroSVG from "@/components/atoms/svgs/HeroSVG.astro";
@@ -60,7 +61,9 @@ const { class: className, dataLink, translations: t } = Astro.props;
         <P class="mb-9 max-w-[60ch]" html={t.description} />
         <div class="flex justify-center gap-6 md:justify-start">
           <Button class="contact-button">{t.contactButtonLabel}</Button>
-          <Button styleType="accent">{t.resumeButtonLabel}</Button>
+          <AnchorButton href="/simon_camacho_cv.pdf" styleType="accent"
+            >{t.resumeButtonLabel}</AnchorButton
+          >
         </div>
       </div>
       <div class="flex basis-[45%] justify-center">
