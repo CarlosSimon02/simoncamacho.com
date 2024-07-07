@@ -1,10 +1,24 @@
 # Simon Camacho's Portfolio Website
 
-A minimal website that is built with [Astro.js](https://astro.build/).
+Welcome to my portfolio website! This site showcases my projects, skills, and experiences. You can visit the live site [here](https://simoncamacho.com/en#intro).
 
 ![portfolio](/screenshots/screenshot-intro-section.png)
 
-## 🧞 Setup
+## 🛠️ Setup
+
+First, install [Node.js](https://nodejs.org/) version 18.18.0 or higher on your machine.
+
+Second, install all the packages.
+
+```bash
+npm install
+```
+
+Third, run a local host on your machine.
+
+```bash
+npm run dev
+```
 
 ## 🧞 Commands
 
@@ -19,6 +33,15 @@ All commands are run from the root of the project, from a terminal:
 | `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
 | `npm run astro -- --help` | Get help using the Astro CLI                     |
 
-## 👀 Want to learn more?
+## 🖥️ Built With
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+- [Astro.js](https://astro.build/)
+- [Tailwind](https://tailwindcss.com/)
+- [Typescript](https://www.typescriptlang.org/)
+
+## 🔗 Connect With Me
+
+- [Facebook](https://www.facebook.com/CarlosSimon02/)
+- [Linkedin](https://www.linkedin.com/in/carlossimon02/)
+- [Instagram](https://www.instagram.com/caloycowmoochi/)
+- [Frontend Mentor](https://www.frontendmentor.io/profile/CarlosSimon02)
