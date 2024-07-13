@@ -148,6 +148,16 @@ const { class: className, translations: t } = Astro.props;
       }
     }
   };
+  const toastMessages = {
+    en: {
+      error: "Message couldn't be sent",
+      success: "Message sent successfully"
+    },
+    fil: {
+      error: "Hindi naipadala ang mensahe",
+      success: "Matagumpay na naipadala ang mensahe"
+    }
+  };
   const messageFormSchema = yup.object().shape({
     name: yup.string().required(errorMessages[currentLocale].name.required),
     // eslint-disable-next-line perfectionist/sort-objects
@@ -282,14 +292,14 @@ const { class: className, translations: t } = Astro.props;
       })
         .then(() => {
           changeSubmitButtonState("default");
-          toast.success("Message sent successfully");
+          toast.success(toastMessages[currentLocale].success);
           let audio = new Audio("/audios/success.mp3");
           audio.play();
           clearInputFields();
         })
         .catch((error) => {
           changeSubmitButtonState("default");
-          toast.error("Message couldn't be sent");
+          toast.error(toastMessages[currentLocale].error);
           let audio = new Audio("/audios/error.mp3");
           audio.play();
           console.error(error);
