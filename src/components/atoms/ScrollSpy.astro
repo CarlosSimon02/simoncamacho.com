@@ -11,19 +11,31 @@ const { ...props } = Astro.props;
 </div>
 
 <script>
+  const body = document.querySelector("body") as HTMLElement;
   const scrollSpyers = document.querySelectorAll(".scroll-spyer");
 
-  const onHashChange = () => {
-    const newHash = window.location.hash;
+  const getCurrentSection = () => {
+    return body.dataset.currentSection as string;
+  };
+
+  const handleCurrentSectionChange = () => {
+    const currentSection = getCurrentSection();
 
     scrollSpyers.forEach((scrollSpyer) => {
       scrollSpyer.classList.remove("selected");
 
-      if (scrollSpyer.getAttribute("href") === newHash)
+      if (scrollSpyer.getAttribute("href") === currentSection)
         scrollSpyer.classList.add("selected");
     });
   };
 
-  window.addEventListener("hashchange", onHashChange);
-  window.addEventListener("DOMContentLoaded", onHashChange);
+  const observeCurrentSection = () => {
+    const observer = new MutationObserver(handleCurrentSectionChange);
+    observer.observe(body, {
+      attributeFilter: ["data-current-section"],
+      attributes: true
+    });
+  };
+
+  observeCurrentSection();
 </script>

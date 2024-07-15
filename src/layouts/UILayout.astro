@@ -31,6 +31,7 @@ const t = uiLayoutTranslations[lang];
       "grid min-h-screen bg-primary-50 font-lexend text-secondary-700",
       "[&_*:focus-visible]:outline-dashed [&_*:focus-visible]:outline-accent-500"
     ]}
+    data-current-section=""
   >
     <Button
       class="skip-to-main-button sr-only left-4 top-4 z-50 max-w-fit focus:not-sr-only focus:fixed"
@@ -49,6 +50,7 @@ const t = uiLayoutTranslations[lang];
     <ScrollNumbers sections={sections} translations={t.scrollNumbers} />
     <MobileMenu translations={t.mobileMenu} />
     <script>
+      const body = document.querySelector("body") as HTMLElement;
       const sections = document.querySelectorAll(
         "section"
       ) as NodeListOf<HTMLElement>;
@@ -72,6 +74,14 @@ const t = uiLayoutTranslations[lang];
           elementTop - scrollTop - headerHeight <= 0 &&
           elementBottom - scrollTop - headerHeight > 1
         );
+      };
+
+      const setCurrentSection = (sectionHash: string) => {
+        body.dataset.currentSection = sectionHash;
+      };
+
+      const getCurrentSection = () => {
+        return body.dataset.currentSection as string;
       };
 
       const getElementOffsetTop = (element: HTMLElement) => {
@@ -111,7 +121,7 @@ const t = uiLayoutTranslations[lang];
           const hashOfSection = sections[i].getAttribute("data-link") || "";
 
           if (isInView(sections[i]) && hashOfSection !== window.location.hash) {
-            window.location.hash = hashOfSection;
+            setCurrentSection(hashOfSection);
             break;
           }
         }
@@ -125,9 +135,9 @@ const t = uiLayoutTranslations[lang];
         updateHashOnSectionInView();
       };
 
-      const handleHashChange = () => {
-        const currentHash = window.location.hash;
-        const targetSection = getSectionOfHash(currentHash) as HTMLElement;
+      const handleCurrentSectionChange = () => {
+        const currentSection = getCurrentSection();
+        const targetSection = getSectionOfHash(currentSection) as HTMLElement;
         scrollToFocus(targetSection);
       };
 
@@ -135,13 +145,28 @@ const t = uiLayoutTranslations[lang];
         const currentHash = window.location.hash;
 
         if (currentHash) {
-          const targetSection = getSectionOfHash(currentHash) as HTMLElement;
-          scrollToFocus(targetSection);
+          setCurrentSection(currentHash);
         } else {
           const hashOfFirstSection =
             sections[0].getAttribute("data-link") || "";
-          window.location.hash = hashOfFirstSection;
+          setCurrentSection(hashOfFirstSection);
         }
+      };
+
+      const handleHashChange = () => {
+        const currentHash = window.location.hash;
+
+        if (currentHash) {
+          setCurrentSection(currentHash);
+        }
+      };
+
+      const observeCurrentSection = () => {
+        const observer = new MutationObserver(handleCurrentSectionChange);
+        observer.observe(body, {
+          attributeFilter: ["data-current-section"],
+          attributes: true
+        });
       };
 
       skipToMainButton.addEventListener("click", () => {
@@ -155,6 +180,7 @@ const t = uiLayoutTranslations[lang];
       window.addEventListener("resize", handleResize);
       window.addEventListener("hashchange", handleHashChange);
       window.addEventListener("DOMContentLoaded", handlePageLoad);
+      observeCurrentSection();
     </script>
   </body>
 </html>
