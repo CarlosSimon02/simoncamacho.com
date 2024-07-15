@@ -117,10 +117,12 @@ const t = uiLayoutTranslations[lang];
       };
 
       const updateHashOnSectionInView = () => {
+        const currentSection = getCurrentSection();
+
         for (let i = 0; i < sections.length; i++) {
           const hashOfSection = sections[i].getAttribute("data-link") || "";
 
-          if (isInView(sections[i]) && hashOfSection !== window.location.hash) {
+          if (isInView(sections[i]) && hashOfSection !== currentSection) {
             setCurrentSection(hashOfSection);
             break;
           }
