@@ -17,6 +17,7 @@ const { ...props } = Astro.props;
     "section"
   ) as NodeListOf<HTMLElement>;
 
+<<<<<<< HEAD
   const isInView = (element: HTMLElement) => {
     const header = document.querySelector("header") as HTMLElement;
     const headerHeight = header.offsetHeight;
@@ -36,10 +37,13 @@ const { ...props } = Astro.props;
     body.dataset.currentSection = sectionHash;
   };
 
+=======
+>>>>>>> 49097b95cb6f13f27e2da3424d7ffa8f64a8d89d
   const getCurrentSection = () => {
     return body.dataset.currentSection as string;
   };
 
+<<<<<<< HEAD
   const getElementOffsetTop = (element: HTMLElement) => {
     const header = document.querySelector("header") as HTMLElement;
     const headerHeight = header.offsetHeight;
@@ -75,6 +79,8 @@ const { ...props } = Astro.props;
     }
   };
 
+=======
+>>>>>>> 49097b95cb6f13f27e2da3424d7ffa8f64a8d89d
   const handleCurrentSectionChange = () => {
     const currentSection = getCurrentSection();
 
@@ -86,6 +92,7 @@ const { ...props } = Astro.props;
     });
   };
 
+<<<<<<< HEAD
   const handlePageLoad = () => {
     const currentHash = window.location.hash;
 
@@ -106,6 +113,8 @@ const { ...props } = Astro.props;
     updateHashOnSectionInView();
   };
 
+=======
+>>>>>>> 49097b95cb6f13f27e2da3424d7ffa8f64a8d89d
   const observeCurrentSection = () => {
     const observer = new MutationObserver(handleCurrentSectionChange);
     observer.observe(body, {
@@ -114,6 +123,7 @@ const { ...props } = Astro.props;
     });
   };
 
+<<<<<<< HEAD
   const getSectionOfHash = (hash: string) => {
     return Array.from(sections).find(
       (section) => section.getAttribute("data-link") === hash
@@ -132,4 +142,7 @@ const { ...props } = Astro.props;
   window.addEventListener("DOMContentLoaded", handlePageLoad);
   window.addEventListener("scrollend", handleScrollEnd);
   window.addEventListener("resize", handleResize);
+=======
+  observeCurrentSection();
+>>>>>>> 49097b95cb6f13f27e2da3424d7ffa8f64a8d89d
 </script>
