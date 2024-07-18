@@ -50,9 +50,6 @@ const t = uiLayoutTranslations[lang];
     <ScrollNumbers sections={sections} translations={t.scrollNumbers} />
     <MobileMenu translations={t.mobileMenu} />
     <script>
-      const sections = document.querySelectorAll(
-        "section"
-      ) as NodeListOf<HTMLElement>;
       const skipToMainButton = document.querySelector(
         ".skip-to-main-button"
       ) as HTMLElement;
@@ -60,102 +57,12 @@ const t = uiLayoutTranslations[lang];
         "#main-content"
       ) as HTMLElement;
 
-      const isInView = (element: HTMLElement) => {
-        const header = document.querySelector("header") as HTMLElement;
-        const headerHeight = header.offsetHeight;
-
-        const scrollTop =
-          document.documentElement.scrollTop || document.body.scrollTop;
-        const elementTop = element.offsetTop;
-        const elementBottom = elementTop + element.offsetHeight;
-
-        return (
-          elementTop - scrollTop - headerHeight <= 0 &&
-          elementBottom - scrollTop - headerHeight > 1
-        );
-      };
-
-      const getElementOffsetTop = (element: HTMLElement) => {
-        const header = document.querySelector("header") as HTMLElement;
-        const headerHeight = header.offsetHeight;
-
-        return element.offsetTop - headerHeight + 1;
-      };
-
-      const getSectionOfHash = (hash: string) => {
-        return Array.from(sections).find(
-          (section) => section.getAttribute("data-link") === hash
-        );
-      };
-
-      const scrollToFocus = (element: HTMLElement) => {
-        if (!isInView(element)) {
-          const focusOnSection = () => {
-            element.setAttribute("tabindex", "-1");
-            element.focus({ preventScroll: true });
-            element.removeAttribute("tabindex");
-
-            window.removeEventListener("scrollend", focusOnSection);
-          };
-
-          window.addEventListener("scrollend", focusOnSection);
-
-          window.scrollTo({
-            behavior: "smooth",
-            top: getElementOffsetTop(element)
-          });
-        }
-      };
-
-      const updateHashOnSectionInView = () => {
-        for (let i = 0; i < sections.length; i++) {
-          const hashOfSection = sections[i].getAttribute("data-link") || "";
-
-          if (isInView(sections[i]) && hashOfSection !== window.location.hash) {
-            window.location.hash = hashOfSection;
-            break;
-          }
-        }
-      };
-
-      const handleScrollEnd = () => {
-        updateHashOnSectionInView();
-      };
-
-      const handleResize = () => {
-        updateHashOnSectionInView();
-      };
-
-      const handleHashChange = () => {
-        const currentHash = window.location.hash;
-        const targetSection = getSectionOfHash(currentHash) as HTMLElement;
-        scrollToFocus(targetSection);
-      };
-
-      const handlePageLoad = () => {
-        const currentHash = window.location.hash;
-
-        if (currentHash) {
-          const targetSection = getSectionOfHash(currentHash) as HTMLElement;
-          scrollToFocus(targetSection);
-        } else {
-          const hashOfFirstSection =
-            sections[0].getAttribute("data-link") || "";
-          window.location.hash = hashOfFirstSection;
-        }
-      };
-
       skipToMainButton.addEventListener("click", () => {
         mainContent.setAttribute("tabindex", "-1");
         mainContent.focus();
         window.scrollTo({ behavior: "smooth", top: 0 });
         mainContent.removeAttribute("tabindex");
       });
-
-      window.addEventListener("scrollend", handleScrollEnd);
-      window.addEventListener("resize", handleResize);
-      window.addEventListener("hashchange", handleHashChange);
-      window.addEventListener("DOMContentLoaded", handlePageLoad);
     </script>
   </body>
 </html>
