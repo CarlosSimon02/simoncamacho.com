@@ -11,19 +11,125 @@ const { ...props } = Astro.props;
 </div>
 
 <script>
+  const body = document.querySelector("body") as HTMLElement;
   const scrollSpyers = document.querySelectorAll(".scroll-spyer");
+  const sections = document.querySelectorAll(
+    "section"
+  ) as NodeListOf<HTMLElement>;
 
-  const onHashChange = () => {
-    const newHash = window.location.hash;
+  const isInView = (element: HTMLElement) => {
+    const header = document.querySelector("header") as HTMLElement;
+    const headerHeight = header.offsetHeight;
+
+    const scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop;
+    const elementTop = element.offsetTop;
+    const elementBottom = elementTop + element.offsetHeight;
+
+    return (
+      elementTop - scrollTop - headerHeight <= 0 &&
+      elementBottom - scrollTop - headerHeight > 1
+    );
+  };
+
+  const setCurrentSection = (sectionHash: string) => {
+    body.dataset.currentSection = sectionHash;
+  };
+
+  const getCurrentSection = () => {
+    return body.dataset.currentSection as string;
+  };
+
+  const getElementOffsetTop = (element: HTMLElement) => {
+    const header = document.querySelector("header") as HTMLElement;
+    const headerHeight = header.offsetHeight;
+
+    return element.offsetTop - headerHeight + 1;
+  };
+
+  const scrollToFocus = (element: HTMLElement) => {
+    const focusOnSection = () => {
+      element.setAttribute("tabindex", "-1");
+      element.focus({ preventScroll: true });
+      element.removeAttribute("tabindex");
+
+      window.removeEventListener("scrollend", focusOnSection);
+    };
+
+    window.addEventListener("scrollend", focusOnSection);
+
+    window.scrollTo({
+      behavior: "smooth",
+      top: getElementOffsetTop(element)
+    });
+  };
+
+  const updateHashOnSectionInView = () => {
+    for (let i = 0; i < sections.length; i++) {
+      const hashOfSection = sections[i].getAttribute("data-link") || "";
+
+      if (isInView(sections[i])) {
+        setCurrentSection(hashOfSection);
+        break;
+      }
+    }
+  };
+
+  const handleCurrentSectionChange = () => {
+    const currentSection = getCurrentSection();
 
     scrollSpyers.forEach((scrollSpyer) => {
       scrollSpyer.classList.remove("selected");
 
-      if (scrollSpyer.getAttribute("href") === newHash)
+      if (scrollSpyer.getAttribute("href") === currentSection)
         scrollSpyer.classList.add("selected");
     });
   };
 
-  window.addEventListener("hashchange", onHashChange);
-  window.addEventListener("DOMContentLoaded", onHashChange);
+  const handlePageLoad = () => {
+    const currentHash = window.location.hash;
+
+    if (currentHash) {
+      const targetSection = getSectionOfHash(currentHash) as HTMLElement;
+      scrollToFocus(targetSection);
+      setCurrentSection(currentHash);
+    } else {
+      updateHashOnSectionInView();
+    }
+  };
+
+  const handleScrollEnd = () => {
+    updateHashOnSectionInView();
+  };
+
+  const handleResize = () => {
+    updateHashOnSectionInView();
+  };
+
+  const observeCurrentSection = () => {
+    const observer = new MutationObserver(handleCurrentSectionChange);
+    observer.observe(body, {
+      attributeFilter: ["data-current-section"],
+      attributes: true
+    });
+  };
+
+  const getSectionOfHash = (hash: string) => {
+    return Array.from(sections).find(
+      (section) => section.getAttribute("data-link") === hash
+    );
+  };
+
+  scrollSpyers.forEach((scrollSpyer) => {
+    scrollSpyer.addEventListener("click", () => {
+      const scrollSpyerHash = scrollSpyer.getAttribute("href") as string;
+      const targetSection = getSectionOfHash(scrollSpyerHash) as HTMLElement;
+      scrollToFocus(targetSection);
+      setCurrentSection(scrollSpyerHash);
+    });
+  });
+  observeCurrentSection();
+  window.addEventListener("DOMContentLoaded", handlePageLoad);
+  window.addEventListener("scrollend", handleScrollEnd);
+  window.addEventListener("resize", handleResize);
 </script>
