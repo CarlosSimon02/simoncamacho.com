@@ -31,6 +31,6 @@ export default defineConfig({
       }
     })
   ],
-  site: "https://simoncamacho.com",
+  site: "https://old.simoncamacho.dev",
   trailingSlash: "never"
 });

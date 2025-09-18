@@ -1,6 +1,6 @@
 # Simon Camacho's Portfolio Website
 
-Welcome to my portfolio website! This site showcases my projects, skills, and experiences. You can visit the live site [here](https://old.simoncamacho.com/en#intro).
+Welcome to my portfolio website! This site showcases my projects, skills, and experiences. You can visit the live site [here](https://old.old.simoncamacho.dev/en#intro).
 
 ![portfolio](/screenshots/screenshot-intro-section.png)
 
